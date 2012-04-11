@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <ComponentGroup Id="miktexGroup">
+            <ComponentRef Id="cmp7DA7134387DEE83E02557C438BDDDC12" />
+        </ComponentGroup>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="INSTALLDIR">
+            <Directory Id="dir4FF337F1C63EA6569FD94E1C18AFA993" Name="miktex2">
+                <Component Id="cmp7DA7134387DEE83E02557C438BDDDC12" Guid="{A5D93ECD-721D-46B7-8A12-03A5651E8306}">
+                    <File Id="filB3D1122BD55FDAEEAFE988E195CB05F3" KeyPath="yes" Source="$(var.miktexDir)\miktex-portable.cmd" />
+                </Component>
+            </Directory>
+        </DirectoryRef>
+    </Fragment>
+</Wix>

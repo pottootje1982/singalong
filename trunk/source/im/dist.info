@@ -1,0 +1,15 @@
+--- This file is part of LuaDist project
+
+name = "imlua"
+version = "3.6.3"
+
+desc = "ImLua was developed to make all functionalities of the IM library available to Lua programmers."
+author = "Antonio Scuri and contributors"
+license = "Tecgraf Library License/MIT"
+url = "http://www.tecgraf.puc-rio.br/im/"
+maintainer = "Peter Kapec"
+
+depends = {
+	"lua ~> 5.1",
+	"im >= 3.6.3",
+}

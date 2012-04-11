@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='windows-1252'?>
+
+<?include vars.wxs ?>
+
+<!-- The main installer schema -->
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+
+  <!-- Product. Id should always remain the same. Change UpgradeCode whenever application
+                should be removed and then re-installed. -->
+    <Product Name='$(var.ProductName)'
+             Id='$(var.ProductID)'
+             UpgradeCode='$(var.ProductUpgradeCode)'
+             Version='$(var.Version)' Manufacturer='$(var.CompanyName)'
+             Language='1033' Codepage='1252'>
+    
+        <!-- Package. The question marks make sure a new ID is generated every time. -->
+    <Package Keywords='Installer'
+          Description="$(var.ProductName) installer"
+          Comments='$(var.ProductName) installer' Manufacturer='$(var.CompanyName)'
+          InstallerVersion='300' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+
+    <!-- Conditions to use this installer. If a condition evaluates to false, it will not install. -->
+    <Condition Message='$(var.ProductName) cannot be installed on Windows 9x or ME.'>VersionNT</Condition>
+    <Condition Message='You need at least 32 MB or RAM to install $(var.ProductName).'>PhysicalMemory &gt;= 32</Condition>
+
+    <!-- Media. We always package on one medium, so this is a bit lame. -->
+    <Media Id='1' Cabinet='Singalong.cab' EmbedCab='yes' CompressionLevel='high' DiskPrompt="CD-ROM #1" />
+    <Property Id='DiskPrompt' Value="$(var.ProductName) Installation [1]" />
+
+    <Property Id='ARPCOMMENTS'>$(var.ProductName)</Property>
+    <Property Id='ARPHELPLINK'>www.virtualsoftware.com</Property>
+    <Property Id='ARPURLINFOABOUT'>www.virtualsoftware.com</Property>
+    <Property Id='ARPURLUPDATEINFO'>www.virtualsoftware.com</Property>
+    <Property Id='ARPHELPTELEPHONE'>0031617318888</Property>
+    
+    <Property Id='ARPNOREPAIR'>1</Property>	<!-- Disable repair option -->
+
+    <!--  =======================================================================
+                                       C O M P O N E N T S
+          ======================================================================= -->
+
+    <!-- Directory structure -->
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <Directory Id='ProgramFilesFolder' Name='PFiles'>
+        <Directory Id='INSTALLDIR' Name='SinGaLonG' />
+      </Directory>
+      
+      <Directory Id="ProgramMenuFolder" Name="Programs">
+        <Directory Id="ProgramMenuDir" Name="$(var.ProductType)" >
+          <Component Id="UninstallShortcutComponent" Guid="2C1C0276-D25A-4B96-9339-59B1CC3B5A54">
+            <RegistryKey Root="HKCU"
+                   Key="Software\VirtualSoftware\$(var.ProductName)\Uninstall">
+              <RegistryValue Value="$(var.ProductName)"
+                       Type="string"
+                       KeyPath="yes" />
+            </RegistryKey>
+
+            <Shortcut Id="ApplicationStartMenuShortcut" 
+                  Name="SingAlonG"
+                  Description="SingAlonG"
+                  Target="[INSTALLDIR]\bin\Singalong.exe"
+                  WorkingDirectory="dirC24A635189E52DF456E2FBC3F74A024A"/>
+
+            <Shortcut Id="UninstallProduct"
+                  Name="Uninstall $(var.ProductName)"
+                  Target="[System64Folder]msiexec.exe"
+                  Arguments="/x [ProductCode]"
+                  Directory="ProgramMenuDir"
+                  Description="Uninstalls $(var.ProductName)" />
+
+            <RemoveFolder Id="RemoveShortcutFolder"
+                    On="uninstall" />
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop" />
+
+      <!-- Registry: write installation dir. Handy on updates -->
+      <Component Id='InstallDir_Reg' Guid='c1b28365-479b-4cbe-ab7d-fdd606bc7a47'>
+        <RegistryValue Id='SingalongRegInstallDir' Root='HKLM' Key='Software\SinGaLonG' Name='InstallDir'
+               Action='write' Type='string' Value='[INSTALLDIR]' />
+      </Component>
+    </Directory>
+
+    <!--  =======================================================================
+                                         F E A T U R E S 
+          ======================================================================= -->
+
+    <Feature Id='Complete' Title='$(var.ProductName)' Description='$(var.ProductName)'
+          Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'
+          AllowAdvertise='no' InstallDefault='local'>
+
+      <Feature Id='SharedStuff' Title='Common files' Description='Common data and software' Level='1' Absent='disallow' AllowAdvertise='no' InstallDefault='local' Display='expand'>
+        <ComponentRef Id='UninstallShortcutComponent'/>
+        <ComponentRef Id='InstallDir_Reg' />
+      </Feature>
+      
+      <Feature Id='MainProgram' Title='MainProgram' Description='SinGaLonG application' Level='1' AllowAdvertise='no' InstallDefault='local' Display='expand'>
+        <ComponentGroupRef Id='binGroup' />
+      </Feature>
+      
+
+    </Feature>
+
+    <UIRef Id="WixUI_InstallDir" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch SinGaLonG!" />
+
+    <UI>
+      <UIRef Id="WixUI_ErrorProgressText" />
+      <Publish Dialog="ExitDialog" 
+            Control="Finish" 
+            Event="DoAction" 
+            Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+    </UI>
+
+    <Property Id="ENABLEFIREWALL" Value="False"/>
+    <Property Id="USBFULLUNINSTALL" Value="False"/>
+    <Property Id="DRIVERFULLUNINSTALL" Value="False"/>
+    <Property Id="WixShellExecTarget" Value="[#fil4C32D3BEBCD2AFF5B5E1E0524682304A]" />
+    <CustomAction Id="LaunchApplication" 
+        BinaryKey="WixCA"
+        DllEntry="WixShellExec"
+        Impersonate="yes" />
+            
+    <InstallExecuteSequence>
+      <FindRelatedProducts Sequence="200" />
+    </InstallExecuteSequence>
+  </Product>
+</Wix>

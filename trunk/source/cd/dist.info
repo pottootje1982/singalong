@@ -1,0 +1,16 @@
+--- This file is part of LuaDist project
+
+name = "cdlua"
+version = "5.4.1"
+
+desc = [[CDLua was developed to make all functionalities of the CD library available to Lua programmers.]]
+author = "Marcelo Gattass, Luiz Henrique de Figueiredo, Luiz Fernando Martha, Antonio Scuri"
+license = "Tecgraf Library License/MIT"
+url = "http://www.tecgraf.puc-rio.br/cd"
+maintainer = "Peter Kapec"
+
+depends = {
+	"lua ~> 5.1",
+	"imlua >= 3.4.1",
+	"cd >= 5.4.1"
+}
