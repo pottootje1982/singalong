@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='Windows-1252'?>
+<Include>
+
+<?include version.wxs ?>
+<?include config.wxs ?>
+
+<?define ProductType="SinGaLonG" ?>
+<?define ProductID="42943ecb-f932-4955-ae0a-8af82b099059" ?>
+<?define ProductUpgradeCode="16ff093a-25d5-4180-a3d7-39bc853c91e2" ?>
+
+<?define ProductName="$(var.ProductType) v$(var.Version)" ?>
+
+<?define CompanyName="Virtual Software B.V." ?>
+</Include>
