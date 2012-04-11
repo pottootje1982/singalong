@@ -21,7 +21,7 @@
 #include <memory.h>
 #include <assert.h>
 
-#define	G3CODES
+//#define	G3CODES
 #include "t4.h"
 
 typedef unsigned int uint32;
