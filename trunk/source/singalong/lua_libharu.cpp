@@ -12,7 +12,6 @@
  *
  */
 
-#include "stdafx.h"
 #include "lua_libharu.h"
 #include <setjmp.h>
 #include <stdlib.h>

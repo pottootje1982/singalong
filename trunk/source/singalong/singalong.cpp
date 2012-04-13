@@ -1,8 +1,9 @@
 // singalong.cpp : Defines the entry point for the application.
 //
 
-#include "stdafx.h"
+#include "global.h"
 #include "singalong.h"
+#include "lua_system.h"
 #include "lua_libharu.h"
 #include "lua_libharupage.h" 
 #include "clipboard.h"
@@ -32,27 +33,10 @@ extern "C" {
 #include "mime.h"
 }
 
-#include <mmsystem.h>
 #include <conio.h>
 #include <string>
 #include <vector>
 #include <algorithm>
-
-static int lua_play(lua_State *L)
-{
-  const char *test = lua_tostring(L,1);
-  BOOL bla = PlaySound(test,NULL,SND_FILENAME|SND_ASYNC);//PLAY WAV SOUND ONCE
-
-  Sleep(lua_tointeger(L,2));
-
-  return 0;
-}
-
-static int lua_sleep(lua_State *L)
-{
-  Sleep(lua_tointeger(L,1));
-  return 0;
-}
 
 template <class T> float edit_distance(const T& s1, const T& s2)
 {
@@ -66,9 +50,9 @@ template <class T> float edit_distance(const T& s1, const T& s2)
   for(unsigned int i = 1; i <= len1; ++i)
     for(unsigned int j = 1; j <= len2; ++j)
 
-      d[i][j] = min( min(d[i - 1][j] + 1,d[i][j - 1] + 1),
+      d[i][j] = std::min( std::min(d[i - 1][j] + 1,d[i][j - 1] + 1),
       d[i - 1][j - 1] + (s1[i - 1] == s2[j - 1] ? 0 : 1) );
-  return 1-d[len1][len2]/(float)(max(len1, len2));
+  return 1-d[len1][len2]/(float)(std::max(len1, len2));
 }
 
 static int lua_levenshtein(lua_State *L)
@@ -78,77 +62,6 @@ static int lua_levenshtein(lua_State *L)
   float res = edit_distance(str1, str2);
   lua_pushnumber(L, res);
   return 1;
-}
-
-static int lua_setIcon(lua_State *L)
-{
-  HINSTANCE hInstance = (HINSTANCE)lua_touserdata(L, 1);
-  // Find HWND on basis of its title
-  HWND hMainWnd = FindWindowA( NULL, lua_tostring(L, 2) );
-  HICON hIcon =  ::LoadIcon(hInstance, MAKEINTRESOURCE(IDI_SINGALONG));
-  CWnd *hWnd = CWnd::FromHandle(hMainWnd);
-  HICON hResIcon = hWnd->SetIcon(hIcon, 0);
-  return 0;
-}
-
-static int lua_shellExecute(lua_State *L)
-{
-  const char* command = lua_tostring(L,1);
-  const char* args = lua_tostring(L,2);
-  const char* action = lua_tostring(L, 3);
-
-  HINSTANCE r = ShellExecute(NULL, action, command, strcmp(args, "") == 0 ? NULL : args, NULL, SW_SHOWNORMAL);
-  DWORD e = GetLastError();
-
-  lua_pushlightuserdata(L, (void*)r);
-  return 1;
-}
-
-static int lua_shellExecuteWait(lua_State *L)
-{
-  const char* command = lua_tostring(L,1);
-  const char* args = lua_tostring(L,2);
-  const char* action = lua_tostring(L, 3);
-  const char* dir = lua_tostring(L, 4);
-
-  SHELLEXECUTEINFO lpExecInfo;
-  lpExecInfo.cbSize  = sizeof(SHELLEXECUTEINFO);
-  lpExecInfo.lpFile = command; // name of file that you want to execute/ print/ or open/ in your case Adobe Acrobat.
-  lpExecInfo.fMask=SEE_MASK_DOENVSUBST|SEE_MASK_NOCLOSEPROCESS ;     
-  lpExecInfo.hwnd = NULL;  
-  lpExecInfo.lpVerb = action; // to open  program
-  lpExecInfo.lpParameters = args; //  file name as an argument
-  lpExecInfo.lpDirectory = dir;   
-  lpExecInfo.nShow = SW_SHOW ;  // show command prompt with normal window size 
-  lpExecInfo.hInstApp = (HINSTANCE) SE_ERR_DDEFAIL ;   //WINSHELLAPI BOOL WINAPI result;
-  ShellExecuteEx(&lpExecInfo);
-
-  //wait until a file is finished printing
-  if(lpExecInfo.hProcess !=NULL)
-  {
-    ::WaitForSingleObject(lpExecInfo.hProcess, INFINITE);
-    ::CloseHandle(lpExecInfo.hProcess);
-  }
-
-  return 0;
-}
-
-static int lua_createProcess(lua_State *L)
-{
-  STARTUPINFO si;
-  PROCESS_INFORMATION pi;
-  const char* command = lua_tostring(L,1);
-  int res = CreateProcess(NULL, (LPSTR)command,
-    NULL,           // Process handle not inheritable
-    NULL,           // Thread handle not inheritable
-    FALSE,          // Set handle inheritance to FALSE
-    0,              // No creation flags
-    NULL,           // Use parent's environment block
-    NULL,           // Use parent's starting directory 
-    &si,            // Pointer to STARTUPINFO structure
-    &pi );
-
-  return 0;
 }
 
 static int traceback (lua_State *L) {
@@ -182,11 +95,6 @@ static int docall (lua_State *L, int narg, int clear) {
   if (status != 0) lua_gc(L, LUA_GCCOLLECT, 0);
   return status;
 }
-
-static luaL_Reg sound_func[] = {
-    {"play",      lua_play},
-    {NULL,        NULL}
-};
 
 static luaL_Reg system_func[] = {
     {"levenshtein",       lua_levenshtein},
@@ -235,7 +143,6 @@ int main(int argc, char ** argv)
   pdfpage_register(L);
   clipboard_register(L);
 
-  luaL_register(L, "sound", sound_func);
   luaL_register(L, "system", system_func);
 
 #if _DEBUG 
