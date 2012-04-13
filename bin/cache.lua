@@ -205,12 +205,12 @@ function scanCache(mp3, searchSite, rescan)
 
     -- E.g. the difference between 'the doors' and 'doors' is 0.55555555
     -- But levenshtein('rem', 'r.e.m.') == 0.5, that's why we made it this value
-    -- system.levenshtein is 5-6 times quicker than lua implementation!!
-    if system.levenshtein(artist, cachedArtist) >= 0.5 then
+    -- compare.levenshtein is 5-6 times quicker than lua implementation!!
+    if compare.levenshtein(artist, cachedArtist) >= 0.5 then
       for cachedTitle, sites in pairs(titles) do
         -- Compare percentage of equal chars of two strings
         -- We consider a similarity of > 80 % enough for title
-        local titleEq = system.levenshtein(title, cachedTitle)
+        local titleEq = compare.levenshtein(title, cachedTitle)
 
         if titleEq > 0.8 and not table.isEmpty(sites) then
           -- Adapting artist & title of mp3 to make sure next time it will be found
