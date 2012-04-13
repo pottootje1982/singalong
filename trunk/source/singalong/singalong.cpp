@@ -4,6 +4,7 @@
 #include "global.h"
 #include "singalong.h"
 #include "lua_system.h"
+#include "lua_compare.h"
 #include "lua_libharu.h"
 #include "lua_libharupage.h" 
 #include "clipboard.h"
@@ -105,6 +106,7 @@ int main(int argc, char ** argv)
   pdfpage_register(L);
   clipboard_register(L);
   luaopen_system(L);
+  luaopen_compare(L);
 
 #if _DEBUG 
   lua_pushboolean(L, true);
