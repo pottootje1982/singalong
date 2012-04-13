@@ -1,7 +1,6 @@
-#include "stdafx.h"
-
 #include "hpdf.h"
 #include "lua_libharupage.h"
+#include <string.h>
 
 const HPDF_UINT16 DASH_MODE1[] = {3};
 const HPDF_UINT16 DASH_MODE2[] = {3, 7};
