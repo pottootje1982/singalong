@@ -49,11 +49,11 @@ UNIX_OBJS:=\
 
 all: $(SOCKET_SO) $(MIME_SO) 
 
-$(SOCKET_SO): $(SOCKET_OBJS)
-	$(LD) $(LDFLAGS) -o $@ $(SOCKET_OBJS)
+$(SOCKET_SO): $(SOCKET_OBJS) 
+	$(LD) $(LDFLAGS) -o $@ $(SOCKET_OBJS) -L$(CURDIR)/../../lua5.1/include -llua
 
 $(MIME_SO): $(MIME_OBJS)
-	$(LD) $(LDFLAGS) -o $@ $(MIME_OBJS)
+	$(LD) $(LDFLAGS) -o $@ $(MIME_OBJS) -L$(CURDIR)/../../lua5.1/include -llua
 
 $(UNIX_SO): $(UNIX_OBJS)
 	$(LD) $(LDFLAGS) -o $@ $(UNIX_OBJS)
