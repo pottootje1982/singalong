@@ -1,3 +1,3 @@
 #pragma once
 
-int luaopen_marshal(lua_State *L);
+extern int luaopen_marshal(lua_State *L);
