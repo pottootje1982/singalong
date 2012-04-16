@@ -39,7 +39,9 @@
 
 #include <stdlib.h>
 #include <string.h>
+#if WIN32
 #include "stdint.h"
+#endif
 
 #include "lua.h"
 #include "lualib.h"
