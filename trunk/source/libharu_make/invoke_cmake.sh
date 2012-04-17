@@ -1,0 +1,1 @@
+cmake -G "Unix Makefiles" ../libharu -DZLIB_LIBRARY=../zlib -DZLIB_INCLUDE_DIR=../zlib -DPNG_LIBRARY=../lpng1510 -DPNG_PNG_INCLUDE_DIR=../lpng1510

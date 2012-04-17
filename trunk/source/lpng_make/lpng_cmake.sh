@@ -1,0 +1,1 @@
+cmake -G "Unix Makefiles" ../lpng1510/ -DZLIB_LIBRARY=../zlib -DZLIB_INCLUDE_DIR=../zlib
