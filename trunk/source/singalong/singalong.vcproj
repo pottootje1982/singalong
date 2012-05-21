@@ -47,7 +47,7 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				UsePrecompiledHeader="1"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
@@ -203,28 +203,12 @@
 				>
 			</File>
 			<File
-				RelativePath=".\singalong.cpp"
+				RelativePath=".\lua_system.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\stdafx.cpp"
+				RelativePath=".\singalong.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -241,6 +225,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\global.h"
+				>
+			</File>
+			<File
 				RelativePath=".\lua_libharu.h"
 				>
 			</File>
@@ -249,15 +237,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\lua_system.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Resource.h"
 				>
 			</File>
 			<File
 				RelativePath=".\singalong.h"
-				>
-			</File>
-			<File
-				RelativePath=".\stdafx.h"
 				>
 			</File>
 		</Filter>
