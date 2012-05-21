@@ -1,3 +1,5 @@
+-- BUGS:
+
 -- mem leak
 -- font sizes for singalong pdf
 -- remove \\ from standard ascii files, replace with newlines
@@ -6,10 +8,14 @@
 -- save button
 -- gray out both save buttons if song/playlist was just saved, so unedited
 
+-- TESTING:
 -- check &quot; somewhere in the zwarte lijst
 -- check if solving CAPTCHA works
 
--- Nice to have:
+-- FEATURES
+-- Dragging files/dirs from explorer to playlist
+
+-- NICE TO HAVE:
 -- Configurable lyrics_dir (lyrics_dir shouldn't be appended before cached items for this)
 -- playback of playlist
 
