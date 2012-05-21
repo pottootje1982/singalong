@@ -195,6 +195,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\lua_compare.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\lua_libharu.cpp"
 				>
 			</File>
@@ -204,6 +208,10 @@
 			</File>
 			<File
 				RelativePath=".\lua_system.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\lua_system_win.cpp"
 				>
 			</File>
 			<File
@@ -229,6 +237,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\lua_compare.h"
+				>
+			</File>
+			<File
 				RelativePath=".\lua_libharu.h"
 				>
 			</File>
@@ -238,6 +250,10 @@
 			</File>
 			<File
 				RelativePath=".\lua_system.h"
+				>
+			</File>
+			<File
+				RelativePath=".\lua_system_win.h"
 				>
 			</File>
 			<File

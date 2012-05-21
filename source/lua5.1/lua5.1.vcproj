@@ -174,127 +174,127 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\lapi.c"
+				RelativePath=".\include\lapi.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lauxlib.c"
+				RelativePath=".\include\lauxlib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lbaselib.c"
+				RelativePath=".\include\lbaselib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lcode.c"
+				RelativePath=".\include\lcode.c"
 				>
 			</File>
 			<File
-				RelativePath=".\ldblib.c"
+				RelativePath=".\include\ldblib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\ldebug.c"
+				RelativePath=".\include\ldebug.c"
 				>
 			</File>
 			<File
-				RelativePath=".\ldo.c"
+				RelativePath=".\include\ldo.c"
 				>
 			</File>
 			<File
-				RelativePath=".\ldump.c"
+				RelativePath=".\include\ldump.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lfunc.c"
+				RelativePath=".\include\lfunc.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lgc.c"
+				RelativePath=".\include\lgc.c"
 				>
 			</File>
 			<File
-				RelativePath=".\linit.c"
+				RelativePath=".\include\linit.c"
 				>
 			</File>
 			<File
-				RelativePath=".\liolib.c"
+				RelativePath=".\include\liolib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\llex.c"
+				RelativePath=".\include\llex.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lmathlib.c"
+				RelativePath=".\include\lmathlib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lmem.c"
+				RelativePath=".\include\lmem.c"
 				>
 			</File>
 			<File
-				RelativePath=".\loadlib.c"
+				RelativePath=".\include\loadlib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lobject.c"
+				RelativePath=".\include\lobject.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lopcodes.c"
+				RelativePath=".\include\lopcodes.c"
 				>
 			</File>
 			<File
-				RelativePath=".\loslib.c"
+				RelativePath=".\include\loslib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lparser.c"
+				RelativePath=".\include\lparser.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lstate.c"
+				RelativePath=".\include\lstate.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lstring.c"
+				RelativePath=".\include\lstring.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lstrlib.c"
+				RelativePath=".\include\lstrlib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\ltable.c"
+				RelativePath=".\include\ltable.c"
 				>
 			</File>
 			<File
-				RelativePath=".\ltablib.c"
+				RelativePath=".\include\ltablib.c"
 				>
 			</File>
 			<File
-				RelativePath=".\ltm.c"
+				RelativePath=".\include\ltm.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lua.c"
+				RelativePath=".\include\lua.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lundump.c"
+				RelativePath=".\include\lundump.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lvm.c"
+				RelativePath=".\include\lvm.c"
 				>
 			</File>
 			<File
-				RelativePath=".\lzio.c"
+				RelativePath=".\include\lzio.c"
 				>
 			</File>
 			<File
-				RelativePath=".\print.c"
+				RelativePath=".\include\print.c"
 				>
 			</File>
 		</Filter>
