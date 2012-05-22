@@ -1,26 +1,17 @@
-require 'misc'
-
 local args = {...}
 
-local testDir = '.'
-if args[1] then
-  testDir = args[1]
-  package.path = package.path .. ';' .. testDir .. '\\?.lua'
-end
+package.path = package.path .. ';tests\\?.lua'
 
-package.path = package.path .. ';..\\?.lua'
-
+require 'misc'
 require 'luaunit'
 require 'lfs'
 
----[[
-for file in lfs.dir(testDir) do
+for file in lfs.dir('tests') do
   if file:match('lua$') and not file:match('run_tests') then
     local fileWithoutExt = file:match('(.*)%.lua$')
     print(fileWithoutExt)
     require(fileWithoutExt)
   end
-end 
+end
 
 LuaUnit:run()
---]]
