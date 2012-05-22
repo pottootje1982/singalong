@@ -8,3 +8,7 @@ function TestQuery:testFormatFile()
   local match = s:match(_(query))
   assert(query == match)
 end
+
+function TestQuery:testFailure()
+  assert(false)
+end
