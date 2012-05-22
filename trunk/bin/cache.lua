@@ -3,7 +3,7 @@ module('cache', package.seeall)
 require 'misc'
 require 'query'
 require 'playlist_api'
-dofile 'compare_playlists.lua'
+require 'compare_playlists'
 
 local cacheFile = F(LYRICS_DIR, 'cache')
 local lyricsCache = {}
@@ -273,11 +273,6 @@ end
 
 
 
-os.calcTime('Loading cache', function()
-  loadCache()
-  createLyricsDirs()
-end)
-
 if not APPLOADED then
 --[=[
   local sites
@@ -291,4 +286,9 @@ if not APPLOADED then
 --]=]
   --socketinterface.request('http://www.google.nl', 't.txt')
   table.saveToFileText(cacheFile .. '.lua', lyricsCache)
+else
+  os.calcTime('Loading cache', function()
+    loadCache()
+    createLyricsDirs()
+  end)
 end
