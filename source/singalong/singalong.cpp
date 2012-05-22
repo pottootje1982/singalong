@@ -73,6 +73,8 @@ void close( lua_State * L )
 {
 #if USE_IUP
   iuplua_close(L);
+  cdlua_close(L);
+  iupcontrolslua_close(L);
 #endif
   lua_close(L);
 }
@@ -158,7 +160,9 @@ int main(int argc, char ** argv)
     if (docall(L,argc-beginIndex,0))
     {
       error = lua_tostring(L, -1);
-      std::cout << error;
+      if (error)
+        std::cout << error;
+      returnval = 1;
     }
   }
   close(L);

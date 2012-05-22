@@ -3,7 +3,7 @@ module('socketinterface', package.seeall)
 require 'misc'
 require 'load_config'
 
-package.path = package.path .. [[;.\socket\?.lua]]
+package.path = package.path .. [[;.\socket\?.lua;..\socket\?.lua]]
 require('socket.socket')
 local http = require("socket.http")
 
