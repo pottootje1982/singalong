@@ -1,4 +1,4 @@
---[[ 
+--[[
 		luaunit.lua
 
 Description: A unit testing framework
@@ -134,6 +134,11 @@ function orderedPairs(t)
     return orderedNext, t, nil
 end
 
+local function printFunctionLocation(func)
+  local info = debug.getinfo (func)
+  print('.\\' .. info.short_src .. ':' .. info.linedefined .. ':')
+end
+
 -------------------------------------------------------------------------------
 UnitResult = { -- class
 	failureCount = 0,
@@ -150,6 +155,8 @@ UnitResult = { -- class
 
 	function UnitResult:displayTestName()
 		if self.verbosity > 0 then
+      local testFuncName = self.currentTestName:match(':(.*)$')
+      printFunctionLocation(_G[self.currentClassName][testFuncName])
 			print( ">>> ".. self.currentTestName )
 		end
 	end

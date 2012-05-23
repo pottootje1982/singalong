@@ -24,18 +24,9 @@ os.format_file = function(ext, search_site, mp3)
   return res
 end
 
---[[
-local function request(url, fn)
-  local taskID = task.create('socketinterface.lua', {url, fn})
-  coroutine.waitFor(function() local running = task.isrunning(taskID) return not running end)
-end
---]]
-
----[[
 local function request(url, fn)
   socketinterface.request(url, fn)
 end
---]]
 
 function executeQuery(search_site, mp3, keepTempFile)
   local artist, title, customArtist, customTitle = mp3.artist, mp3.title, mp3.customArtist, mp3.customTitle
