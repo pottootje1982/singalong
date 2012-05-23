@@ -34,23 +34,26 @@ Changes between 1.1 and 1.0:
 - two verbosity level, like in python unittest
 ]]--
 
+module('luaunit', package.seeall)
+
 argv = arg
 
---[[ Some people like assertEquals( actual, expected ) and some people prefer 
+--[[ Some people like assertEquals( actual, expected ) and some people prefer
 assertEquals( expected, actual ).
 
 ]]--
 USE_EXPECTED_ACTUAL_IN_ASSERT_EQUALS = true
+PRINT_FUNCTION_LOCATION = false
 
-function assertError(f, ...)
+_G.assertError = function(f, ...)
 	-- assert that calling f with the arguments will raise an error
 	-- example: assertError( f, 1, 2 ) => f(1,2) should generate an error
 	local has_error, error_msg = not pcall( f, ... )
-	if has_error then return end 
+	if has_error then return end
 	error( "No error generated", 2 )
 end
 
-function assertEquals(actual, expected)
+_G.assertEquals = function(actual, expected)
 	-- assert that two values are equal and calls error else
 	if  actual ~= expected  then
 		local function wrapValue( v )
@@ -73,8 +76,8 @@ function assertEquals(actual, expected)
 	end
 end
 
-assert_equals = assertEquals
-assert_error = assertError
+_G.assert_equals = assertEquals
+_G.assert_error = assertError
 
 function wrapFunctions(...)
 	-- Use me to wrap a set of functions into a Runnable test class:
@@ -90,7 +93,7 @@ function wrapFunctions(...)
 	return testClass
 end
 
-function __genOrderedIndex( t )
+_G.__genOrderedIndex = function( t )
     local orderedIndex = {}
     for key,_ in pairs(t) do
         table.insert( orderedIndex, key )
@@ -99,7 +102,7 @@ function __genOrderedIndex( t )
     return orderedIndex
 end
 
-function orderedNext(t, state)
+_G.orderedNext = function(t, state)
 	-- Equivalent of the next() function of table iteration, but returns the
 	-- keys in the alphabetic order. We use a temporary ordered key table that
 	-- is stored in the table being iterated.
@@ -128,7 +131,7 @@ function orderedNext(t, state)
     return
 end
 
-function orderedPairs(t)
+_G.orderedPairs = function(t)
     -- Equivalent of the pairs() function on tables. Allows to iterate
     -- in order
     return orderedNext, t, nil
@@ -155,8 +158,10 @@ UnitResult = { -- class
 
 	function UnitResult:displayTestName()
 		if self.verbosity > 0 then
-      local testFuncName = self.currentTestName:match(':(.*)$')
-      printFunctionLocation(_G[self.currentClassName][testFuncName])
+      if PRINT_FUNCTION_LOCATION then
+        local testFuncName = self.currentTestName:match(':(.*)$')
+        printFunctionLocation(_G[self.currentClassName][testFuncName])
+      end
 			print( ">>> ".. self.currentTestName )
 		end
 	end
@@ -173,7 +178,7 @@ UnitResult = { -- class
 	function UnitResult:displaySuccess()
 		if self.verbosity > 0 then
 			--print ("Ok" )
-		else 
+		else
 			io.stdout:write(".")
 		end
 	end
@@ -239,7 +244,7 @@ LuaUnit = {
 	result = UnitResult
 }
 	-- Split text into a list consisting of the strings in text,
-	-- separated by strings matching delimiter (which may be a pattern). 
+	-- separated by strings matching delimiter (which may be a pattern).
 	-- example: strsplit(",%s*", "Anna, Bob, Charlie,Dolores")
 	function LuaUnit.strsplit(delimiter, text)
 		local list = {}
@@ -260,7 +265,7 @@ LuaUnit = {
 		return list
 	end
 
-	function LuaUnit.isFunction(aObject) 
+	function LuaUnit.isFunction(aObject)
 		return 'function' == type(aObject)
 	end
 
@@ -354,12 +359,12 @@ LuaUnit = {
 		-- command line. If no class name is specified on the command line
 		-- run all classes whose name starts with 'Test'
 		--
-		-- If arguments are passed, they must be strings of the class names 
+		-- If arguments are passed, they must be strings of the class names
 		-- that you want to run
                 args={...};
 		if #args > 0 then
 			table.foreachi( args, LuaUnit.runTestClassByName )
-		else 
+		else
 			if argv and #argv > 0 then
 				table.foreachi(argv, LuaUnit.runTestClassByName )
 			else
@@ -367,12 +372,12 @@ LuaUnit = {
 				-- get undefined result because you modify _G while iterating
 				-- over it.
 				testClassList = {}
-				for key, val in pairs(_G) do 
-					if string.sub(key,1,4) == 'Test' then 
+				for key, val in pairs(_G) do
+					if string.sub(key,1,4) == 'Test' then
 						table.insert( testClassList, key )
 					end
 				end
-				for i, val in orderedPairs(testClassList) do 
+				for i, val in orderedPairs(testClassList) do
 						LuaUnit:runTestClassByName(val)
 				end
 			end
@@ -381,3 +386,6 @@ LuaUnit = {
 	end
 -- class LuaUnit
 
+function run(...)
+  LuaUnit:run()
+end

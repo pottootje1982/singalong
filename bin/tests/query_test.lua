@@ -19,3 +19,14 @@ function TestQuery:testQueryGoogle()
   assert(content:match(title))
 end
 
+function TestQuery:testGetLyricFragment()
+  local html =
+  [[<div class="adsdiv">
+<img src="http://www.justsomelyrics.com/images/phone.gif" alt="phone" /><a href="http://www.ringtonematcher.com/go/?sid=JSOLros&artist=Boudewijn+de+Groot&song=De+zwembadpas" class="ads" rel="nofollow" > Send "De zwembadpas" Ringtone to your Cell </a><img src="http://www.justsomelyrics.com/images/phone2.gif" alt="phone" />
+</div>
+lyric content<div class="adsdiv">]]
+  local lyrics = query.getLyricFragment(html, "<div.->.-<img.-/><a.->.-</a><img.-/>%c</div>%c", "<div.->")
+  assertEquals(lyrics, "lyric content")
+end
+
+
