@@ -9,9 +9,12 @@ require 'lfs'
 for file in lfs.dir('tests') do
   if file:match('lua$') and not file:match('run_tests') then
     local fileWithoutExt = file:match('(.*)%.lua$')
-    print(fileWithoutExt)
     require(fileWithoutExt)
   end
 end
 
 LuaUnit:run()
+
+if args[1] == 'pause' then
+  debug.debug()
+end
