@@ -13,7 +13,8 @@ for file in lfs.dir('tests') do
   end
 end
 
-LuaUnit:run()
+luaunit.PRINT_FUNCTION_LOCATION = false
+luaunit.run()
 
 if args[1] == 'pause' then
   debug.debug()

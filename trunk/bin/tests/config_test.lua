@@ -1,0 +1,1 @@
+-- write test when config file fails loading, because there's an error in it
