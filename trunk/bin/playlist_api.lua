@@ -226,7 +226,7 @@ local function gatherMp3s(fn)
   return result
 end
 
-local function extractFromFile(fileStr)
+function extractFromFile(fileStr)
   local artist, title = fileStr:match("^%(?[%d]*%)?[%.]*[%.%- ]+" .. artist_title)
   if not artist then
     artist, title = fileStr:match(artist_title)
@@ -303,7 +303,6 @@ function deleteNotInPlayList(mp3s, root, fn)
   end
 end
 
----[=[
 -- function that removes all trailing _ and moves lyric files to
 -- their respective search_site dir
 local function replaceLyrics()
@@ -327,10 +326,4 @@ local function replaceLyrics()
     end
   end
 end
---]=]
 
-if not APPLOADED then
-  --replaceLyrics()
-  --fileStr = [[10CC - Dreadlock Holiday]]
-  --print(extractFromFile(fileStr))
-end
