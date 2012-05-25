@@ -271,9 +271,12 @@ function IsTxtInCache(mp3, rescan)
 end
 
 function saveCache(customFile)
-  table.saveToFile(cacheFile or customFile, lyricsCache)
+  table.saveToFile(customFile or cacheFile, lyricsCache)
 end
 
+function saveTxtCache(customFile)
+  table.saveToFileText(customFile or cacheFile .. '.lua', lyricsCache)
+end
 
 
 if not APPLOADED then
