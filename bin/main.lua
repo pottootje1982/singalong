@@ -21,7 +21,7 @@
 
 require "misc"
 require "app"
-require "load_config"
+require "load_config"('APPDATA')
 require "cache"
 require "query"
 require "playlist_gui"

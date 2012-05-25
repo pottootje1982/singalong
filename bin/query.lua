@@ -5,7 +5,7 @@ GOOGLE_BAN = "CAPTCHA"
 emptyFileMatch = '^[%c%s]*$'
 local google_delimiter = [[<h%d class=%"r%">]]
 
-require 'load_config'
+require 'load_config'()
 require 'misc'
 require 'load_search_sites'
 require 'cache'

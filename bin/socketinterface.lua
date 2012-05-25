@@ -1,7 +1,7 @@
 module('socketinterface', package.seeall)
 
 require 'misc'
-require 'load_config'
+require 'load_config'()
 
 EXECUTABLE_PATH = EXECUTABLE_PATH or [[.\]]
 

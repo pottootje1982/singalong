@@ -1,14 +1,9 @@
 local args = {...}
 
-local executablePath = system.getExecutablePath()
-local testPath = executablePath .. 'tests'
-package.path = package.path .. ';' .. testPath .. '\\?.lua'
-
-require 'misc'
+require 'test_setup'
 require 'luaunit'
-require 'lfs'
 
-for file in lfs.dir(testPath) do
+for file in lfs.dir(TEST_PATH) do
   if file:match('lua$') and not file:match('run_tests') then
     local fileWithoutExt = file:match('(.*)%.lua$')
     require(fileWithoutExt)

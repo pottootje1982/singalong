@@ -285,10 +285,11 @@ if not APPLOADED then
   table.print(mp3)
 --]=]
   --socketinterface.request('http://www.google.nl', 't.txt')
-  table.saveToFileText(cacheFile .. '.lua', lyricsCache)
-else
-  os.calcTime('Loading cache', function()
-    loadCache()
-    createLyricsDirs()
-  end)
+  --table.saveToFileText(cacheFile .. '.lua', lyricsCache)
 end
+
+os.calcTime('Loading cache', function()
+  loadCache()
+  createLyricsDirs()
+end)
+
