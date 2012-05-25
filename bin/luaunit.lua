@@ -220,7 +220,7 @@ UnitResult = { -- class
   function UnitResult:startTest(testName)
     self.currentTestName = testName
     self:displayTestName()
-        self.testCount = self.testCount + 1
+    self.testCount = self.testCount + 1
     self.testHasFailure = false
   end
 
@@ -286,7 +286,7 @@ LuaUnit = {
     return stack_trace
   end
 
-    function LuaUnit:runTestMethod(aName, aClassInstance, aMethod)
+  function LuaUnit:runTestMethod(aName, aClassInstance, aMethod)
     local ok, errorMsg
     -- example: runTestMethod( 'TestToto:test1', TestToto, TestToto.testToto(self) )
     LuaUnit.result:startTest(aName)
@@ -301,7 +301,7 @@ LuaUnit = {
     end
 
     -- run testMethod()
-        ok, errorMsg = xpcall( aMethod, err_handler )
+    ok, errorMsg = xpcall( aMethod, err_handler )
     if not ok then
       errorMsg  = self.strip_luaunit_stack(errorMsg)
       LuaUnit.result:addFailure( errorMsg )

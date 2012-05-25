@@ -5,6 +5,12 @@ TestQuery = {}
 
 local testMp3 = {artist='neil young', title='unknown legend'}
 
+function TestQuery:tearDown()
+  -- remove test app data dir
+  print("removing appdata")
+  os.removeDir(LOCALAPPDATADIR, true)
+end
+
 function TestQuery:testFormatFile()
   local s = os.format_file('html', {site='www.lyricssearch.net'}, {artist='beatles', title='hey jude'})
   local query = 'www.lyricssearch.net\\beatles - hey jude.html'
