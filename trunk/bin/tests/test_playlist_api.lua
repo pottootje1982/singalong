@@ -1,3 +1,4 @@
+require 'playlist_api'
 
 TestPlaylistApi = {}
 

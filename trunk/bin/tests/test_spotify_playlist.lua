@@ -1,4 +1,11 @@
-return
+require 'spotify_playlist'
+
+TestSpotifyPlaylist = {}
+
+local samplePlaylist =
+[[http://open.spotify.com/track/4WToGRH29Gp1gMDU67OLtZ]]
+
+local longSamplePlaylist =
 [[http://open.spotify.com/track/4WToGRH29Gp1gMDU67OLtZ
 http://open.spotify.com/track/69gZzofJUJ8srHwuDqzR3l
 http://open.spotify.com/track/53Nu9T4OtqPZieukvVOvOh
@@ -12,4 +19,11 @@ http://open.spotify.com/track/0sOwSMwz1ZfzTGI8s13cO6
 http://open.spotify.com/track/3NW1YMA8kfNVTzGJCGBS8m
 ]]
 
+
+function TestSpotifyPlaylist:testParseSpotifyPlaylist()
+  local songs = spotify_playlist.parseSpotifyPlaylist(samplePlaylist)
+  assert(songs)
+  assertEquals(songs[1].artist, 'Fernando Goin')
+  assertEquals(songs[1].title, 'Make You Feel My Love')
+end
 

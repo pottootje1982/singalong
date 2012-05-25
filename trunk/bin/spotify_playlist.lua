@@ -25,11 +25,3 @@ function parseSpotifyPlaylist(playlist)
   return songs
 end
 
-
---[[
-if not APPLOADED then
-  local playlist = require 'spotify'
-  local songs = parseSpotifyPlaylist(playlist)
-  table.print(songs)
-end
---]]
