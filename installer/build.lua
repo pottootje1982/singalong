@@ -29,7 +29,7 @@ end
 ---[=[
 if not noCheckout then
   print(string.format('Checking out repos to %q...', checkOutDir))
-  local res = execute([[svn export file://iomega-10d667/activefolders/ftp/svn/SingAlonG %q]], checkOutDir)
+  local res = execute([[svn export https://singalong.googlecode.com/svn/trunk %q]], checkOutDir)
 end
 --]=]
 
