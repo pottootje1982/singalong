@@ -1,3 +1,5 @@
+-- Main.lua : script invoked directly from singalong.exe when no arguments are given
+
 -- BUGS:
 
 -- mem leak
@@ -7,6 +9,7 @@
 -- progress bar multiple site selection klopt nog niet (1 song)
 -- save button
 -- gray out both save buttons if song/playlist was just saved, so unedited
+-- rebuild cache when adding mp3 to list
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
