@@ -8,11 +8,8 @@ function TestSocketInterface:testRequest()
   os.exists(neilYoungQuery)
   local content = os.read(neilYoungQuery)
   assert(content)
-  print(content)
   local queryArtist = 'neil young'
   local queryTitle = 'unknown legend'
   assertEquals(content:lower():match(queryArtist), queryArtist)
   assertEquals(content:lower():match(queryTitle), queryTitle)
 end
-
-TestSocketInterface:testRequest()

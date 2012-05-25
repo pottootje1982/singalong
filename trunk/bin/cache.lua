@@ -9,6 +9,9 @@ local cacheFile = F(LYRICS_DIR, 'cache')
 local lyricsCache = {}
 local fileTypes = {'html', 'txt'}
 
+LEVENSHTEIN_ARTIST_TRESHOLD = 0.5
+LEVENSHTEIN_TITLE_TRESHOLD = 0.8
+
 local function createLyricsDirs()
   -- check if lyrics dir exists and make it if not
   os.createDir(LYRICS_DIR)
@@ -206,13 +209,13 @@ function scanCache(mp3, searchSite, rescan)
     -- E.g. the difference between 'the doors' and 'doors' is 0.55555555
     -- But levenshtein('rem', 'r.e.m.') == 0.5, that's why we made it this value
     -- compare.levenshtein is 5-6 times quicker than lua implementation!!
-    if compare.levenshtein(artist, cachedArtist) >= 0.5 then
+    if compare.levenshtein(artist, cachedArtist) >= LEVENSHTEIN_ARTIST_TRESHOLD then
       for cachedTitle, sites in pairs(titles) do
         -- Compare percentage of equal chars of two strings
         -- We consider a similarity of > 80 % enough for title
         local titleEq = compare.levenshtein(title, cachedTitle)
 
-        if titleEq > 0.8 and not table.isEmpty(sites) then
+        if titleEq > LEVENSHTEIN_TITLE_TRESHOLD and not table.isEmpty(sites) then
           -- Adapting artist & title of mp3 to make sure next time it will be found
           -- immediately by indexing lyricsCache table
           -- Old artist & title strings are stored in customArtist & customTitle
@@ -267,8 +270,8 @@ function IsTxtInCache(mp3, rescan)
   return exists
 end
 
-function saveCache()
-  table.saveToFile(cacheFile, lyricsCache)
+function saveCache(customFile)
+  table.saveToFile(cacheFile or customFile, lyricsCache)
 end
 
 
@@ -284,7 +287,6 @@ if not APPLOADED then
   table.print(sites)
   table.print(mp3)
 --]=]
-  --socketinterface.request('http://www.google.nl', 't.txt')
   --table.saveToFileText(cacheFile .. '.lua', lyricsCache)
 end
 
