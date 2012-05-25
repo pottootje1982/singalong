@@ -1,6 +1,9 @@
 require 'query'
+require 'luaunit'
 
 TestQuery = {}
+
+local testMp3 = {artist='neil young', title='unknown legend'}
 
 function TestQuery:testFormatFile()
   local s = os.format_file('html', {site='www.lyricssearch.net'}, {artist='beatles', title='hey jude'})
@@ -11,12 +14,10 @@ end
 
 function TestQuery:testQueryGoogle()
   assert(search_sites and #search_sites > 0, "No search sites defined!")
-  local artist = 'neil young'
-  local title='unknown legend'
-  local content, fn = query.executeQuery(search_sites[4], {artist=artist, title=title}, true)
+  local content, fn = query.executeQuery(search_sites[4], testMp3, true)
   assert(os.exists(fn), "file " .. fn .. " doesn't exist!")
-  assert(content:match(artist))
-  assert(content:match(title))
+  assert(content:match(testMp3.artist))
+  assert(content:match(testMp3.title))
 end
 
 function TestQuery:testGetLyricFragment()
@@ -41,16 +42,33 @@ end
 
 
 function TestQuery:testExtractLyrics()
-  local artist = 'neil young'
-  local title='unknown legend'
   local search_site = search_sites[1]
-  print(search_site.site)
-  local mp3 = {artist=artist, title=title}
-  local fileName = os.format_file('html', search_site, mp3)
-  os.copy(artist .. ' - ' .. title .. '.html', os.getPath(fileName))
+  local fileName = os.format_file('html', search_site, testMp3)
+  os.copy(testMp3.artist .. ' - ' .. testMp3.title .. '.html', os.getPath(fileName))
   -- we've to add it to cache first otherwise getLyrics won't find it
-  cache.addToCache(mp3, search_site, fileName)
-  local lyrics = query.extractLyrics(search_site, mp3)
+  cache.addToCache(testMp3, search_site, fileName)
+  local lyrics = query.extractLyrics(search_site, testMp3)
   assert(lyrics)
+end
+
+function TestQuery:testDownloadLyrics()
+  local searchSite = search_sites[4]
+  query.downloadLyrics(testMp3, {searchSite})
+  local txtFn = os.format_file('txt', searchSite, testMp3)
+  local htmlFn = os.format_file('html', searchSite, testMp3)
+  assert(os.exists(txtFn))
+  assert(os.exists(htmlFn))
+
+  local songQuery = 'she used to work in a diner'
+
+  local fn, lyrics = query.getLyrics('txt', searchSite, testMp3)
+  assert(lyrics)
+  assert(os.exists(fn))
+  assertEquals(lyrics:lower():match(songQuery):lower(), songQuery:lower())
+
+  local fn, html = query.getLyrics('html', searchSite, testMp3)
+  assert(html)
+  assert(os.exists(fn))
+  assertEquals(html:lower():match(songQuery):lower(), songQuery:lower())
 end
 
