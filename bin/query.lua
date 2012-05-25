@@ -270,16 +270,3 @@ function downloadLyrics(mp3, customSearchSites, totalWaitTime, lastMp3)
   end
   return
 end
-
-if not APPLOADED then
-  --downloadLyrics({artist='neil young', title='unknown legend'}, {search_sites[4]})
-
-  --print(executeQuery(search_sites[4], {artist='neil young', title='unknown legend'}, true))
-  --queryGoogle(search_sites[4], {artist='neil young', title='unknown legend'})
-
-  --print(extractLyrics(search_sites[4], {artist='neil young', title='unknown legend'}))
-
-  --print(socketinterface.request('http://www.google.com/search?q=neil+young+unknown+legend+site%3Awww.lyricsfreak.com', 'C:\Users\Wouter\AppData\Local\SinGaLonG\lyrics\s1j8..html'))
-
-  --print(request('http://www.google.com/search?q=neil+young+unknown+legend%3Awww.lyricsfreak.com', [[C:\Users\Wouter\AppData\Local\SinGaLonG\lyrics\s1j8..html]]))
-end

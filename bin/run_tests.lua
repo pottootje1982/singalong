@@ -3,6 +3,10 @@ local args = {...}
 require 'test_setup'
 require 'luaunit'
 
+function testFile(file)
+  return F(TEST_PATH, file)
+end
+
 for file in lfs.dir(TEST_PATH) do
   if file:match('lua$') and not file:match('run_tests') then
     local fileWithoutExt = file:match('(.*)%.lua$')
