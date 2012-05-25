@@ -1,6 +1,6 @@
 require 'misc'
 require 'socketinterface'
-require 'load_config'
+require 'load_config'()
 local convert = require('convert_html_to_ascii')
 
 module('spotify_playlist', package.seeall)

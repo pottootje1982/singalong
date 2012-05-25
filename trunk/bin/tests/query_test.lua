@@ -44,7 +44,8 @@ end
 function TestQuery:testExtractLyrics()
   local search_site = search_sites[1]
   local fileName = os.format_file('html', search_site, testMp3)
-  os.copy(testMp3.artist .. ' - ' .. testMp3.title .. '.html', os.getPath(fileName))
+  os.copy(F(TEST_PATH, testMp3.artist .. ' - ' .. testMp3.title .. '.html'), os.getPath(fileName))
+  assert(os.exists(fileName))
   -- we've to add it to cache first otherwise getLyrics won't find it
   cache.addToCache(testMp3, search_site, fileName)
   local lyrics = query.extractLyrics(search_site, testMp3)
