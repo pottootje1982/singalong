@@ -5,7 +5,11 @@ require 'misc'
 local args = {...}
 local miktexDir = [[c:\temp\miktex2]]
 local vsCompilerLocation = string.format([[%s..\IDE]], os.getenv('VS90COMNTOOLS') or os.getenv('VS80COMNTOOLS'))
-WIX_LOCATION = string.format([[%s\bin]], os.getenv('WIX') or [[C:\Program Files (x86)\Windows Installer XML v3.5]])
+local wixDir
+for i, dir in ipairs({[[C:\Program Files (x86)\Windows Installer XML v3.5]], [[C:\Program Files\Windows Installer XML v3.5]]}) do
+  if os.exists(dir) then wixDir = dir end
+end
+WIX_LOCATION = string.format([[%s\bin]], os.getenv('WIX') or wixDir)
 local luaLocation = os.getenv('LUA_DEV') or [[E:\Program Files\Lua 5.1]]
 checkOutDir = [[C:\tmp\singalong]]
 local relSlnPath = [[source\main\main.sln]]
