@@ -281,5 +281,5 @@ if not APPLOADED then
 
   --print(socketinterface.request('http://www.google.com/search?q=neil+young+unknown+legend+site%3Awww.lyricsfreak.com', 'C:\Users\Wouter\AppData\Local\SinGaLonG\lyrics\s1j8..html'))
 
-  print(request('http://www.google.com/search?q=neil+young+unknown+legend%3Awww.lyricsfreak.com', [[C:\Users\Wouter\AppData\Local\SinGaLonG\lyrics\s1j8..html]]))
+  --print(request('http://www.google.com/search?q=neil+young+unknown+legend%3Awww.lyricsfreak.com', [[C:\Users\Wouter\AppData\Local\SinGaLonG\lyrics\s1j8..html]]))
 end

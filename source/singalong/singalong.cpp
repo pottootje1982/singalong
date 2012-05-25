@@ -81,6 +81,8 @@ void close( lua_State * L )
 
 int main(int argc, char ** argv)
 {
+  setExecutablePath(argv[0]);
+
   lua_State *L = lua_open();
 
   luaL_openlibs(L);
@@ -141,7 +143,7 @@ int main(int argc, char ** argv)
   }
     
   int temp_int = luaL_loadfile(L,luaFile);
-
+  
   int returnval = 0;
   if (temp_int)
   {

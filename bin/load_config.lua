@@ -2,6 +2,8 @@
 
 require 'misc'
 
+EXECUTABLE_PATH = system.getExecutablePath()
+
 -- Global var used to determine whether test code can be launched
 local localAppData = os.getenv('LOCALAPPDATA')
 local appData = os.getenv('APPDATA')
@@ -40,7 +42,7 @@ if APPLOADED then -- has to be disabled for socketinterface
 
   -- if an entry in the config table got deleted, we get it from configDefaults
   for i, v in pairs(configDefaults) do
-    if config[i] == nil then 
+    if config[i] == nil then
       config[i] = v
     end
   end
