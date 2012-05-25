@@ -29,4 +29,28 @@ lyric content<div class="adsdiv">]]
   assertEquals(lyrics, "lyric content")
 end
 
+function TestQuery:testExtractUnexistingLyrics()
+  local artist = 'Some weird band name'
+  local title='Some weird title'
+  local search_site = search_sites[4]
+  local mp3 = {artist=artist, title=title}
+  local fileName = os.format_file('html', search_site, mp3)
+  local lyrics = query.extractLyrics(search_site, mp3)
+  assert(not lyrics, "Lyrics are returned!")
+end
+
+
+function TestQuery:testExtractLyrics()
+  local artist = 'neil young'
+  local title='unknown legend'
+  local search_site = search_sites[1]
+  print(search_site.site)
+  local mp3 = {artist=artist, title=title}
+  local fileName = os.format_file('html', search_site, mp3)
+  os.copy(artist .. ' - ' .. title .. '.html', os.getPath(fileName))
+  -- we've to add it to cache first otherwise getLyrics won't find it
+  cache.addToCache(mp3, search_site, fileName)
+  local lyrics = query.extractLyrics(search_site, mp3)
+  assert(lyrics)
+end
 

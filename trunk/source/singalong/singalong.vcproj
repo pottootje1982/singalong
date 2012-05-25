@@ -96,7 +96,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd ..\..\bin&#x0D;&#x0A;singalong run_tests.lua"
+				CommandLine="..\..\bin\singalong ..\..\bin\run_tests.lua"
 			/>
 		</Configuration>
 		<Configuration
@@ -178,7 +178,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd ..\..\bin&#x0D;&#x0A;singalong run_tests.lua"
+				CommandLine="..\..\bin\singalong ..\..\bin\run_tests.lua"
 			/>
 		</Configuration>
 	</Configurations>
