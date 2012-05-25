@@ -278,21 +278,6 @@ function saveTxtCache(customFile)
   table.saveToFileText(customFile or cacheFile .. '.lua', lyricsCache)
 end
 
-
-if not APPLOADED then
---[=[
-  local sites
-
-  local mp3 = {artist='Alexandra Stann', title='Mr. Saxobeat'}
-  os.calcTime("scanCache", function()
-  sites = scanCache(mp3)
-  end)
-  table.print(sites)
-  table.print(mp3)
---]=]
-  --table.saveToFileText(cacheFile .. '.lua', lyricsCache)
-end
-
 os.calcTime('Loading cache', function()
   loadCache()
   createLyricsDirs()
