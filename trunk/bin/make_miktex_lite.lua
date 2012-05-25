@@ -1,3 +1,4 @@
+require 'misc'
 require 'lfs'
 
 local MIKTEX_DIR = [[C:\temp\miktex\]]
@@ -18,24 +19,6 @@ local function install(package)
   os.execute(command)
   lfs.chdir(cwd)
 end
-
-local function removeDir(path)
-  path = path .. [[\]]
-  for file in lfs.dir(path) do
-    if not(file == '.' or file == '..') then 
-      file = path .. file
-      local mode = lfs.attributes(file).mode
-      if mode == 'file' then  
-        os.remove(file) 
-      elseif mode == 'directory' then
-        removeDir(file)
-      end
-    end
-  end
-  lfs.rmdir(path)
-end
-
-
 
 --\Applications\Graphics
 uninstall('pstricks')
@@ -169,4 +152,4 @@ uninstall('miktex-xetex-bin-2.8')
 uninstall('miktex-zip-bin-2.8')
 --]]
 
-removeDir(MIKTEX_DIR .. [[doc]])
+os.removeDir(MIKTEX_DIR .. [[doc]])
