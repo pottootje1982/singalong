@@ -41,7 +41,7 @@ function application:tick()
       if not res[1] then
         assert(res[1], string.format('Error in coroutine %d: %s', i, res[2]))
       end
-      
+
       -- the coroutine could've been killed in the coroutine.resume above
       if entry.resume and coroutine.status(entry.co) ~= 'dead' then
         entry.resume(unpack(res))
@@ -53,6 +53,7 @@ function application:tick()
   for i, co in ipairs(routinesToRemove) do
     self:removeCo(co)
   end
+  iup.LoopStepWait()
 end
 
 appInstance = application()

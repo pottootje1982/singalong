@@ -83,9 +83,9 @@ end
 
 function getLyricFragment(content, lBegin, lEnd)
   local endLyrics
-  local _, beginLyrics   = content:find(lBegin)
+  local _, beginLyrics = content:find(lBegin)
   if lEnd then
-    endLyrics, _     = content:find(lEnd, beginLyrics)
+    endLyrics, _ = content:find(lEnd, beginLyrics)
   end
   print('****** Beginning lyrics, end lyrics: ', beginLyrics, endLyrics)
   if beginLyrics then
