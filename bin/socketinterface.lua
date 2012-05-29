@@ -16,7 +16,7 @@ function request(url, fn)
     proxy = proxy,
   }
   if httpErrorCode ~= 200 then -- 200 means OK
-    print(string.format('Executing url "%s" returned following http error: %s', url, tostring(httpErrorCode)))
+    print(string.format('Executing url "%s" returned following http error: %s', tostring(url), tostring(httpErrorCode)))
     --table.print(content)
     return httpErrorCode
   end
