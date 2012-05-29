@@ -211,7 +211,6 @@ function playlist:updateItem(i, mp3, dontUpdate)
     self.c['bgcolor' .. i .. ':2'] = '255 255 255'
   end
   if not dontUpdate then
-    print('*******update')
     iup.Update(self.c)
   end
 end
