@@ -3,11 +3,9 @@ module('playlist_api', package.seeall)
 require 'query'
 require 'misc'
 require 'spotify_playlist'
+require 'playlist_helpers'
 
 local playlistFileName
-
-artist_title = '([^%c]-)%s+%-%s+([^%c]+)'
-artist_title_ext = artist_title .. '%.([^.]+)$'
 
 local function setPlaylistFileName(fn)
   mainDialog.title = 'SinGaLonG' .. ' - ' .. tostring(fn)
@@ -53,7 +51,7 @@ local function openTXT(fn)
   file = io.open(fn)
   assert(file, string.format("File %q doesn't exist!", fn))
   local content = file:read("*a")
-  local mp3s = gatherFromCustomPlaylist(content)
+  local mp3s = playlist_helpers.gatherFromCustomPlaylist(content)
   return mp3s
 end
 
@@ -70,11 +68,15 @@ function makeNewPlaylist()
   local sample = [[The Beatles - Yellow Submarine
 Neil Young - Old man
 ]]
+
+  local clipboard = clipboard.get()
+  if clipboard:find('open.spotify.com', nil, true) then sample = clipboard end
+
   local playlistEntries = nil
   local multiline = iup.text{expand = 'YES', multiline = 'YES', value = sample}
 
   local function okFunction()
-    playlistEntries = gatherFromCustomPlaylist(multiline.value)
+    playlistEntries = playlist_helpers.gatherFromCustomPlaylist(multiline.value)
     return iup.CLOSE
   end
 
@@ -226,25 +228,6 @@ local function gatherMp3s(fn)
   return result
 end
 
-function extractFromFile(fileStr)
-  local artist, title = fileStr:match("^%(?[%d]*%)?[%.]*[%.%- ]+" .. artist_title)
-  if not artist then
-    artist, title = fileStr:match(artist_title)
-  end
-  return artist, title
-end
-
-function gatherFromCustomPlaylist(playlist)
-  local tracks = {}
-  for artist, title in playlist:gmatch(artist_title) do
-    if artist and title then
-      table.insert(tracks, {artist = artist, title = title})
-    end
-  end
-
-  return tracks
-end
-
 function gatherMp3Info(fn)
   file = io.open(fn)
   assert(file, string.format("File %q doesn't exist!", fn))
@@ -252,12 +235,12 @@ function gatherMp3Info(fn)
   tracks = {}
   for playlistEntry, track, v in (string.gmatch(content, "(#EXTINF:[%d]+,([^%c]*)\n([^%c]*)\n)")) do
     local artist, title
-    artist, title = extractFromFile(track)
+    artist, title = playlist_helpers.extractArtistTitle(track)
     if not artist or not title then
       local path, fileStr = v:match("(.-)([^:\\/]+).mp3$")
 
       if fileStr then
-        artist, title = extractFromFile(fileStr)
+        artist, title = playlist_helpers.extractArtistTitle(fileStr)
         if not artist then
           artist, album = path:match([[([^\/-]-)%s+%-%s+([^\/-]*)]])
           if artist then
@@ -302,28 +285,3 @@ function deleteNotInPlayList(mp3s, root, fn)
     end
   end
 end
-
--- function that removes all trailing _ and moves lyric files to
--- their respective search_site dir
-local function replaceLyrics()
-  for file in lfs.dir(LYRICS_DIR) do
-    local site, artist, title, ext = file:match('^_*(.*)_' .. artist_title_ext)
-    if site and artist and title and (ext == 'html' or ext == 'txt') then
-      local old = F(LYRICS_DIR, file)
-      local new = F(LYRICS_DIR, site, string.format([[%s - %s.%s]], artist, title, ext))
-      print('\n', old, new)
-      -- If renaming doesn't work for some reason, try copying
-      local succ, mess, errCode =  os.rename(old, new)
-      if succ then
-        print(string.format('Successfully moved file to "%s"', new))
-      end
-      print(succ, mess, errCode)
-      if errCode == 17 then -- 17: file already exists
-        print('removing ' .. old)
-        os.remove(old)
-      end
-      --os.execute(string.format('copy "%s" "%s"', old, new))
-    end
-  end
-end
-
