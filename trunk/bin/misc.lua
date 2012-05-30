@@ -138,6 +138,21 @@ os.removeDir = function(path, doNotRemoveDirs)
   os.iterateDir(path, dirFunc, function(file) os.remove(file) end)
 end
 
+os.gatherFiles = function(path, ext)
+  local res = {}
+  os.iterateDir(path, nil,
+    function(file)
+      if os.getExtension(file) == ext then
+        table.insert(res, file)
+      end
+    end)
+  return res
+end
+
+os.getExtension = function(file)
+  return file:match('%.([^%.]+)$')
+end
+
 table.saveToFileText = function(fn, tab, prefix)
   local content = ''
 
@@ -229,6 +244,7 @@ table.find = function(tab, key, iterator)
       if entry == key then return _, entry end
     end
   end
+  return nil
 end
 
 table.ifind = function(tab, key)

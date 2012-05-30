@@ -1,7 +1,12 @@
 require 'misc'
 
-IterateDirTest = {}
+TestIterateDir = {}
 
-function IterateDirTest:testIterateDir()
+function TestIterateDir:testIterateDir()
   os.iterateDir('singalong', function(dir) print(dir) end, function(file) print(file) end)
+end
+
+function TestIterateDir:testGatherFiles()
+  local files = os.gatherFiles('tests', 'lua')
+  assert(table.find(files, function(i, file) return file:find('config_test.lua', nil, true) end))
 end
