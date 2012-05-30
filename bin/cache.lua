@@ -126,7 +126,7 @@ function addToCache(mp3, search_site, file, content)
   artist = artist:lower()
   title = title:lower()
   local site = search_site.site
-  local ext = file:match('%.([^%.]+)$')
+  local ext = os.getExtension(file)
 
   if content then
     file = os.format_file(ext, search_site, mp3)
