@@ -36,4 +36,3 @@ function TestCache:testSaveCache()
   assertEquals(entry.title, testMp3.title)
   assertEquals(entry.site, search_site.site)
 end
-
