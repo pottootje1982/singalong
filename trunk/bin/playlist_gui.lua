@@ -5,6 +5,8 @@ require 'class'
 
 class 'playlist' (list)
 
+YOUTUBE_MATCH = [[<a href="([^"]*www.youtube.com[^"]+)"]]
+
 local COLUMN0_SIZE = 20
 
 function playlist:playlist(params)
@@ -112,7 +114,8 @@ local playlistMenu = iup.menu {
 function playlist:queryGoogle(show)
   local selMp3, selMp3s = self:getSelection(mp3s)
   local content, fn
-  local execRoutine = app.addCo(function()
+
+  local queryGoogle = function()
     content, fn = query.executeQuery(nil, selMp3, true)
     if fn and os.exists(fn) then
       local content = os.read(fn)
@@ -123,14 +126,20 @@ function playlist:queryGoogle(show)
         os.shellExecute(fn)
       end
     end
-  end)
-  app.waitToFinish(execRoutine)
+  end
+
+  if app then
+    local execRoutine = app.addCo(queryGoogle)
+    app.waitToFinish(execRoutine)
+  else
+    queryGoogle()
+  end
   return content, fn
 end
 
 function playlist:playOnYoutube()
   local content, fn = widget:queryGoogle(false)
-  local ref = content:match([[<a href="([^"]+www.youtube.com[^"]+)"]])
+  local ref = content:match(YOUTUBE_MATCH)
   os.shellExecute(ref, 'html')
 end
 
