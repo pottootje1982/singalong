@@ -1,5 +1,6 @@
 module('app', package.seeall)
 
+require 'misc'
 require 'class'
 
 local appInstance
