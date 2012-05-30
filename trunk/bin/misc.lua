@@ -108,22 +108,34 @@ os.shellExecute = function(fileName, command, action, dir)
   end
 end
 
-os.removeDir = function(path, doNotRemoveDirs)
+os.iterateDir = function(path, dirFunc, fileFunc)
   path = path .. [[\]]
   for file in lfs.dir(path) do
     if not(file == '.' or file == '..') then
       file = path .. file
-      local mode = lfs.attributes(file).mode
-      if mode == 'file' then
-        os.remove(file)
+      local attribs = lfs.attributes(file)
+      local mode = attribs and attribs.mode
+      if mode == 'file' and fileFunc then
+        fileFunc(file)
       elseif mode == 'directory' then
-        os.removeDir(file, doNotRemoveDirs)
+        os.iterateDir(file, dirFunc, fileFunc)
       end
     end
   end
-  if not doNotRemoveDirs then
-    return lfs.rmdir(path)
+  if dirFunc then
+    return dirFunc(path)
   end
+end
+
+os.removeDir = function(path, doNotRemoveDirs)
+  local dirFunc
+  if not doNotRemoveDirs then
+    dirFunc = function(path)
+      return lfs.rmdir(path)
+    end
+  end
+
+  os.iterateDir(path, dirFunc, function(file) os.remove(file) end)
 end
 
 table.saveToFileText = function(fn, tab, prefix)

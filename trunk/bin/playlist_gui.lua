@@ -136,6 +136,10 @@ function playlist:queryGoogle(show)
   return content, fn
 end
 
+function playlist:dropFiles(files)
+  print(files)
+end
+
 function playlist:playOnYoutube()
   local content, fn = widget:queryGoogle(false)
   local ref = content:match(YOUTUBE_MATCH)

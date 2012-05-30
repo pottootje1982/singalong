@@ -37,25 +37,22 @@ local function loadConfig(singalongPath)
   end
   _G.LYRICS_DIR = F(LOCALAPPDATADIR, 'lyrics')
 
-  if singalongPath then -- has to be disabled for socketinterface
-    if not lfs.attributes(F(LOCALAPPDATADIR, 'config.lua')) then
-      os.createDir(LOCALAPPDATADIR)
-      config = configDefaults
-      table.saveToFileText(F(LOCALAPPDATADIR, 'config.lua'), config)
-    else
-      print('Loading config file...')
-      config = dofile(F(LOCALAPPDATADIR, "config.lua"))
-    end
-
-    -- if an entry in the config table got deleted, we get it from configDefaults
-    for i, v in pairs(configDefaults) do
-      if config[i] == nil then
-        config[i] = v
-      end
-    end
-  else
-    config = dofile(F(LOCALAPPDATADIR, "config.lua"))
+  if not lfs.attributes(F(LOCALAPPDATADIR, 'config.lua')) then
+    os.createDir(LOCALAPPDATADIR)
+    config = configDefaults
+    table.saveToFileText(F(LOCALAPPDATADIR, 'config.lua'), config)
   end
+
+  print('Loading config file...')
+  config = dofile(F(LOCALAPPDATADIR, "config.lua"))
+
+  -- if an entry in the config table got deleted, we get it from configDefaults
+  for i, v in pairs(configDefaults) do
+    if config[i] == nil then
+      config[i] = v
+    end
+  end
+
   configLoaded = true
 end
 

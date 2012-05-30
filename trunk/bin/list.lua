@@ -90,6 +90,10 @@ function list:list(params)
     return iup.CONTINUE
   end
 
+  self.c.dropfiles_cb = function(widget, files)
+    self:call('dropFiles', files)
+  end
+
   -- Used to modify selection when navigating with keys like k_up k_down, k_pgdn & p_pgup
   self.c.enteritem_cb = function(widget, line, col)
     local shift = iup.GetGlobal('MODKEYSTATE'):match('S')
