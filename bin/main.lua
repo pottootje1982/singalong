@@ -11,7 +11,6 @@
 -- gray out both save buttons if song/playlist was just saved, so unedited
 -- rebuild cache when adding mp3 to list
 -- why do we need to ignore libcmtd.lib in singalong.vcproj for release???
--- play on youtube fails
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
