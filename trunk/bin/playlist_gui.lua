@@ -118,7 +118,6 @@ function playlist:queryGoogle(show)
   local queryGoogle = function()
     content, fn = query.executeQuery(nil, selMp3, true)
     if fn and os.exists(fn) then
-      local content = os.read(fn)
       -- remove /url?q=] from html because this breaks links that have image thumbnail
       content = content:gsub([[/url%?q=]], [[]])
       os.writeTo(fn, content)

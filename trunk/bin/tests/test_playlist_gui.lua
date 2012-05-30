@@ -8,9 +8,7 @@ function PlaylistGuiTest:testQueryGoogle()
 	playlist_gui.widget:modifySelection(1, 1, true)
   local content, fn = playlist_gui.widget:queryGoogle(false)
 
-  print(content)
-  print('') print('')
-  print(content:match(playlist_gui.YOUTUBE_MATCH))
+  assert(content:match(playlist_gui.YOUTUBE_MATCH):match('http://www.youtube.com'))
 end
 
 function PlaylistGuiTest:testLaunchYoutube()
@@ -18,6 +16,3 @@ function PlaylistGuiTest:testLaunchYoutube()
 	playlist_gui.widget:modifySelection(1, 1, true)
 	playlist_gui.widget:playOnYoutube(true)
 end
-
---PlaylistGuiTest:testLaunchYoutube()
-PlaylistGuiTest:testQueryGoogle()
