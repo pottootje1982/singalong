@@ -136,8 +136,15 @@ function playlist:queryGoogle(show)
   return content, fn
 end
 
-function playlist:dropFiles(files)
-  print(files)
+function playlist:dropFiles(file)
+  local attribs = lfs.attributes(file)
+  local songs
+  if not attribs then
+  elseif attribs.mode == 'file' then
+    songs = {file}
+  elseif attribs.mode == 'directory' then
+    songs = os.gatherFiles(file, 'mp3')
+  end
 end
 
 function playlist:playOnYoutube()
