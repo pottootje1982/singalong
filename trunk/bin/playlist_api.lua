@@ -69,8 +69,8 @@ function makeNewPlaylist()
 Neil Young - Old man
 ]]
 
-  local clipboard = clipboard.get()
-  if clipboard:find('open.spotify.com', nil, true) then sample = clipboard end
+  local clipboardContent = clipboard.get()
+  if clipboardContent:find('open.spotify.com', nil, true) then sample = clipboardContent end
 
   local playlistEntries = nil
   local multiline = iup.text{expand = 'YES', multiline = 'YES', value = sample}
@@ -220,12 +220,28 @@ end
 
 local function gatherMp3s(fn)
   file = io.open(fn)
-  content = file:read("*a")
-  result = {}
+  local content = file:read("*a")
+  local result = {}
   for v in (string.gmatch(content, "#EXTINF[^%c]*\n([^%c]*)\n")) do
     table.insert(result, v)
   end
   return result
+end
+
+local function getArtistTitleFromFile(pathEntry)
+  local artist, title, album
+  local path, fileStr = pathEntry:match("(.-)([^:\\/]+)%.[^.]+$")
+
+  if fileStr then
+    artist, title = playlist_helpers.extractArtistTitle(fileStr)
+    if not artist then
+      artist, album = path:match([[([^\/-]-)%s+%-%s+([^\/-]*)]])
+      if artist then
+        title = fileStr:match("[%d]+[%.]* (.*)")
+      end
+    end
+  end
+  return artist, title
 end
 
 function gatherMp3Info(fn)
@@ -233,27 +249,28 @@ function gatherMp3Info(fn)
   assert(file, string.format("File %q doesn't exist!", fn))
   content = file:read("*a")
   tracks = {}
-  for playlistEntry, track, v in (string.gmatch(content, "(#EXTINF:[%d]+,([^%c]*)\n([^%c]*)\n)")) do
+  for playlistEntry, track, pathEntry in (string.gmatch(content, "(#EXTINF:[%d]+,([^%c]*)\n([^%c]*)\n)")) do
     local artist, title
     artist, title = playlist_helpers.extractArtistTitle(track)
     if not artist or not title then
-      local path, fileStr = v:match("(.-)([^:\\/]+).mp3$")
-
-      if fileStr then
-        artist, title = playlist_helpers.extractArtistTitle(fileStr)
-        if not artist then
-          artist, album = path:match([[([^\/-]-)%s+%-%s+([^\/-]*)]])
-          if artist then
-            title = fileStr:match("[%d]+[%.]* (.*)")
-          end
-        end
-      end
+      artist, title = getArtistTitleFromFile(pathEntry)
     end
     if artist and title then
       table.insert(tracks, {artist = artist, title = title, playlistEntry = playlistEntry})
     end
   end
 
+  return tracks
+end
+
+function gatherMp3InfoFromFiles(files)
+  local tracks = {}
+  for i, file in ipairs(files) do
+    local artist, title = getArtistTitleFromFile(file)
+    if artist and title then
+      table.insert(tracks, {artist = artist, title = title, playlistEntry = file})
+    end
+  end
   return tracks
 end
 

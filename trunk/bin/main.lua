@@ -11,6 +11,7 @@
 -- gray out both save buttons if song/playlist was just saved, so unedited
 -- rebuild cache when adding mp3 to list
 -- why do we need to ignore libcmtd.lib in singalong.vcproj for release???
+-- in case config.lua fails loading, don't let app crash
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
