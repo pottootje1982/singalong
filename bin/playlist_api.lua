@@ -8,7 +8,7 @@ require 'playlist_helpers'
 local playlistFileName
 
 local function setPlaylistFileName(fn)
-  mainDialog.title = 'SinGaLonG' .. ' - ' .. tostring(fn)
+  if mainDialog then mainDialog.title = 'SinGaLonG' .. ' - ' .. tostring(fn) end
   playlistFileName = fn
 end
 
@@ -42,10 +42,6 @@ function saveMp3Table(fn, mp3Table)
   end
 end
 
-local function openM3U(fn)
-  local mp3s = gatherMp3Info(fn)
-  return mp3s
-end
 
 local function openTXT(fn)
   file = io.open(fn)
@@ -182,7 +178,7 @@ function openPlaylist(fn, newSingFile)
       end
       if ext == '.m3u' then
         if reloadM3u then
-          _G.mp3s = openM3U(fn)
+          _G.mp3s = gatherMp3Info(fn)
         end
       elseif ext == '.txt' then
         _G.mp3s = openTXT(fn)
