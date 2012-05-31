@@ -198,10 +198,14 @@ if APPLOADED then
   mainDialog:show()
 
   if config.loadplaylist then
-    local err, mess = pcall(function()
+    local succ, mess = pcall(function()
       openPlaylistButton:action(config.loadplaylist)
     end)
-    if err then mp3s = {} end
+    if not succ then
+      print('Something was wrong with playlist, clearing it.')
+      mp3s = {}
+      playlist_gui.update()
+    end
   end
 
   iup.MainLoop()
