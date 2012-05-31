@@ -38,8 +38,8 @@ local function viewTexFile(fileName, preview)
   end
 end
 
-local function getHeading(mp3)
-  local heading = (mp3.customArtist or mp3.artist) .. ' - ' .. (mp3.customTitle or mp3.title)
+local function getHeading(track)
+  local heading = (track.customArtist or track.artist) .. ' - ' .. (track.customTitle or track.title)
   heading = require('convert_ascii_to_latex')(heading)
   return heading
 end
@@ -54,11 +54,11 @@ function previewSites(fileName, customSearchSites)
   os.remove(texFile)
   local content = getHeader()
   local selMp3, selMp3s = playlist_gui.getSelection()
-  for _, mp3 in pairs(selMp3s) do
+  for _, track in pairs(selMp3s) do
     for _,search_site in pairs(customSearchSites or search_sites) do
-      local _, fileContent = query.getLyrics('txt', search_site, mp3, false)
+      local _, fileContent = query.getLyrics('txt', search_site, track, false)
       if fileContent then
-        local heading = string.format('\\chapter{%s: %s}\n\\noindent\n', search_site.site, getHeading(mp3))
+        local heading = string.format('\\chapter{%s: %s}\n\\noindent\n', search_site.site, getHeading(track))
         content = content .. heading .. fileContent
       end
     end
@@ -69,7 +69,7 @@ function previewSites(fileName, customSearchSites)
   viewTexFile(fileName, config.preview)
 end
 
-function generateSongbook(mp3s, fileName)
+function generateSongbook(tracks, fileName)
   if not os.checkIfFileExists(getMiktexDir(), 'texify.exe') then
     return
   end
@@ -77,8 +77,8 @@ function generateSongbook(mp3s, fileName)
   local content = getHeader(true)
   local notFound = 0
 
-  for index, mp3 in ipairs(mp3s) do
-    lyrics = query.retrieveLyrics(mp3)
+  for index, track in ipairs(tracks) do
+    lyrics = query.retrieveLyrics(track)
 
     if lyrics == query.GOOGLE_BAN then
       print('google ban')
@@ -86,7 +86,7 @@ function generateSongbook(mp3s, fileName)
     end
     if lyrics then
       local needspace = config.avoidPageBreaks and string.format([[\Needspace*{%d\baselineskip}{]], string.count(lyrics, [[\\]])) or ''
-      local heading = needspace .. '\\chapter{' .. getHeading(mp3) .. '}\n\\noindent\n'
+      local heading = needspace .. '\\chapter{' .. getHeading(track) .. '}\n\\noindent\n'
       content = content .. heading
       local needSpaceEnding = config.avoidPageBreaks and '}' or ''
       content = content .. lyrics .. needSpaceEnding .. '\n'

@@ -170,7 +170,7 @@ function playlist:playOnYoutube()
 end
 
 function playlist:onPopup()
-  local selMp3, selMp3s = getSelection()
+  local selMp3, selMp3s = playlist_gui.getSelection()
   local index = 1
   while playlistMenu[index] do
     playlistMenu[index].active = selMp3 and 'YES' or 'NO'
@@ -288,6 +288,6 @@ function resize_cb()
   widget.c.fittotext = 'C2'
 end
 
-function getSelection(tracks)
-  return widget:getSelection(tracks or mp3s)
+function getSelection(trks)
+  return widget:getSelection(trks or mp3s)
 end

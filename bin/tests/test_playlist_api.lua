@@ -13,8 +13,8 @@ function TestPlaylistApi:testExtractArtistTitle()
 end
 
 function TestPlaylistApi:testGatherMp3Info()
-  local mp3s = playlist_api.gatherMp3Info(F(system.getExecutablePath(), 'verukkelijke 715 zang.m3u'))
-  assertEquals(#mp3s, 73)
+  local tracks = playlist_api.gatherMp3Info(F(system.getExecutablePath(), 'verukkelijke 715 zang.m3u'))
+  assertEquals(#tracks, 73)
 end
 
 function TestPlaylistApi:testGatherMp3InfoFromFiles()
