@@ -13,6 +13,7 @@
 -- why do we need to ignore libcmtd.lib in singalong.vcproj for release???
 -- remove dependency on gui_impl from playlist_api
 -- when program asks for discarding playlist (when loading m3u), it says it fails if you press no
+-- remove list item 'write unfound items to playlist' from playlist popup menu
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
