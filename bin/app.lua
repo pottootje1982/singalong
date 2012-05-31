@@ -12,6 +12,7 @@ function application:application()
 end
 
 function application:addCo(func, resumeFunc, endFunc)
+  if not APPLOADED then func() return end
   local co = coroutine.create(func)
   table.insert(self.coroutines, {co=co, resume=resumeFunc, endFunc = endFunc})
   return co
