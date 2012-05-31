@@ -70,7 +70,7 @@ Neil Young - Old man
 ]]
 
   local clipboardContent = clipboard.get()
-  if clipboardContent:find('open.spotify.com', nil, true) then sample = clipboardContent end
+  if clipboardContent and clipboardContent:find('open.spotify.com', nil, true) then sample = clipboardContent end
 
   local playlistEntries = nil
   local multiline = iup.text{expand = 'YES', multiline = 'YES', value = sample}

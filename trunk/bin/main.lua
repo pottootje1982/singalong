@@ -198,7 +198,10 @@ if APPLOADED then
   mainDialog:show()
 
   if config.loadplaylist then
-    openPlaylistButton:action(config.loadplaylist)
+    local err, mess = pcall(function()
+      openPlaylistButton:action(config.loadplaylist)
+    end)
+    if err then mp3s = {} end
   end
 
   iup.MainLoop()
