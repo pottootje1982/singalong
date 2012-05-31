@@ -19,7 +19,6 @@ end
 
 function TestSpotifyPlaylist:testInvalidUrl()
   local songs = spotify_playlist.parseSpotifyPlaylist(invalidUrl)
-  table.print(songs)
   assert(songs)
   assertEquals(songs[1].artist, 'George Harrison')
   assertEquals(songs[1].title, 'Give me love')
