@@ -120,8 +120,8 @@ function removeUnusedLyrics(updateCallback)
   end
 end
 
-function addToCache(mp3, search_site, file, content)
-  local artist, title = mp3.artist, mp3.title
+function addToCache(track, search_site, file, content)
+  local artist, title = track.artist, track.title
   assert(artist and title and search_site, "One of the parameters artist, title or search_site is nil!")
   artist = artist:lower()
   title = title:lower()
@@ -129,7 +129,7 @@ function addToCache(mp3, search_site, file, content)
   local ext = os.getExtension(file)
 
   if content then
-    file = os.format_file(ext, search_site, mp3)
+    file = os.format_file(ext, search_site, track)
     os.writeTo(file, content)
     if content:match(query.emptyFileMatch) then
       file = nil
@@ -188,8 +188,8 @@ end
 -- {ignore, html, txt, artist, title}, if searchSite ~= nil
 -- a map of site --> {ignore, html, txt, artist, title}, otherwise
 -- Only checks entire cache with levenshtein algorithm if rescan == true, otherwise return nil
-function scanCache(mp3, searchSite, rescan)
-  local artist, title = mp3.artist, mp3.title
+function scanCache(track, searchSite, rescan)
+  local artist, title = track.artist, track.title
   artist = artist:lower()
   title = title:lower()
 
@@ -216,15 +216,15 @@ function scanCache(mp3, searchSite, rescan)
         local titleEq = compare.levenshtein(title, cachedTitle)
 
         if titleEq > LEVENSHTEIN_TITLE_TRESHOLD and not table.isEmpty(sites) then
-          -- Adapting artist & title of mp3 to make sure next time it will be found
+          -- Adapting artist & title of track to make sure next time it will be found
           -- immediately by indexing lyricsCache table
           -- Old artist & title strings are stored in customArtist & customTitle
           -- to ensure that the playlist seems unchanged
           -- (see comment "Try to index lyricsCache table directly")
-          mp3.customArtist = mp3.artist
-          mp3.customTitle = mp3.title
-          mp3.artist = cachedArtist
-          mp3.title = cachedTitle
+          track.customArtist = track.artist
+          track.customTitle = track.title
+          track.artist = cachedArtist
+          track.title = cachedTitle
           if searchSite then
             return sites[searchSite.site]
           else
@@ -238,14 +238,14 @@ function scanCache(mp3, searchSite, rescan)
 end
 
 -- Function that is called when playlist is loaded
-function rescanPlaylist(mp3s)
+function rescanPlaylist(tracks)
   app.addCo(function()
-    for i, mp3 in ipairs(mp3s) do
-      local notFoundInCache = not IsTxtInCache(mp3)
-      IsTxtInCache(mp3, true)
-      if notFoundInCache ~= mp3.notFoundInCache then
-        print('Found following song with thorough search!:', i, mp3.artist, mp3.title)
-        playlist_gui.widget:updateItem(i, mp3)
+    for i, track in ipairs(tracks) do
+      local notFoundInCache = not IsTxtInCache(track)
+      IsTxtInCache(track, true)
+      if notFoundInCache ~= track.notFoundInCache then
+        print('Found following song with thorough search!:', i, track.artist, track.title)
+        playlist_gui.widget:updateItem(i, track)
       end
       coroutine.waitFor()
     end
@@ -256,9 +256,9 @@ function rescanPlaylist(mp3s)
   )
 end
 
-function IsTxtInCache(mp3, rescan)
+function IsTxtInCache(track, rescan)
   local exists = false
-  local sites = cache.scanCache(mp3, nil, rescan)
+  local sites = cache.scanCache(track, nil, rescan)
   for siteName, info in pairs(sites or {}) do
     if info.txt then
       exists = true
@@ -266,7 +266,7 @@ function IsTxtInCache(mp3, rescan)
     end
   end
   -- set notFoundInCache flag
-  if rescan then mp3.notFoundInCache = not exists end
+  if rescan then track.notFoundInCache = not exists end
   return exists
 end
 

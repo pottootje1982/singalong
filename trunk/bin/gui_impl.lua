@@ -267,7 +267,7 @@ function compareButton:action()
   if fn then
     local doubles, mp3Strings = comparePlaylists(playlist_api.getPlaylistName(), fn)
     listContent = table.concat(mp3Strings, '|')
-    local ret, selMp3 = iup.GetParam("Double mp3s", nil, #doubles .. " double mp3s%l|" .. listContent .. "|\n", 1)
+    local ret, selMp3 = iup.GetParam("Double tracks", nil, #doubles .. " double tracks%l|" .. listContent .. "|\n", 1)
   end
 end
 

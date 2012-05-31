@@ -47,8 +47,8 @@ local function openTXT(fn)
   file = io.open(fn)
   assert(file, string.format("File %q doesn't exist!", fn))
   local content = file:read("*a")
-  local mp3s = playlist_helpers.gatherFromCustomPlaylist(content)
-  return mp3s
+  local tracks = playlist_helpers.gatherFromCustomPlaylist(content)
+  return tracks
 end
 
 local function showNewPlaylistDialog()
@@ -281,11 +281,11 @@ local function extractDirs(files)
   return result
 end
 
-function deleteNotInPlayList(mp3s, root, fn)
+function deleteNotInPlayList(tracks, root, fn)
   _G.mp3s = gatherMp3s(root .. fn)
-  dirs = extractDirs(mp3s)
+  dirs = extractDirs(tracks)
   for _,dir in pairs(dirs) do
-    inverse = gatherInverse(root, dir, mp3s)
+    inverse = gatherInverse(root, dir, tracks)
     print([[About to delete the following files in "]] .. root .. dir .. [["]])
     print("\t" .. table.concat(inverse, "; "))
     print("\nAre you sure? (y/n)")

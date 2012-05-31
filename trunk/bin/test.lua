@@ -3,7 +3,6 @@ require 'main'
 
 -- Test script: use to your liking!
 
---table.print(search_sites)
 --print(query.getLyrics('txt', search_sites[4], {artist='Charles Aznavour', title='La Mama'}))
 --local cont = query.extractLyrics(search_site, {artist='Blues Brothers', title='Everybody Needs Somebody to Love'})
 --miktex.viewTexFile([[top 2000 zang]], true)

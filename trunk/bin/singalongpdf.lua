@@ -3,19 +3,19 @@ module('singalongpdf', package.seeall)
 require 'pdfdoc'
 require 'libharuError'
 
-local function getHeader(mp3)
-  return string.format('%s - %s', mp3.customArtist or mp3.artist, mp3.customTitle or mp3.title)
+local function getHeader(track)
+  return string.format('%s - %s', track.customArtist or track.artist, track.customTitle or track.title)
 end
 
-local function writeOneSong(pdf, fileContent, mp3, site)
+local function writeOneSong(pdf, fileContent, track, site)
   if fileContent then
     local currPage
     local heading
 
     if site then
-      heading = string.format('%s: %s', site, getHeader(mp3))
+      heading = string.format('%s: %s', site, getHeader(track))
     else
-      heading = string.format('%s', getHeader(mp3))
+      heading = string.format('%s', getHeader(track))
     end
     pdf:showTextNextLine(heading, pdf.headerFont)
     currPage = pdf.currPage
@@ -31,30 +31,30 @@ local function writeOneSong(pdf, fileContent, mp3, site)
   end
 end
 
-local function calcContentSpanInPages(pdf, mp3s)
+local function calcContentSpanInPages(pdf, tracks)
   local page = pdf.currPage
   local columnHeight = page.height - page.topMargin - page.bottomMargin
-  local totalHeight = pdf.headerFont.size + #mp3s * pdf.normalFont.size
+  local totalHeight = pdf.headerFont.size + #tracks * pdf.normalFont.size
   local nrColumns = totalHeight / columnHeight
   local nrPages = nrColumns / page.nrColumns
   return math.ceil(nrPages)
 end
 
-local function writeContent(pdf, mp3s)
+local function writeContent(pdf, tracks)
   pdf.currPage = pdf.pages[1] -- Assuming that pages already have been inserted before actual content
   pdf:showTextNextLine('Table of contents:', pdf.headerFont)
 
   -- Write headings
-  pdf:showTextBlock(mp3s, -- iterator
-    function(i, mp3) -- formatFunc
-      return getHeader(mp3)
+  pdf:showTextBlock(tracks, -- iterator
+    function(i, track) -- formatFunc
+      return getHeader(track)
     end,
     pdf.normalFont, -- font
-    function(i, mp3) -- saveFunc
-      mp3.contentPage = pdf.currPage
-      mp3.column = pdf.currPage.currColumn
-      mp3.x = pdf.currPage.x
-      mp3.y = pdf.currPage.y
+    function(i, track) -- saveFunc
+      track.contentPage = pdf.currPage
+      track.column = pdf.currPage.currColumn
+      track.x = pdf.currPage.x
+      track.y = pdf.currPage.y
     end,
     true -- use already added pages for content
   )
@@ -62,32 +62,32 @@ local function writeContent(pdf, mp3s)
   pdf.pageLabelWidth = pdf.currPage:textWidth('999')
 
   -- Draw dashed line behind every content item leading to page label
-  for index, mp3 in ipairs(mp3s) do
-    if mp3.contentPage then
-      mp3.contentPage:setLineWidth(.1)
-      mp3.contentPage:drawLine(mp3.contentPage:getColumnX(mp3.column+1) - pdf.pageLabelWidth, mp3.y, mp3.x, mp3.y, "dash")
+  for index, track in ipairs(tracks) do
+    if track.contentPage then
+      track.contentPage:setLineWidth(.1)
+      track.contentPage:drawLine(track.contentPage:getColumnX(track.column+1) - pdf.pageLabelWidth, track.y, track.x, track.y, "dash")
     end
   end
 end
 
-local function writePageLabelsInContent(pdf, mp3s)
-  for index, mp3 in ipairs(mp3s) do
-    local page = mp3.contentPage
+local function writePageLabelsInContent(pdf, tracks)
+  for index, track in ipairs(tracks) do
+    local page = track.contentPage
     local posFunc = function()
-      return page:getColumnX(mp3.column+1) - pdf.pageLabelWidth, mp3.y
+      return page:getColumnX(track.column+1) - pdf.pageLabelWidth, track.y
     end
-    page:showText(tostring(mp3.lyricsPage.pageNr), pdf.normalFont, posFunc)
+    page:showText(tostring(track.lyricsPage.pageNr), pdf.normalFont, posFunc)
   end
 end
 
-function generateSongbook(mp3s, fileName)
+function generateSongbook(tracks, fileName)
   local mp3sCopy = {}
-  -- Create a copy of mp3s so that this table doesn't get polluted with entries
+  -- Create a copy of tracks so that this table doesn't get polluted with entries
   -- like contentPage, lyricsPage, title, lyrics, column, x & y
-  for i, mp3 in ipairs(mp3s) do
-    table.insert(mp3sCopy, {artist = mp3.artist, title = mp3.title, customArtist = mp3.customArtist, customTitle = mp3.customTitle})
+  for i, track in ipairs(tracks) do
+    table.insert(mp3sCopy, {artist = track.artist, title = track.title, customArtist = track.customArtist, customTitle = track.customTitle})
   end
-  mp3s = mp3sCopy
+  tracks = mp3sCopy
 
   local pdf = pdfdoc(config.twoside)
 
@@ -97,15 +97,15 @@ function generateSongbook(mp3s, fileName)
   local notFound = 0
   local existingMp3s = {}
 
-  for index, mp3 in ipairs(mp3s) do
-    lyrics = query.retrieveLyrics(mp3)
+  for index, track in ipairs(tracks) do
+    lyrics = query.retrieveLyrics(track)
     if lyrics == query.GOOGLE_BAN then
       print('google ban')
       break
     end
     if lyrics then
-      mp3.lyrics = lyrics
-      table.insert(existingMp3s, mp3)
+      track.lyrics = lyrics
+      table.insert(existingMp3s, track)
     else
       notFound = notFound + 1
     end
@@ -116,8 +116,8 @@ function generateSongbook(mp3s, fileName)
   pdf:addPage(nrPagesContent)
 
   -- Write lyrics
-  for index, mp3 in ipairs(existingMp3s) do
-    mp3.lyricsPage = writeOneSong(pdf, mp3.lyrics, mp3)
+  for index, track in ipairs(existingMp3s) do
+    track.lyricsPage = writeOneSong(pdf, track.lyrics, track)
   end
 
   writeContent(pdf, existingMp3s)
@@ -141,10 +141,10 @@ function previewSites(fileName, customSearchSites)
   pdf.normalFont = pdf:getFont("Times-Roman", 9)
 
   local selMp3, selMp3s = playlist_gui.getSelection()
-  for _, mp3 in pairs(selMp3s) do
+  for _, track in pairs(selMp3s) do
     for _,search_site in pairs(customSearchSites or search_sites) do
-      local _, fileContent = query.getLyrics('txt', search_site, mp3, false)
-      writeOneSong(pdf, fileContent, mp3, search_site.site)
+      local _, fileContent = query.getLyrics('txt', search_site, track, false)
+      writeOneSong(pdf, fileContent, track, search_site.site)
     end
   end
 
