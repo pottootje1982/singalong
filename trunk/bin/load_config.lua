@@ -23,6 +23,12 @@ local configDefaults = {
   miktexDir = [[c:\miktex]],
 }
 
+local function createDefaultConfig()
+  os.createDir(LOCALAPPDATADIR)
+  config = configDefaults
+  table.saveToFileText(F(LOCALAPPDATADIR, 'config.lua'), config)
+end
+
 local function loadConfig(singalongPath)
   -- Only allow config to be loaded once
   if configLoaded then return end
@@ -37,14 +43,14 @@ local function loadConfig(singalongPath)
   end
   _G.LYRICS_DIR = F(LOCALAPPDATADIR, 'lyrics')
 
-  if not lfs.attributes(F(LOCALAPPDATADIR, 'config.lua')) then
-    os.createDir(LOCALAPPDATADIR)
-    config = configDefaults
-    table.saveToFileText(F(LOCALAPPDATADIR, 'config.lua'), config)
+  local succ, mess = pcall(function()
+    print('Loading config file...')
+    config = dofile(F(LOCALAPPDATADIR, "config.lua"))
+  end)
+  if not succ then
+    print("Config doesn't exist, or something was wrong with config file, creating new one")
+    createDefaultConfig()
   end
-
-  print('Loading config file...')
-  config = dofile(F(LOCALAPPDATADIR, "config.lua"))
 
   -- if an entry in the config table got deleted, we get it from configDefaults
   for i, v in pairs(configDefaults) do
