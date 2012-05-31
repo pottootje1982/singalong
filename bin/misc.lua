@@ -251,6 +251,40 @@ table.ifind = function(tab, key)
   return table.find(tab, key, ipairs)
 end
 
+table.copy = function(tab, iterator)
+  local res = {}
+  for i, v in (iterator or pairs)(tab) do
+    table.insert(res, v)
+  end
+  return res
+end
+
+table.icopy = function(tab)
+  return table.copy(tab, ipairs)
+end
+
+table.merge = function(tab1, tab2, at, iterator)
+  local res = table.copy(tab1, iterator)
+  at = at or (#res + 1)
+  for i, v in (iterator or pairs)(tab2) do
+    table.insert(res, at or (#res + 1), v)
+    at = at + 1
+  end
+  return res
+end
+
+table.imerge = function(tab1, tab2, at)
+  return table.merge(tab1, tab2, at, ipairs)
+end
+
+table.equals = function(tab1, tab2)
+  if #tab1 ~= #tab2 then return false end
+  for i, v in ipairs(tab1) do
+    if v ~= tab2[i] then return false end
+  end
+  return true
+end
+
 os.calcTime = function(name, funcToTime)
   local start = os.clock()
   funcToTime()

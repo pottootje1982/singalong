@@ -136,15 +136,31 @@ function playlist:queryGoogle(show)
   return content, fn
 end
 
-function playlist:dropFiles(file)
-  local attribs = lfs.attributes(file)
-  local songs
-  if not attribs then
-  elseif attribs.mode == 'file' then
-    songs = {file}
-  elseif attribs.mode == 'directory' then
-    songs = os.gatherFiles(file, 'mp3')
+function fileStringToTable(fileList)
+  local result = {}
+  for line in fileList:gmatch('[^%c]+') do
+    table.insert(result, line)
   end
+  return result
+end
+
+function playlist:dropFiles(fileList)
+  local files = fileStringToTable(fileList)
+  assert(files)
+  for i, file in ipairs(files) do
+    local attribs = lfs.attributes(file)
+    local songs
+    if not attribs then
+    elseif attribs.mode == 'file' then
+      songs = {file}
+    elseif attribs.mode == 'directory' then
+      songs = os.gatherFiles(file, 'mp3')
+    end
+    assert(songs)
+    songs = playlist_api.gatherMp3InfoFromFiles(songs)
+    _G.mp3s = table.imerge(mp3s, songs)
+  end
+  update()
 end
 
 function playlist:playOnYoutube()
