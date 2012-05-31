@@ -65,24 +65,25 @@ if _DEBUG then
     }
 end
 
-local playlistSitesSplitter = iup.split {
-  value = config.playlistSitesSplitter,
-  playlist_gui.widget.c,
-  iup.hbox
-  {
-    gap="5",
-    expand='YES',
-    minsize='200x',
-
+local playlistSitesSplitter =
+  iup.split {
+    value = config.playlistSitesSplitter,
+    playlist_gui.widget.c,
     searchsites_gui.widget.c,
-    debugFrame,
-  },
-}
+  }
+
 
 local splitter = iup.split {
     orientation = 'HORIZONTAL',
     value = config.splitterValue,
-    playlistSitesSplitter,
+    iup.hbox
+    {
+      gap="5",
+      minsize='10x10',
+      expandchildren='YES',
+      playlistSitesSplitter,
+      debugFrame,
+    },
     iup.vbox{
       iup.hbox
       {

@@ -13,7 +13,7 @@ function siteslist:siteslist(params)
   self.c['width1'] = 100
 end
 
-widget = siteslist({readonly = 'yes', minsize = '10x', numcol=1, numlin=#search_sites, expand="vertical", markmode='lin', multiple='yes', disableDragging = true, resizematrix = 'yes', fittosize = 'columns'})
+widget = siteslist({readonly = 'yes', minsize = '10x10', numcol=1, numlin=#search_sites, expand="yes", markmode='lin', multiple='yes', disableDragging = true, resizematrix = 'yes', fittosize = 'columns'})
 
 local goodItem
 local reasonableItem
@@ -57,7 +57,7 @@ function siteslist:onPopup()
         return info and info.txt
       end
     end)
-    
+
   -- disable items if no mp3 is selected or if no html/txt has been found
   selectLyricsItem.active = selTxtFound and 'YES' or 'NO'
   reextractLyricsItem.active = selHtmlFound and 'YES' or 'NO'
@@ -271,7 +271,7 @@ lyricsSearchConfigItem = iup.item {
     selSite.lyric_end = searchSiteEnd
   end;
 }
-  
+
 searchSiteMenu = iup.menu {
   selectLyricsItem,
   reextractLyricsItem,
