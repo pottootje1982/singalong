@@ -7,6 +7,6 @@ function TestIterateDir:testIterateDir()
 end
 
 function TestIterateDir:testGatherFiles()
-  local files = os.gatherFiles('tests', 'lua')
+  local files = os.gatherFiles(F(system.getExecutablePath(), 'tests'), 'lua')
   assert(table.find(files, function(i, file) return file:find('config_test.lua', nil, true) end))
 end

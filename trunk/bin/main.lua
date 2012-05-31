@@ -11,17 +11,14 @@
 -- gray out both save buttons if song/playlist was just saved, so unedited
 -- rebuild cache when adding mp3 to list
 -- why do we need to ignore libcmtd.lib in singalong.vcproj for release???
--- in case config.lua fails loading, don't let app crash
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
 -- check if solving CAPTCHA works
 
 -- FEATURES
--- Dragging files/dirs from explorer to playlist
 
 -- NICE TO HAVE:
--- Configurable lyrics_dir (lyrics_dir shouldn't be appended before cached items for this)
 -- playback of playlist
 
 require "misc"
