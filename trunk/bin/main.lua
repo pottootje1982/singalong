@@ -11,6 +11,7 @@
 -- gray out both save buttons if song/playlist was just saved, so unedited
 -- rebuild cache when adding mp3 to list
 -- why do we need to ignore libcmtd.lib in singalong.vcproj for release???
+-- remove dependency on gui_impl from playlist_api
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
@@ -200,9 +201,8 @@ if APPLOADED then
       openPlaylistButton:action(config.loadplaylist)
     end)
     if not succ then
-      print('Something was wrong with playlist, clearing it.')
-      mp3s = {}
-      playlist_gui.update()
+      print('Something was wrong with playlist, clearing UI.')
+      playlist_api.setPlaylist({})
     end
   end
 

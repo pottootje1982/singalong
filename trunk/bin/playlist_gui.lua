@@ -73,13 +73,15 @@ local playlistMenu = iup.menu {
   iup.item {
     title = "Add";
     action = function(self)
-      widget:editOrAddEntry(#mp3s + 1, true)
+      local tracks = playlist_api.getPlaylist()
+      widget:editOrAddEntry(#tracks + 1, true)
     end;
   },
   iup.item {
     title = "Remove";
     action = function(self)
-      table.remove(mp3s, widget.lastSel)
+      local tracks = playlist_api.getPlaylist()
+      table.remove(tracks, widget.lastSel)
       widget:modifySelection(math.max(widget.lastSel-1, 1))
       updateGui('playlist', 'searchsites', {true}, 'lyrics')
     end;
@@ -102,9 +104,10 @@ local playlistMenu = iup.menu {
     title = "Write unfound songs to playlist",
     action = function(self)
       local notFoundPlaylist = '#EXTM3U\n'
-      local unfoundMp3s = table.ifilter(mp3s, function(i,mp3) return not cache.IsTxtInCache(mp3) end)
-      for i, mp3 in ipairs(unfoundMp3s) do
-        notFoundPlaylist = notFoundPlaylist .. (mp3.playlistEntry or '')
+      local tracks = playlist_api.getPlaylist()
+      local unfoundTracks = table.ifilter(tracks, function(i,track) return not cache.IsTxtInCache(track) end)
+      for i, track in ipairs(unfoundTracks) do
+        notFoundPlaylist = notFoundPlaylist .. (track.playlistEntry or '')
       end
       os.writeTo(playlist_api.getNotFoundPlaylistName(), notFoundPlaylist)
     end;
@@ -147,6 +150,7 @@ end
 function playlist:dropFiles(fileList)
   local files = fileStringToTable(fileList)
   assert(files)
+  local newSongs = {}
   for i, file in ipairs(files) do
     local attribs = lfs.attributes(file)
     local songs
@@ -158,8 +162,9 @@ function playlist:dropFiles(fileList)
     end
     assert(songs)
     songs = playlist_api.gatherMp3InfoFromFiles(songs)
-    _G.mp3s = table.imerge(mp3s, songs)
+    newSongs = table.imerge(newSongs, songs)
   end
+  _G.mp3s = table.imerge(mp3s, newSongs)
   update()
 end
 
@@ -180,21 +185,23 @@ function playlist:onPopup()
 end
 
 function playlist:onSelectionChanged(line)
-  local mp3 = mp3s[tonumber(line)]
-  if mp3 then
+  local tracks = playlist_api.getPlaylist()
+  local track = tracks[tonumber(line)]
+  if track then
     updateGui('searchsites', {true}, 'lyrics' )
   end
 end
 
 function playlist:editOrAddEntry(line, add)
+  local tracks = playlist_api.getPlaylist()
   local ret, artist, title =
   iup.GetParam(add and "Add entry" or "Change fields (for web search only)", iupParamCallback,
                   add and "Artist name: %s\n" ..
                           "Title name: %s\n"
                   or      "Change artist name: %s\n" ..
                           "Change title name: %s\n",
-                  add and '' or (mp3s[line].customArtist or mp3s[line].artist),
-                  add and '' or (mp3s[line].customTitle or mp3s[line].title))
+                  add and '' or (tracks[line].customArtist or tracks[line].artist),
+                  add and '' or (tracks[line].customTitle or tracks[line].title))
 
   if ret == 0 or not ret then return end -- dialog was cancelled
 
@@ -204,11 +211,11 @@ function playlist:editOrAddEntry(line, add)
     -- remove newlines (This can happen when user presses enter to close dialog)
     artist = artist:gsub('\n', '')
     title = title:gsub('\n', '')
-    if mp3s[line] then
-      mp3s[line].customArtist = artist
-      mp3s[line].customTitle = title
+    if tracks[line] then
+      tracks[line].customArtist = artist
+      tracks[line].customTitle = title
     else
-      mp3s[line] = {artist = artist, title = title}
+      tracks[line] = {artist = artist, title = title}
     end
 
     self:update()
@@ -225,17 +232,19 @@ function playlist:onDouble(line)
 end
 
 function playlist:onDraggingStopped(draggedItem, droppedOnItem)
-  local temp = mp3s[draggedItem]
-  table.remove(mp3s, draggedItem)
-  table.insert(mp3s, droppedOnItem, temp)
+  local tracks = playlist_api.getPlaylist()
+  local temp = tracks[draggedItem]
+  table.remove(tracks, draggedItem)
+  table.insert(tracks, droppedOnItem, temp)
   update()
 end
 
 function playlist:updateItem(i, mp3, dontUpdate)
   -- Check if lyrics do not exist
+  local tracks = playlist_api.getPlaylist()
   local exists
   if not i then
-    i = table.find(mp3s, mp3)
+    i = table.find(tracks, mp3)
   end
   exists = cache.IsTxtInCache(mp3)
   if not exists then
@@ -251,15 +260,16 @@ function playlist:updateItem(i, mp3, dontUpdate)
 end
 
 function playlist:update()
-  self.c.numlin = #mp3s
-  for i, mp3 in ipairs(mp3s) do
+  local tracks = playlist_api.getPlaylist()
+  self.c.numlin = #tracks
+  for i, mp3 in ipairs(tracks) do
     self.c[i .. ':0'] = tostring(i)
     self.c[i .. ':1'] = mp3.customArtist or mp3.artist
     self.c[i .. ':2'] = mp3.customTitle or mp3.title
     self:updateItem(i, mp3, true)
   end
 
-  self.c[#mp3s + 1 .. ':0'] = nil
+  self.c[#tracks + 1 .. ':0'] = nil
   if self.lastSel then
     iup.Update(widget.c)
   end
@@ -289,5 +299,6 @@ function resize_cb()
 end
 
 function getSelection(trks)
-  return widget:getSelection(trks or mp3s)
+  local allTracks = playlist_api.getPlaylist()
+  return widget:getSelection(trks or allTracks)
 end

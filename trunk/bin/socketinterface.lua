@@ -5,7 +5,7 @@ require 'load_config'()
 
 EXECUTABLE_PATH = EXECUTABLE_PATH or [[.\]]
 
-package.path = package.path .. ';' .. EXECUTABLE_PATH .. [[socket\?.lua]]
+package.path = package.path .. ';' .. F(EXECUTABLE_PATH, [[socket\?.lua]])
 require('socket.socket')
 local http = require("socket.http")
 
