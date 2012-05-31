@@ -35,3 +35,8 @@ function TestPlaylistApi:testGatherMp3InfoFromPaths()
   assertEquals(tracks[2].title, 'unknown legend')
 end
 
+function TestPlaylistApi:testSavePlaylistAsText()
+  local res = playlist_api.gatherMp3Info(F(system.getExecutablePath(), 'verukkelijke 715 zang.m3u'))
+  table.saveToFileText('verukkelijke 715 zang.sing', res)
+end
+

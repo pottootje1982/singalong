@@ -1,15 +1,7 @@
 _G.HIDE_GUI = true
 require 'main'
 
-
 -- Test script: use to your liking!
-
---openPlaylistButton:action([[top40.sing]])
-
---query.extractLyrics(search_sites[1], {artist='Alanis Morissette', title='Hand In My Pocket'}, true)
-
---query.queryGoogle(search_site)
---query.request([[http://webcache.googleusercontent.com/search?q=cache:tjnxuzWT2m8J:www.lyricsbay.com/come_together_lyrics-beatles.html+Beatles+Come+together+site:www.lyricsbay.com&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;ie=UTF-8]], 'bla.txt')
 
 --table.print(search_sites)
 --print(query.getLyrics('txt', search_sites[4], {artist='Charles Aznavour', title='La Mama'}))
@@ -18,16 +10,9 @@ require 'main'
 --miktex.generateSongbook(mp3s, [[top40]])
 --print(cont)
 
---playlist_api.openPlaylist('frans.sing')
---table.saveToFileText('frans2.sing', mp3s)
-
 -- os.shellExecute([[www.google.com]], 'html')
 --socketinterface.request([[http://www.google.com/sorry/image?id=4143580117029869510&amp;hl=en]], 'test.jpg')
 
-
---showCaptchaAssignment()
-
---socketinterface.request('http://www.google.com/search?q=The+Beatles+Yellow+Submarine', 'test.html')
 
 --[[
 require 'progress_dialog'
