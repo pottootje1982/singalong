@@ -1,5 +1,6 @@
 module('cache', package.seeall)
 
+require 'app'
 require 'misc'
 require 'query'
 require 'playlist_helpers'

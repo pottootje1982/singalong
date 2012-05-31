@@ -1,6 +1,7 @@
 require 'misc'
 require 'playlist_api'
 require 'progress_dialog'
+require 'lyrics_gui'
 
 mp3s = {}
 
@@ -23,7 +24,8 @@ function updateGui(...)
 end
 
 function activateButtons()
-  local active = (mp3s and #mp3s > 0) and 'YES' or 'NO'
+  local tracks = playlist_api.getPlaylist()
+  local active = (tracks and #tracks > 0) and 'YES' or 'NO'
   lyrics_gui.saveLyricsButton.active = active
   sortButton.active = active
   downloadLyricsButton.active = active
@@ -63,7 +65,8 @@ end
 
 sortButton = iup.button{tip="Sort playlist", image='IUP_ToolsSortAscend', active = 'NO'}
 function sortButton:action()
-  sortTracks(mp3s)
+  local tracks = playlist_api.getPlaylist()
+  sortTracks(tracks)
   updateGui('playlist', 'searchsites', 'lyrics')
 end
 
@@ -155,12 +158,13 @@ function downloadLyricsButton:action()
   config.downloadWhichMp3s = whichSelection[downloadWhichMp3s]
   config.downloadSelSites = downloadSelSites == 1
 
+  local allTracks = playlist_api.getPlaylist()
   if config.downloadWhichMp3s == 'All' then
-    selMp3s = mp3s
+    selMp3s = allTracks
   elseif config.downloadWhichMp3s == 'Selection' then
   elseif config.downloadWhichMp3s == 'Unfound' then
-    selMp3s = table.ifilter(mp3s, function(i,mp3)
-      return not cache.IsTxtInCache(mp3)
+    selMp3s = table.ifilter(allTracks, function(i,track)
+      return not cache.IsTxtInCache(track)
     end)
   end
 
@@ -170,7 +174,7 @@ function downloadLyricsButton:action()
   end
   if not selMp3s or table.isEmpty(selMp3s) then
     if config.downloadWhichMp3s == 'Selected' then
-      iup.Message('Warning', 'No mp3s are selected!')
+      iup.Message('Warning', 'No tracks are selected!')
     elseif config.downloadWhichMp3s == 'Unfound' then
       iup.Message('Warning', 'There are no unfound songs!')
     end
@@ -225,7 +229,7 @@ function downloadLyricsButton:action()
         break
       end
       -- not that i is not always the correct index, as we're dealing with selMp3s
-      -- which might be a subset of mp3s
+      -- which might be a subset of playlist tracks
       playlist_gui.widget:updateItem(nil, mp3)
     end
   end
@@ -304,7 +308,7 @@ function createSongbookButton:action()
   config.avoidPageBreaks = avoidPageBreaks == 1
   config.preview = preview == 1
 
-  local selMp3, selMp3s = nil, mp3s
+  local selMp3, selMp3s = nil, playlist_api.getPlaylist()
   if config.texifySelMp3s then
     local selMp3
     selMp3, selMp3s = playlist_gui.getSelection()

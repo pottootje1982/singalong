@@ -12,6 +12,5 @@ function TestSingalongPdf:testGenerateSongbook()
   for i, track in ipairs(tracks) do
     cache.addToCache(track, searchSite, os.format_file('txt', searchSite, track))
   end
-  table.print(tracks)
   getPdfGenerator().generateSongbook(tracks, 'testGenerateSongbook')
 end

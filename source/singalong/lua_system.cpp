@@ -1,4 +1,6 @@
 #include "lua_system.h"
+#include <iostream>
+#include <direct.h>
 
 std::string executablePath;
 
@@ -8,6 +10,10 @@ void setExecutablePath(char* charPath)
   int index = path.find_last_of('\\');
   path = path.substr(0, index + 1);
   executablePath = path;
+  if (executablePath == "")
+  {
+    executablePath = _getcwd( NULL, 0 );
+  }
 }
 
 int lua_getExecutablePath(lua_State *L)

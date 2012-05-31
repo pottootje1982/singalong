@@ -4,6 +4,7 @@ require 'query'
 require 'misc'
 require 'spotify_playlist'
 require 'playlist_helpers'
+require 'gui_impl'
 
 local playlistFileName
 
@@ -36,7 +37,7 @@ end
 -- save mp3 table that contains ranking info of search sites
 function saveMp3Table(fn, mp3Table)
   fn = fn or playlistFileName
-  mp3Table = mp3Table or mp3s
+  mp3Table = mp3Table or playlist_api.getPlaylist()
   if mp3Table and #mp3Table > 0 and fn then
     table.saveToFile(os.getFileWithoutExt(fn) .. '.sing', mp3Table)
   end
@@ -176,12 +177,13 @@ function openPlaylist(fn, newSingFile)
       if not newSingFile then
         saveMp3Table()
       end
+      local tracks
       if ext == '.m3u' then
         if reloadM3u then
-          _G.mp3s = gatherMp3Info(fn)
+          tracks = gatherMp3Info(fn)
         end
       elseif ext == '.txt' then
-        _G.mp3s = openTXT(fn)
+        tracks = openTXT(fn)
       elseif ext == '.sing' then -- do nothing, sing files will be opened in loadMp3Table()
       end
       if not reloadM3u then
@@ -190,18 +192,27 @@ function openPlaylist(fn, newSingFile)
           iup.Message('Warning', string.format('Loading of sing file "%s" failed!', singFile))
           return
         end
-        _G.mp3s = newMp3s
+        tracks = newMp3s
       end
 
+      setPlaylist(tracks)
       setPlaylistFileName(fn)
-      activateButtons()
-
-      updateGui('playlist', 'searchsites', 'lyrics')
-      playlist_gui.resize_cb()
-      playlist_gui.widget:modifySelection(1)
-      cache.rescanPlaylist(mp3s)
     end)
   end
+end
+
+function setPlaylist(tracks)
+  _G.mp3s = tracks
+  activateButtons()
+
+  updateGui('playlist', 'searchsites', 'lyrics')
+  playlist_gui.resize_cb()
+  playlist_gui.widget:modifySelection(1)
+  cache.rescanPlaylist(tracks)
+end
+
+function getPlaylist()
+  return mp3s
 end
 
 local function gatherInverse(root, dir, selection)
@@ -282,7 +293,6 @@ local function extractDirs(files)
 end
 
 function deleteNotInPlayList(tracks, root, fn)
-  _G.mp3s = gatherMp3s(root .. fn)
   dirs = extractDirs(tracks)
   for _,dir in pairs(dirs) do
     inverse = gatherInverse(root, dir, tracks)
