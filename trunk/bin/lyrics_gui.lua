@@ -10,7 +10,7 @@ saveLyricsButton = iup.button
   action = function()
     local content = lyricsMultiLine.value
     local selSite = searchsites_gui.widget:getSelection(search_sites)
-    local selMp3 = playlist_gui.widget:getSelection(mp3s)
+    local selMp3 = playlist_gui.getSelection()
     if selSite and selMp3 then
       local fn = os.format_file(lyrics_gui.htmlToggle.value == 'ON' and 'html' or 'txt', selSite, selMp3)
       cache.addToCache(selMp3, selSite, fn, content)
@@ -26,7 +26,7 @@ end
 
 lyricsMultiLine = iup.multiline{value="", border="YES", expand="yes", minsize='10x10', wordwrap='yes'}
 function lyricsMultiLine:updateLyrics(searchIndex)
-  local selMp3  = playlist_gui.widget:getSelection(mp3s)
+  local selMp3  = playlist_gui.getSelection()
   local selSite = searchsites_gui.widget:getSelection(search_sites)
   if selSite then
     if htmlToggle.value == 'ON' then

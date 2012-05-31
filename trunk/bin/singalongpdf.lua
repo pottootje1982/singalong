@@ -140,7 +140,7 @@ function previewSites(fileName, customSearchSites)
   pdf.headerFont = pdf:getFont("Times-Bold", 12)
   pdf.normalFont = pdf:getFont("Times-Roman", 9)
 
-  local selMp3, selMp3s = playlist_gui.widget:getSelection(mp3s)
+  local selMp3, selMp3s = playlist_gui.getSelection()
   for _, mp3 in pairs(selMp3s) do
     for _,search_site in pairs(customSearchSites or search_sites) do
       local _, fileContent = query.getLyrics('txt', search_site, mp3, false)

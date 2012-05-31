@@ -45,7 +45,7 @@ function getSelection(search_site)
   if not search_site then
     search_site = searchsites_gui.widget:getSelection(search_sites)
   end
-  local selMp3, selMp3s = playlist_gui.widget:getSelection(mp3s)
+  local selMp3, selMp3s = playlist_gui.getSelection()
   if search_site and selMp3 then
     return search_site, selMp3.artist, selMp3.title
   end
@@ -111,7 +111,7 @@ function downloadLyricsButton:action()
     return
   end
 
-  local selMp3, selMp3s = playlist_gui.widget:getSelection(mp3s)
+  local selMp3, selMp3s = playlist_gui.getSelection()
 
   local function callback(dialog, paramIndex, bla)
     if paramIndex == -2 then
@@ -307,7 +307,7 @@ function createSongbookButton:action()
   local selMp3, selMp3s = nil, mp3s
   if config.texifySelMp3s then
     local selMp3
-    selMp3, selMp3s = playlist_gui.widget:getSelection(mp3s)
+    selMp3, selMp3s = playlist_gui.getSelection()
   end
   if not selMp3s and config.downloadWhichMp3s == 'Selected' then
     iup.Message('Warning', 'No songs are selected!')
