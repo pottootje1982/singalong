@@ -22,7 +22,7 @@ local playlistMenu = iup.menu {
   iup.item {
     title = "Preview";
     action = function(self)
-      local selMp3, selMp3s = widget:getSelection(mp3s)
+      local selMp3, selMp3s = getSelection()
       if selMp3s then
         getPdfGenerator().generateSongbook(selMp3s, 'temp')
       end
@@ -31,7 +31,7 @@ local playlistMenu = iup.menu {
   iup.item {
     title = "Re-extract lyrics";
     action = function(self)
-      local selMp3, selMp3s = widget:getSelection(mp3s)
+      local selMp3, selMp3s = getSelection()
       if selMp3s then
         for i, mp3 in ipairs(selMp3s) do
           for j, search_site in ipairs(search_sites) do
@@ -52,7 +52,7 @@ local playlistMenu = iup.menu {
 
       if ret == 0 or not ret then return end -- dialog was cancelled
 
-      local selMp3, selMp3s = widget:getSelection(mp3s)
+      local selMp3, selMp3s = getSelection()
       if selMp3s then
         for i, mp3 in ipairs(selMp3s) do
           for j, search_site in ipairs(search_sites) do
@@ -112,7 +112,7 @@ local playlistMenu = iup.menu {
 }
 
 function playlist:queryGoogle(show)
-  local selMp3, selMp3s = self:getSelection(mp3s)
+  local selMp3, selMp3s = getSelection()
   local content, fn
 
   local queryGoogle = function()
@@ -170,7 +170,7 @@ function playlist:playOnYoutube()
 end
 
 function playlist:onPopup()
-  local selMp3, selMp3s = playlist_gui.widget:getSelection(mp3s)
+  local selMp3, selMp3s = getSelection()
   local index = 1
   while playlistMenu[index] do
     playlistMenu[index].active = selMp3 and 'YES' or 'NO'
@@ -268,7 +268,7 @@ end
 function playlist:k_any(key, press)
   if (key == iup.K_cc or key == iup.K_cC) then
     local playlistContent = ''
-    local selMp3, selMp3s = self:getSelection(mp3s)
+    local selMp3, selMp3s = getSelection()
     for i, mp3 in ipairs(selMp3s) do
       playlistContent = playlistContent .. mp3.artist .. ' - ' .. mp3.title .. '\n'
     end
@@ -286,4 +286,8 @@ function resize_cb()
   --widget.c.fittosize = 'columns'
   widget.c.fittotext = 'C1'
   widget.c.fittotext = 'C2'
+end
+
+function getSelection(tracks)
+  return widget:getSelection(tracks or mp3s)
 end

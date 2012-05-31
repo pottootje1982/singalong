@@ -35,7 +35,7 @@ function siteslist:onSelectionChanged(line)
 end
 
 function siteslist:onPopup()
-  local selMp3, selMp3s = playlist_gui.widget:getSelection(mp3s)
+  local selMp3, selMp3s = playlist_gui.getSelection()
   local selSite, selSites = self:getSelection(search_sites)
   if selSite and selMp3 and selMp3.sitesSucceeded then
     goodItem.value = selMp3.sitesSucceeded[selSite.site] == 'good' and 'ON' or 'OFF'
@@ -72,7 +72,7 @@ function siteslist:onPopup()
 end
 
 function siteslist:viewFile(ext)
-  local selMp3 = playlist_gui.widget:getSelection(mp3s)
+  local selMp3 = playlist_gui.getSelection()
   local selSite = self:getSelection(search_sites)
 
   if selMp3 and selSite then
@@ -85,7 +85,7 @@ function siteslist:viewFile(ext)
 end
 
 function siteslist:selectFile(ext)
-  local selMp3 = playlist_gui.widget:getSelection(mp3s)
+  local selMp3 = playlist_gui.getSelection()
   local selSite = widget:getSelection(search_sites)
   if selMp3 and selSite then
     os.shellExecute(os.format_file(ext, selSite, selMp3), nil, 'select')
@@ -97,7 +97,7 @@ function siteslist:onDouble()
 end
 
 function siteslist:deleteFile(ext)
-  local selMp3, selMp3s = playlist_gui.widget:getSelection(mp3s)
+  local selMp3, selMp3s = playlist_gui.getSelection()
   local selSite, selSites = searchsites_gui.widget:getSelection(search_sites)
   for i, site in ipairs(selSites) do
     local fn, content, info = query.getLyrics(ext, site, selMp3)
@@ -108,7 +108,7 @@ end
 
 function siteslist:update(updatePos)
   local found
-  local selMp3 = playlist_gui.widget:getSelection(mp3s)
+  local selMp3 = playlist_gui.getSelection()
   local artist, title
   if selMp3 then
     selMp3.sitesSucceeded = selMp3.sitesSucceeded or {}
@@ -158,7 +158,7 @@ goodItem =
   iup.item {
     title = "Rank as good";
     action = function(self)
-      local selMp3 = playlist_gui.widget:getSelection(mp3s)
+      local selMp3 = playlist_gui.getSelection()
       local selSite = widget:getSelection(search_sites)
       selMp3.sitesSucceeded[selSite.site] = 'good'
     end;
@@ -167,7 +167,7 @@ reasonableItem =
   iup.item {
     title = "Rank as reasonable";
     action = function(self)
-      local selMp3 = playlist_gui.widget:getSelection(mp3s)
+      local selMp3 = playlist_gui.getSelection()
       local selSite = widget:getSelection(search_sites)
       selMp3.sitesSucceeded[selSite.site] = 'reasonable'
     end;
@@ -176,7 +176,7 @@ discardItem =
   iup.item {
     title = "Discard";
     action = function(self)
-      local selMp3 = playlist_gui.widget:getSelection(mp3s)
+      local selMp3 = playlist_gui.getSelection()
       local selSite = widget:getSelection(search_sites)
       selMp3.sitesSucceeded[selSite.site] = nil
     end;
@@ -185,7 +185,7 @@ discardItem =
 selectLyricsItem = iup.item {
   title = "Select these lyrics for songbook";
   action = function(self)
-    local selMp3 = playlist_gui.widget:getSelection(mp3s)
+    local selMp3 = playlist_gui.getSelection()
     local selSite = searchsites_gui.widget:getSelection(search_sites)
     for i, searchSite in ipairs(search_sites) do
       local cachedItem = cache.scanCache(selMp3, searchSite)
@@ -200,7 +200,7 @@ selectLyricsItem = iup.item {
 reextractLyricsItem = iup.item {
   title = "Re-extract lyrics from html";
   action = function(self)
-    local selMp3, selMp3s = playlist_gui.widget:getSelection(mp3s)
+    local selMp3, selMp3s = playlist_gui.getSelection()
     local selSite, selSites = searchsites_gui.widget:getSelection(search_sites)
     for i, search_site in ipairs(selSites) do
       query.extractLyrics(search_site, selMp3, true)
@@ -304,7 +304,7 @@ calcRankSitesButton = iup.button
       search_site.found = 0
       search_site.reasonable = 0
     end
-    local selMp3, selMp3s = playlist_gui.widget:getSelection(mp3s)
+    local selMp3, selMp3s = playlist_gui.getSelection()
     for _, mp3 in pairs(selMp3s) do
       if mp3.sitesSucceeded then
         for i, search_site in pairs(search_sites) do
