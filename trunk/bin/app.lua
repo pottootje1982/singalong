@@ -41,7 +41,8 @@ function application:tick()
     if coroutine.status(entry.co) ~= 'dead' then
       local res = {coroutine.resume(entry.co)}
       if not res[1] then
-        assert(res[1], string.format('Error in coroutine %d: %s', i, res[2]))
+        iup.Message('Warning', string.format('Error in coroutine %d: %s', i, res[2]))
+        table.insert(routinesToRemove, entry.co)
       end
 
       -- the coroutine could've been killed in the coroutine.resume above
@@ -55,7 +56,9 @@ function application:tick()
   for i, co in ipairs(routinesToRemove) do
     self:removeCo(co)
   end
-  iup.LoopStepWait()
+  -- iup.SetIdle() will consume all processor resources
+  -- when sleep is not here
+  system.sleep(1)
 end
 
 appInstance = application()
