@@ -15,12 +15,16 @@ require 'constants'    -- header & footer for latex file
 require 'socketinterface'
 require 'task'
 
+os.format_bare_file = function(artist, title, ext)
+  return string.format([[%s.%s]], replace(artist .. ' - ' .. title, fileReplacements), ext)
+end
+
 os.format_file = function(ext, search_site, mp3)
   local artist, title = mp3.artist, mp3.title
   assert(artist and title and search_site, "One of the parameters artist, title or search_site is nil!")
   assert(search_site.site, 'Invalid search site')
   assert(ext, 'No extension given')
-  local res = F(LYRICS_DIR, search_site.site, string.format([[%s.%s]], replace(artist .. ' - ' .. title, fileReplacements), ext))
+  local res = F(LYRICS_DIR, search_site.site, os.format_bare_file(artist, title, ext))
   return res
 end
 
