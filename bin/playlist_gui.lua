@@ -102,19 +102,6 @@ local playlistMenu = iup.menu {
       widget:playOnYoutube()
     end;
   },
-  -- Actually this function should somewhere in a menu or so, it doesn't operate on selection
-  iup.item {
-    title = "Write unfound songs to playlist",
-    action = function(self)
-      local notFoundPlaylist = '#EXTM3U\n'
-      local tracks = playlist_api.getPlaylist()
-      local unfoundTracks = table.ifilter(tracks, function(i,track) return not cache.IsTxtInCache(track) end)
-      for i, track in ipairs(unfoundTracks) do
-        notFoundPlaylist = notFoundPlaylist .. (track.playlistEntry or '')
-      end
-      os.writeTo(playlist_api.getNotFoundPlaylistName(), notFoundPlaylist)
-    end;
-  },
 }
 
 function playlist:queryGoogle(show)

@@ -13,10 +13,6 @@ local function setPlaylistFileName(fn)
   playlistFileName = fn
 end
 
-function getNotFoundPlaylistName()
-  return os.getFileWithoutExt(playlistFileName) .. '_notfound.' .. 'm3u'
-end
-
 function getLatexFileName()
   return os.getFileWithoutExt(playlistFileName) ..  '.tex'
 end
