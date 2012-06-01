@@ -35,7 +35,7 @@ local function loadConfig(singalongPath)
   -- Global var used to determine whether test code can be launched
   local localAppData = os.getenv('LOCALAPPDATA')
   local appData = os.getenv('APPDATA')
-  misc.verify(localAppData or appData, '%LOCALAPPDATA% or %APPDATA% directory not found in environment variables!')
+  verify(localAppData or appData, '%LOCALAPPDATA% or %APPDATA% directory not found in environment variables!')
   if not singalongPath or singalongPath == 'APPDATA' then
     LOCALAPPDATADIR = F(localAppData or appData, 'SinGaLonG')
   else
