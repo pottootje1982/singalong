@@ -10,7 +10,9 @@ function TestSingalongPdf:testGenerateSongbook()
   tracks = {tracks[1], tracks[2], tracks[3], tracks[4]}
   local searchSite = search_sites[1]
   for i, track in ipairs(tracks) do
-    cache.addToCache(track, searchSite, os.format_file('txt', searchSite, track))
+    local fn = os.format_bare_file(track.artist, track.title, 'txt')
+    fn = F(system.getExecutablePath(), 'tests', fn)
+    cache.addToCache(track, searchSite, os.format_file('txt', searchSite, track), os.read(fn))
   end
   getPdfGenerator().generateSongbook(tracks, 'testGenerateSongbook')
 end
