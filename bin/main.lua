@@ -14,6 +14,7 @@
 -- remove list item 'write unfound items to playlist' from playlist popup menu
 -- progress bar in download dialog doesn't proceed in case wait time was set to 0
 -- turn gui_impl into module
+-- creating empty playlist doesn't work
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
@@ -34,39 +35,13 @@ require "searchsites_gui"
 require "lyrics_gui"
 require "miktex"
 require "singalongpdf"
-require "icon"
+require "title_bar"
+require "debug_frame"
 
 dofile  "gui_impl.lua"
 dofile  "compare_playlists.lua"
 
 local args = {...}
-
-local debugFrame
-if _DEBUG then
-  debugFrame =
-    iup.frame
-    {
-      title="Debugging",
-      expand="vertical",
-      maxsize='150x',
-      iup.vbox
-      {
-
-        testButton, reloadButton,
-        iup.button
-        {title="Debug", expand="HORIZONTAL",
-          action = function(self)
-            dofile 'reload.lua'
-            debug.debug()
-          end,
-          bgcolor = "255 0 0",
-        },
-        compareButton,
-        expand = 'no',
-        homogeneous = 'yes',
-      },
-    }
-end
 
 local playlistSitesSplitter =
   iup.split {
@@ -85,7 +60,7 @@ local splitter = iup.split {
       minsize='10x10',
       expandchildren='YES',
       playlistSitesSplitter,
-      debugFrame,
+      debug_frame.widget,
     },
     iup.vbox{
       iup.hbox
@@ -112,19 +87,7 @@ mainDialog = iup.dialog
       margin = "2x2",
       expand = 'yes',
       expandchildren = 'yes',
-      iup.hbox
-      {
-        gap="5",
-        expand="horizontal",
-
-        newPlaylistButton,
-        openPlaylistButton,
-        sortButton,
-        downloadLyricsButton,
-        createSongbookButton,
-        iup.label{title = "", expand = "HORIZONTAL"}, -- Tried to do this with iup.fill but this doesn't work...
-        settingsButton,
-      },
+      title_bar.widget,
       splitter,
     },
   },
@@ -156,9 +119,9 @@ function mainDialog:k_any( key, press)
   elseif (key == iup.K_co or key == iup.K_cO) then
     playlist_api.openPlaylist()
   elseif (key == iup.K_cd or key == iup.K_cD) then
-    downloadLyricsButton:action()
+    title_bar.downloadLyricsButton:action()
   elseif (key == iup.K_cb or key == iup.K_cB) then
-    createSongbookButton:action()
+    title_bar.createSongbookButton:action()
   elseif (key == iup.K_cp or key == iup.K_cP) then
     playlist_gui.widget:playOnYoutube()
   elseif (key == iup.K_cs or key == iup.K_cS) then
@@ -190,7 +153,7 @@ if args[1] then
   if not fn:find('\\') then
     fn = F(lfs.currentdir(), fn)
   end
-  openPlaylistButton:action(fn)
+  title_bar.openPlaylistButton:action(fn)
 end
 
 if APPLOADED then
@@ -200,7 +163,7 @@ if APPLOADED then
 
   if config.loadplaylist then
     local succ, mess = pcall(function()
-      openPlaylistButton:action(config.loadplaylist)
+      title_bar.openPlaylistButton:action(config.loadplaylist)
     end)
     if not succ then
       print('Something was wrong with playlist, clearing UI.')

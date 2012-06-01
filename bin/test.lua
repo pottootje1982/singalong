@@ -1,6 +1,3 @@
-_G.HIDE_GUI = true
-require 'main'
-
 -- Test script: use to your liking!
 
 --print(query.getLyrics('txt', search_sites[4], {artist='Charles Aznavour', title='La Mama'}))
@@ -19,6 +16,4 @@ require 'progress_dialog'
 local progressDialog, updateLabel, downloadProgressbar = progress_dialog.getDialog("Downloading lyrics...", "Downloading lyrics:", closeCallback, "Stop downloading", closeCallback)
 
 progressDialog:show()
-
-iup.MainLoop()
 --]]
