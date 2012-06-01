@@ -26,7 +26,6 @@ end
 
 function savePlaylistButton:action()
   playlist_api.saveMp3Table()
-  update()
   return iup.DEFAULT
 end
 
