@@ -31,11 +31,15 @@ table.saveToFileText = function(fn, tab, prefix)
 end
 
 table.loadFromFile = function(fn)
-  local res
-  local succ = pcall(function()
+  local res, mess
+  local succ, mess = pcall(function()
     res = table.unmarshal(os.read(fn, true))
   end)
-  if succ then return res end
+  if succ then
+    return res
+  else
+    print(mess)
+  end
 end
 
 table.saveToFile = function(fn, tab, prefix)

@@ -75,8 +75,8 @@ Neil Young - Old man
 
   local playlistName = showNewPlaylistDialog()
   if not playlistName then return end
+  if os.getExtension(playlistName) ~= 'sing' then playlistName = playlistName .. '.sing' end
   if not os.isFileWritable(playlistName) then iup.Message('Warning', string.format('Cannot write to file "%s"! Make sure it is not write protected.', playlistName)) return end
-  if not playlistName:match('%.sing$') then playlistName = playlistName .. '.sing' end
 
   -- Save currently loaded mp3 table
   saveMp3Table()
