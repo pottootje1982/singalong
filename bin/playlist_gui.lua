@@ -199,14 +199,15 @@ function playlist:editOrAddEntry(line)
   local add = not line
   local tracks = playlist_api.getPlaylist()
   line = line or (#tracks + 1)
+  local track = tracks[line]
   local ret, artist, title =
   iup.GetParam(add and "Add entry" or "Change fields (for web search only)", iupParamCallback,
                   add and "Artist name: %s\n" ..
                           "Title name: %s\n"
                   or      "Change artist name: %s\n" ..
                           "Change title name: %s\n",
-                  add and '' or (tracks[line].customArtist or tracks[line].artist),
-                  add and '' or (tracks[line].customTitle or tracks[line].title))
+                  add and '' or (track.customArtist or track.artist),
+                  add and '' or (track.customTitle or track.title))
 
   if ret == 0 or not ret then return end -- dialog was cancelled
 
@@ -216,14 +217,22 @@ function playlist:editOrAddEntry(line)
     -- remove newlines (This can happen when user presses enter to close dialog)
     artist = artist:gsub('\n', '')
     title = title:gsub('\n', '')
-    if tracks[line] then
-      tracks[line].customArtist = artist
-      tracks[line].customTitle = title
+    if track then
+      -- if track already resides in cache, we only adapt customArtist/customTitle,
+      -- which is only used for visual representation and querying
+      if cache.IsTxtInCache(track) then
+        track.customArtist = artist
+        track.customTitle = title
+      else
+        track.artist = artist
+        track.title = title
+      end
     else
-      tracks[line] = {artist = artist, title = title}
+      track = {artist = artist, title = title}
+      tracks[line] = track
     end
-    cache.rescanPlaylist({tracks[line]})
-    self:update()
+    cache.rescanPlaylist({track})
+    playlist_api.playlistUpdate()
   end
 end
 

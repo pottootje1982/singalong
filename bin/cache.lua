@@ -70,7 +70,6 @@ function buildCache(updateCallback)
         local somethingExisted = false
         local removedItem
         for i, ext in ipairs(fileTypes) do
-          --print(cachedItem[ext] and os.exists(cachedItem[ext]))
           if cachedItem[ext] then
             if os.exists(cachedItem[ext]) then
               somethingExisted = true

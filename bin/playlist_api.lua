@@ -202,7 +202,7 @@ function openPlaylist(fn, newSingFile)
   end
 end
 
-local function playlistUpdate()
+function playlistUpdate()
   activateButtons()
   updateGui('playlist', 'searchsites', 'lyrics')
   playlist_gui.resize_cb()
