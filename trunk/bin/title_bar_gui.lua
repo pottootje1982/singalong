@@ -5,8 +5,9 @@ require 'playlist_api'
 require 'progress_dialog'
 require 'icon'
 
-local openPlaylistButton = iup.button{title="", image = 'IUP_FileOpen', tip="Open playlist (ctr-o)"}
 local newPlaylistButton = iup.button{title="", image = 'IUP_FileNew', tip="New playlist (ctr-n)"}
+local openPlaylistButton = iup.button{title="", image = 'IUP_FileOpen', tip="Open playlist (ctr-o)"}
+local savePlaylistButton = iup.button{title="", image = 'IUP_FileSave', tip="Save playlist (ctr-s)"}
 local downloadLyricsButton = iup.button{tip="Download lyrics (ctr-d)", image=downloadIcon, active = 'NO'}
 local sortButton = iup.button{tip="Sort playlist", image='IUP_ToolsSortAscend', active = 'NO'}
 local createSongbookButton = iup.button{tip="Create songbook (ctr-b)", image = 'IUP_FileText', active = 'NO'}
@@ -18,8 +19,14 @@ function newPlaylistButton:action()
   return iup.DEFAULT
 end
 
-function openPlaylistButton:action(fn)
-  playlist_api.openPlaylist(fn)
+function openPlaylistButton:action()
+  playlist_api.openPlaylist()
+  return iup.DEFAULT
+end
+
+function savePlaylistButton:action()
+  playlist_api.saveMp3Table()
+  update()
   return iup.DEFAULT
 end
 
@@ -350,6 +357,7 @@ widget = iup.hbox
 
         newPlaylistButton,
         openPlaylistButton,
+        savePlaylistButton,
         sortButton,
         downloadLyricsButton,
         createSongbookButton,
@@ -357,11 +365,12 @@ widget = iup.hbox
         settingsButton,
       }
 
-function update()
+function update(playlistModified)
   local tracks = playlist_api.getPlaylist()
   local active = (tracks and #tracks > 0) and 'YES' or 'NO'
   lyrics_gui.saveLyricsButton.active = active
   sortButton.active = active
   downloadLyricsButton.active = active
   createSongbookButton.active = active
+  savePlaylistButton.active = (playlistModified and tracks and #tracks > 0) and 'YES' or 'NO'
 end

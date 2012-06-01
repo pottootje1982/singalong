@@ -200,8 +200,8 @@ function openPlaylist(fn, newSingFile)
   end
 end
 
-function playlistUpdate()
-  updateGui('title_bar', 'playlist', 'searchsites', 'lyrics')
+function playlistUpdate(playlistModified)
+  updateGui('title_bar', {playlistModified}, 'playlist', 'searchsites', 'lyrics')
   playlist_gui.resize_cb()
 end
 
@@ -214,7 +214,7 @@ end
 
 function addToPlaylist(newTracks)
   playlist = table.imerge(playlist, newTracks)
-  playlistUpdate()
+  playlistUpdate(true)
   cache.rescanPlaylist(newTracks)
 end
 

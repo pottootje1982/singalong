@@ -22,7 +22,7 @@ function playlist:removeSelItem()
   local tracks = playlist_api.getPlaylist()
   table.remove(tracks, self.lastSel)
   self:modifySelection(math.max(self.lastSel-1, 1))
-  updateGui('playlist', 'searchsites', {true}, 'lyrics')
+  updateGui('title_bar', {true}, 'playlist', 'searchsites', {true}, 'lyrics')
 end
 
 local playlistMenu = iup.menu {
@@ -155,7 +155,6 @@ function playlist:dropFiles(fileList)
     newSongs = table.imerge(newSongs, songs)
   end
   playlist_api.addToPlaylist(newSongs)
-  update()
 end
 
 function playlist:playOnYoutube()
@@ -219,7 +218,7 @@ function playlist:editOrAddEntry(line)
       tracks[line] = track
     end
     cache.rescanPlaylist({track})
-    playlist_api.playlistUpdate()
+    playlist_api.playlistUpdate(true)
   end
 end
 
