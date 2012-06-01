@@ -28,3 +28,22 @@ getSize = function(str)
   local w, h = str:match('(%d+)x(%d+)')
   return tonumber(w), tonumber(h)
 end
+
+function updateGui(...)
+  for i, v in ipairs(arg) do
+    local args = {}
+    if type(arg[i+1]) == 'table' then
+      args = arg[i+1]
+    end
+    if type(v) == 'string' then
+      require(v .. '_gui').update(unpack(args))
+    end
+  end
+end
+
+function iupParamCallback(dialog, paramIndex)
+  if paramIndex == -2 then -- -2 = after the dialog is mapped and just before it is shown;
+    setDialogIcon(dialog)
+  end
+end
+
