@@ -240,13 +240,15 @@ end
 
 -- Function that is called when playlist is loaded
 function rescanPlaylist(tracks)
+  local allTracks = playlist_api.getPlaylist()
   app.addCo(function()
     for i, track in ipairs(tracks) do
       local notFoundInCache = not IsTxtInCache(track)
       IsTxtInCache(track, true)
       if notFoundInCache ~= track.notFoundInCache then
-        print('Found following song with thorough search!:', i, track.artist, track.title)
-        playlist_gui.widget:updateItem(i, track)
+        local index = table.find(allTracks, track)
+        print('Found following song with thorough search!:', index, track.artist, track.title)
+        playlist_gui.widget:updateItem(index, track)
       end
       coroutine.waitFor()
     end
