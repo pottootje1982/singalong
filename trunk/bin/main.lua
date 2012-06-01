@@ -5,18 +5,17 @@
 -- mem leak
 -- font sizes for singalong pdf
 -- remove \\ from standard ascii files, replace with newlines
--- remove multiple selection
 -- progress bar multiple site selection klopt nog niet (1 song)
 -- why do we need to ignore libcmtd.lib in singalong.vcproj for release???
 -- progress bar in download dialog doesn't proceed in case wait time was set to 0
 -- creating empty playlist doesn't work
--- move playlistDlg in makeNewPlaylist to separate file
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
 -- check if solving CAPTCHA works
 
 -- FEATURES
+-- delete multiple tracks
 
 -- NICE TO HAVE:
 -- playback of playlist

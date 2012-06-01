@@ -29,7 +29,6 @@ if _DEBUG then
         iup.button
         {title="Debug", expand="HORIZONTAL",
           action = function(self)
-            dofile 'reload.lua'
             debug.debug()
           end,
           bgcolor = "255 0 0",
