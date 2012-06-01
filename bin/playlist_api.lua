@@ -202,19 +202,23 @@ function openPlaylist(fn, newSingFile)
   end
 end
 
-function setPlaylist(tracks)
-  playlist = tracks
+local function playlistUpdate()
   activateButtons()
-
   updateGui('playlist', 'searchsites', 'lyrics')
   playlist_gui.resize_cb()
+end
+
+function setPlaylist(tracks)
+  playlist = tracks
+  playlistUpdate()
   playlist_gui.widget:modifySelection(1)
   cache.rescanPlaylist(tracks)
 end
 
 function addToPlaylist(newTracks)
-  local allTracks = table.imerge(playlist, newTracks)
-  setPlaylist(allTracks)
+  playlist = table.imerge(playlist, newTracks)
+  playlistUpdate()
+  cache.rescanPlaylist(newTracks)
 end
 
 function getPlaylist()

@@ -222,7 +222,7 @@ function playlist:editOrAddEntry(line)
     else
       tracks[line] = {artist = artist, title = title}
     end
-
+    cache.rescanPlaylist({tracks[line]})
     self:update()
   end
 end
@@ -292,6 +292,8 @@ function playlist:k_any(key, press)
     self:removeSelItem()
   elseif key == iup.K_INS then
     self:editOrAddEntry()
+  elseif key == iup.K_F2 then
+    self:editOrAddEntry(self.lastSel)
   end
 end
 
