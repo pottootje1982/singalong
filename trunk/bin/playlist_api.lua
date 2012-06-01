@@ -30,7 +30,10 @@ end
 local function loadMp3Table(singFile)
   if os.exists(singFile) then
     local mp3Info = table.loadFromFile(singFile)
-    --local mp3Info = dofile(singFile)
+    -- If binary loading fails, try to load it as text:
+    if not mp3Info then
+      mp3Info = dofile(singFile)
+    end
     return mp3Info
   end
 end
