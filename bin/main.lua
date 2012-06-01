@@ -7,12 +7,10 @@
 -- remove \\ from standard ascii files, replace with newlines
 -- remove multiple selection
 -- progress bar multiple site selection klopt nog niet (1 song)
--- save button
--- gray out both save buttons if song/playlist was just saved, so unedited
 -- why do we need to ignore libcmtd.lib in singalong.vcproj for release???
--- remove list item 'write unfound items to playlist' from playlist popup menu
 -- progress bar in download dialog doesn't proceed in case wait time was set to 0
 -- creating empty playlist doesn't work
+-- move playlistDlg in makeNewPlaylist to separate file
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
