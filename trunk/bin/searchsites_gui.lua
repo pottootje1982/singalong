@@ -106,6 +106,13 @@ function siteslist:deleteFile(ext)
   updateGui('playlist', 'searchsites', 'lyrics')
 end
 
+function siteslist:k_any(key)
+  if key == iup.K_DEL then
+    siteslist:deleteFile('txt')
+    siteslist:deleteFile('html')
+  end
+end
+
 function siteslist:update(updatePos)
   local found
   local selMp3 = playlist_gui.getSelection()

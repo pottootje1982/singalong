@@ -11,6 +11,7 @@ local downloadLyricsButton = iup.button{tip="Download lyrics (ctr-d)", image=dow
 local sortButton = iup.button{tip="Sort playlist", image='IUP_ToolsSortAscend', active = 'NO'}
 local createSongbookButton = iup.button{tip="Create songbook (ctr-b)", image = 'IUP_FileText', active = 'NO'}
 local settingsButton = iup.button{tip="Settings", image = 'IUP_ToolsSettings', alignment='ARIGHT'}
+local AVG_REQUEST_TIME = 0.7
 
 function newPlaylistButton:action()
   playlist_api.makeNewPlaylist()
