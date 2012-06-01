@@ -18,6 +18,13 @@ function playlist:playlist(params)
   self.c['alignment2'] = 'aleft'
 end
 
+function playlist:removeSelItem()
+  local tracks = playlist_api.getPlaylist()
+  table.remove(tracks, self.lastSel)
+  self:modifySelection(math.max(self.lastSel-1, 1))
+  updateGui('playlist', 'searchsites', {true}, 'lyrics')
+end
+
 local playlistMenu = iup.menu {
   iup.item {
     title = "Preview";
@@ -73,17 +80,13 @@ local playlistMenu = iup.menu {
   iup.item {
     title = "Add";
     action = function(self)
-      local tracks = playlist_api.getPlaylist()
-      widget:editOrAddEntry(#tracks + 1, true)
+      widget:editOrAddEntry()
     end;
   },
   iup.item {
     title = "Remove";
     action = function(self)
-      local tracks = playlist_api.getPlaylist()
-      table.remove(tracks, widget.lastSel)
-      widget:modifySelection(math.max(widget.lastSel-1, 1))
-      updateGui('playlist', 'searchsites', {true}, 'lyrics')
+      widget:removeSelItem()
     end;
   },
   iup.separator{},
@@ -164,7 +167,7 @@ function playlist:dropFiles(fileList)
     songs = playlist_api.gatherMp3InfoFromFiles(songs)
     newSongs = table.imerge(newSongs, songs)
   end
-  _G.mp3s = table.imerge(mp3s, newSongs)
+  playlist_api.addToPlaylist(newSongs)
   update()
 end
 
@@ -192,8 +195,10 @@ function playlist:onSelectionChanged(line)
   end
 end
 
-function playlist:editOrAddEntry(line, add)
+function playlist:editOrAddEntry(line)
+  local add = not line
   local tracks = playlist_api.getPlaylist()
+  line = line or (#tracks + 1)
   local ret, artist, title =
   iup.GetParam(add and "Add entry" or "Change fields (for web search only)", iupParamCallback,
                   add and "Artist name: %s\n" ..
@@ -283,6 +288,10 @@ function playlist:k_any(key, press)
       playlistContent = playlistContent .. mp3.artist .. ' - ' .. mp3.title .. '\n'
     end
     clipboard.set(playlistContent)
+  elseif key == iup.K_DEL then
+    self:removeSelItem()
+  elseif key == iup.K_INS then
+    self:editOrAddEntry()
   end
 end
 

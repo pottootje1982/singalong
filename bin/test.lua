@@ -6,7 +6,7 @@ require 'main'
 --print(query.getLyrics('txt', search_sites[4], {artist='Charles Aznavour', title='La Mama'}))
 --local cont = query.extractLyrics(search_site, {artist='Blues Brothers', title='Everybody Needs Somebody to Love'})
 --miktex.viewTexFile([[top 2000 zang]], true)
---miktex.generateSongbook(mp3s, [[top40]])
+--miktex.generateSongbook(playlist_api.getPlaylist(), [[top40]])
 --print(cont)
 
 -- os.shellExecute([[www.google.com]], 'html')
