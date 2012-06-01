@@ -7,6 +7,7 @@ require 'playlist_helpers'
 require 'gui_impl'
 
 local playlistFileName
+local playlist = {}
 
 local function setPlaylistFileName(fn)
   if mainDialog then mainDialog.title = 'SinGaLonG' .. ' - ' .. tostring(fn) end
@@ -202,7 +203,7 @@ function openPlaylist(fn, newSingFile)
 end
 
 function setPlaylist(tracks)
-  _G.mp3s = tracks
+  playlist = tracks
   activateButtons()
 
   updateGui('playlist', 'searchsites', 'lyrics')
@@ -211,8 +212,13 @@ function setPlaylist(tracks)
   cache.rescanPlaylist(tracks)
 end
 
+function addToPlaylist(newTracks)
+  local allTracks = table.imerge(playlist, newTracks)
+  setPlaylist(allTracks)
+end
+
 function getPlaylist()
-  return mp3s
+  return playlist
 end
 
 local function gatherInverse(root, dir, selection)

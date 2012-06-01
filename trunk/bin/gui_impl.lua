@@ -3,8 +3,6 @@ require 'playlist_api'
 require 'progress_dialog'
 require 'lyrics_gui'
 
-mp3s = {}
-
 openPlaylistButton = iup.button{title="", image = 'IUP_FileOpen', tip="Open playlist (ctr-o)"}
 newPlaylistButton = iup.button{title="", image = 'IUP_FileNew', tip="New playlist (ctr-n)"}
 downloadLyricsButton = nil
