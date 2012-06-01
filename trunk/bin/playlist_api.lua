@@ -4,7 +4,6 @@ require 'query'
 require 'misc'
 require 'spotify_playlist'
 require 'playlist_helpers'
-require 'gui_impl'
 
 local playlistFileName
 local playlist = {}
@@ -206,8 +205,7 @@ function openPlaylist(fn, newSingFile)
 end
 
 function playlistUpdate()
-  activateButtons()
-  updateGui('playlist', 'searchsites', 'lyrics')
+  updateGui('title_bar', 'playlist', 'searchsites', 'lyrics')
   playlist_gui.resize_cb()
 end
 

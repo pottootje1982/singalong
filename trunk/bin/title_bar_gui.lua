@@ -1,16 +1,16 @@
-module('title_bar', package.seeall)
+module('title_bar_gui', package.seeall)
 
 require 'misc'
 require 'playlist_api'
 require 'progress_dialog'
 require 'icon'
 
-openPlaylistButton = iup.button{title="", image = 'IUP_FileOpen', tip="Open playlist (ctr-o)"}
-newPlaylistButton = iup.button{title="", image = 'IUP_FileNew', tip="New playlist (ctr-n)"}
-downloadLyricsButton = iup.button{tip="Download lyrics (ctr-d)", image=downloadIcon, active = 'NO'}
-sortButton = iup.button{tip="Sort playlist", image='IUP_ToolsSortAscend', active = 'NO'}
-createSongbookButton = iup.button{tip="Create songbook (ctr-c)", image = 'IUP_FileText', active = 'NO'}
-settingsButton = iup.button{tip="Settings", image = 'IUP_ToolsSettings', alignment='ARIGHT'}
+local openPlaylistButton = iup.button{title="", image = 'IUP_FileOpen', tip="Open playlist (ctr-o)"}
+local newPlaylistButton = iup.button{title="", image = 'IUP_FileNew', tip="New playlist (ctr-n)"}
+local downloadLyricsButton = iup.button{tip="Download lyrics (ctr-d)", image=downloadIcon, active = 'NO'}
+local sortButton = iup.button{tip="Sort playlist", image='IUP_ToolsSortAscend', active = 'NO'}
+local createSongbookButton = iup.button{tip="Create songbook (ctr-b)", image = 'IUP_FileText', active = 'NO'}
+local settingsButton = iup.button{tip="Settings", image = 'IUP_ToolsSettings', alignment='ARIGHT'}
 
 function newPlaylistButton:action()
   playlist_api.makeNewPlaylist()
@@ -67,7 +67,7 @@ local function determineWaitInterval()
   end
 end
 
-function downloadLyricsButton:action()
+function downloadLyrics()
   -- First check if there's internet access
   local err = socketinterface.request('http://www.google.com/search?q=test')
   if err then
@@ -216,7 +216,15 @@ function downloadLyricsButton:action()
   downloadCo = app.addCo(routineFunc, resumeFunc, endFunc)
 end
 
+function downloadLyricsButton:action()
+  downloadLyrics()
+end
+
 function createSongbookButton:action()
+  createSongbook()
+end
+
+function createSongbook()
   local function num(bool) return bool and 1 or 0 end
   local pdfGenerator = table.find(pdfGenerators, config.pdfGenerator)
   assert(pdfGenerator, 'PDF generator ' .. tostring(config.pdfGenerator) .. ' is unknown!')
@@ -339,11 +347,20 @@ widget = iup.hbox
         gap="5",
         expand="horizontal",
 
-        title_bar.newPlaylistButton,
-        title_bar.openPlaylistButton,
-        title_bar.sortButton,
-        title_bar.downloadLyricsButton,
-        title_bar.createSongbookButton,
+        newPlaylistButton,
+        openPlaylistButton,
+        sortButton,
+        downloadLyricsButton,
+        createSongbookButton,
         iup.label{title = "", expand = "HORIZONTAL"}, -- Tried to do this with iup.fill but this doesn't work...
-        title_bar.settingsButton,
+        settingsButton,
       }
+
+function update()
+  local tracks = playlist_api.getPlaylist()
+  local active = (tracks and #tracks > 0) and 'YES' or 'NO'
+  lyrics_gui.saveLyricsButton.active = active
+  sortButton.active = active
+  downloadLyricsButton.active = active
+  createSongbookButton.active = active
+end

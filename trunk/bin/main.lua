@@ -10,10 +10,8 @@
 -- save button
 -- gray out both save buttons if song/playlist was just saved, so unedited
 -- why do we need to ignore libcmtd.lib in singalong.vcproj for release???
--- remove dependency on gui_impl from playlist_api
 -- remove list item 'write unfound items to playlist' from playlist popup menu
 -- progress bar in download dialog doesn't proceed in case wait time was set to 0
--- turn gui_impl into module
 -- creating empty playlist doesn't work
 
 -- TESTING:
@@ -35,10 +33,9 @@ require "searchsites_gui"
 require "lyrics_gui"
 require "miktex"
 require "singalongpdf"
-require "title_bar"
+require "title_bar_gui"
 require "debug_frame"
 
-dofile  "gui_impl.lua"
 dofile  "compare_playlists.lua"
 
 local args = {...}
@@ -87,7 +84,7 @@ mainDialog = iup.dialog
       margin = "2x2",
       expand = 'yes',
       expandchildren = 'yes',
-      title_bar.widget,
+      title_bar_gui.widget,
       splitter,
     },
   },
@@ -119,9 +116,9 @@ function mainDialog:k_any( key, press)
   elseif (key == iup.K_co or key == iup.K_cO) then
     playlist_api.openPlaylist()
   elseif (key == iup.K_cd or key == iup.K_cD) then
-    title_bar.downloadLyricsButton:action()
+    title_bar_gui.downloadLyrics()
   elseif (key == iup.K_cb or key == iup.K_cB) then
-    title_bar.createSongbookButton:action()
+    title_bar_gui.createSongbook()
   elseif (key == iup.K_cp or key == iup.K_cP) then
     playlist_gui.widget:playOnYoutube()
   elseif (key == iup.K_cs or key == iup.K_cS) then
@@ -153,17 +150,17 @@ if args[1] then
   if not fn:find('\\') then
     fn = F(lfs.currentdir(), fn)
   end
-  title_bar.openPlaylistButton:action(fn)
+  playlist_api.openPlaylist(fn)
 end
 
 if APPLOADED then
-  activateButtons()
+  updateGui('title_bar')
 
   mainDialog:show()
 
   if config.loadplaylist then
     local succ, mess = pcall(function()
-      title_bar.openPlaylistButton:action(config.loadplaylist)
+      playlist_api.openPlaylist(config.loadplaylist)
     end)
     if not succ then
       print('Something was wrong with playlist, clearing UI.')
