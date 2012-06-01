@@ -9,11 +9,11 @@
 -- progress bar multiple site selection klopt nog niet (1 song)
 -- save button
 -- gray out both save buttons if song/playlist was just saved, so unedited
--- rebuild cache when adding mp3 to list
 -- why do we need to ignore libcmtd.lib in singalong.vcproj for release???
 -- remove dependency on gui_impl from playlist_api
--- when program asks for discarding playlist (when loading m3u), it says it fails if you press no
 -- remove list item 'write unfound items to playlist' from playlist popup menu
+-- progress bar in download dialog doesn't proceed in case wait time was set to 0
+-- turn gui_impl into module
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
