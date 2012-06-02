@@ -5,3 +5,7 @@ string.count = function(str, occurrence)
   end
   return count
 end
+
+string.isStringEmptyOrSpace = function(str)
+  return str:match('^[%s%c]*$')
+end

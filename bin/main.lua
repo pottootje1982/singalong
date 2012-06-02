@@ -8,7 +8,6 @@
 -- progress bar multiple site selection klopt nog niet (1 song)
 -- why do we need to ignore libcmtd.lib in singalong.vcproj for release???
 -- progress bar in download dialog doesn't proceed in case wait time was set to 0
--- creating empty playlist doesn't work
 -- add to playlist with ctrl-N
 -- change playlist while downloading shouldn't be possible
 

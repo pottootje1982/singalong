@@ -82,7 +82,7 @@ Neil Young - Old man
   saveMp3Table()
   -- Save new custom playlist
   saveMp3Table(playlistName, playlistEntries)
-  openPlaylist(playlistName, true)
+  openPlaylist(playlistName, true, table.isEmpty(playlistEntries))
 end
 
 local function showOpenPlaylistDialog()
@@ -94,7 +94,7 @@ local function showOpenPlaylistDialog()
   end
 end
 
-function openPlaylist(fn, newSingFile)
+function openPlaylist(fn, newSingFile, clearPlaylist)
   if not fn then
     fn = showOpenPlaylistDialog()
   end
@@ -126,7 +126,10 @@ function openPlaylist(fn, newSingFile)
         tracks = openTXT(fn)
       elseif ext == '.sing' then -- do nothing, sing files will be opened in loadMp3Table()
       end
-      if not reloadM3u then
+
+      if clearPlaylist then
+        tracks = {}
+      elseif not reloadM3u then
         local newMp3s = loadMp3Table(singFile)
         if not newMp3s then
           iup.Message('Warning', string.format('Loading of sing file "%s" failed!', singFile))
