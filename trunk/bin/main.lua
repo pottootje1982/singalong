@@ -11,7 +11,6 @@
 -- creating empty playlist doesn't work
 -- add to playlist with ctrl-N
 -- change playlist while downloading shouldn't be possible
--- two sided page layout doesn't work
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
