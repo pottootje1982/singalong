@@ -1,4 +1,4 @@
-local header = [[\documentclass[a4paper,12pt%s]{book} %% ********* two sided *********
+local header = [[\documentclass[a4paper,12pt]{%s} %% ********* two sided *********
 \makeatletter
 \usepackage[latin1]{inputenc}
 \usepackage[titles]{tocloft}
@@ -66,7 +66,7 @@ local footer = [[
 function getHeader(useContent)
   local r, g, b = getFontColor(config.fontColor)
   return string.format(header,
-    config.twoside and ',twoside' or '',
+    config.twoside and 'book' or 'report',
     r, g, b,
     config.fontSize,
     useContent and content or '')
