@@ -29,6 +29,10 @@ getSize = function(str)
   return tonumber(w), tonumber(h)
 end
 
+function setDialogIcon(dialog)
+  system.setIcon(HINSTANCE, dialog.title)
+end
+
 function updateGui(...)
   for i, v in ipairs(arg) do
     local args = {}
