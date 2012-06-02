@@ -1,12 +1,14 @@
 module('miktex', package.seeall)
 
+require 'constants'
+
 function getMiktexDir(miktexDir)
   return (miktexDir or config.miktexDir) .. [[\miktex\bin]]
 end
 
 local function texify(filename, postfix)
   local filePath = os.getPath(filename) or '.'
-  local includeDir = lfs.currentdir() .. [[\latex]]
+  local includeDir = system.getExecutablePath() .. [[\latex]]
   local command = string.format([[%s\%s]], getMiktexDir(), 'texify.exe')
   local args = string.format(' -e -q -I "%s" -I "%s" "%s" %s', includeDir, filePath, filename, postfix or '')
   os.shellExecute(args, command, nil, filePath)
@@ -14,7 +16,7 @@ local function texify(filename, postfix)
   return res
 end
 
-local function viewTexFile(fileName, preview)
+function viewTexFile(fileName, preview)
   local outputName = fileName .. '.pdf'
   local outputFile = io.open(outputName, 'w')
   if not outputFile then

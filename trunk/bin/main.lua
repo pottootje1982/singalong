@@ -9,6 +9,9 @@
 -- why do we need to ignore libcmtd.lib in singalong.vcproj for release???
 -- progress bar in download dialog doesn't proceed in case wait time was set to 0
 -- creating empty playlist doesn't work
+-- add to playlist with ctrl-N
+-- change playlist while downloading shouldn't be possible
+-- two sided page layout doesn't work
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
@@ -98,10 +101,6 @@ function mainDialog:resize_cb()
 end
 
 local HINSTANCE = iup.GetGlobal('HINSTANCE')
-
-function setDialogIcon(dialog)
-  system.setIcon(HINSTANCE, dialog.title)
-end
 
 function mainDialog:show_cb()
   setDialogIcon(mainDialog)

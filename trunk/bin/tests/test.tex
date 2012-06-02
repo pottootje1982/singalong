@@ -1,0 +1,50 @@
+\documentclass[a4paper,12pt]{book} % ********* two sided *********
+\makeatletter
+\usepackage[latin1]{inputenc}
+\usepackage[titles]{tocloft}
+\usepackage{color}
+\usepackage{needspace}
+\usepackage{titlesec}
+
+\pagestyle{plain} % No page headers
+
+\titleclass{\chapter}{straight} % No page break before chapter heading:
+\titleformat{\chapter}[hang] % Remove 'Chapter' label before chapter headings
+{\normalfont\small\bfseries}{\thechapter}{10pt}{\small} % Change chapter fonts/sizes
+\titlespacing{\chapter} % Change chapter spacing
+{0pt}{10pt}{5pt}
+
+\renewcommand{\cftchapnumwidth}{3em} % A little more space for heading numbers in TOC
+\setlength{\cftbeforechapskip}{0em} % Position TOC entries closer to each other
+\renewcommand{\cftchapdotsep}{3} % Use dots after chapter entries in TOC
+
+\definecolor{customColor}{rgb}{0.000000,0.000000,0.000000} % ********* Font color *********
+\usepackage[left=1cm,top=1cm,bottom=1.5cm,right=1.5cm,nohead,nofoot]{geometry}
+\addtolength\oddsidemargin{10mm}
+\addtolength\evensidemargin{-10mm}
+\usepackage{multicol}
+\begin{document}
+\begin{multicols}{2}
+\normalsize % ********* Font size *********
+\textcolor{customColor}{
+\tableofcontents
+\clearpage
+ % ********* Content *********
+\chapter{The Beatles - Yellow Submarine}
+\noindent
+In the town where I was born,\\Lived a man who sailed to sea,\\And he told us of his life,\\In the land of submarines,\\\\So we sailed up to the sun,\\Till we found a sea of green,\\And we lived beneath the waves,\\In our yellow submarine,\\\\We all live in a yellow submarine, \\Yellow submarine, yellow submarine,\\We all live in a yellow submarine, \\Yellow submarine, yellow submarine,\\\\And our friends are all aboard,\\Many more of them live next door,\\And the band begins to play.\\\\(Trumpets play)\\\\We all live in a yellow submarine, \\Yellow submarine, yellow submarine,\\We all live in a yellow submarine, \\Yellow submarine, yellow submarine,\\\\(weird sounds)\\\\As we live a life of ease,\\Everyone of us has all we need (has all we need)\\Sky of blue (sky of blue) and sea of green (sea of green)\\In our yellow (in our yellow) submarine (submarine. Blaaaha)\\\\We all live in a yellow submarine, \\Yellow submarine, yellow submarine,\\We all live in a yellow submarine, \\Yellow submarine, yellow submarine,\\\\We all live in a yellow submarine, \\Yellow submarine, yellow submarine.(fade)
+\chapter{beatles - hey jude}
+\noindent
+Hey Jude, don't make it bad\\Take a sad song and make it better\\Remember to let her into your heart\\Then you can start to make it better\\\\Hey Jude, don't be afraid\\You were made to go out and get her\\The minute you let her under your skin\\Then you begin to make it better\\\\And anytime you feel the pain, hey Jude, refrain\\Don't carry the world upon your shoulders\\For well you know that it's a fool who plays it cool\\By making his world a little colder\\Nah nah nah nah nah nah nah nah nah\\\\Hey Jude, don't let me down\\You have found her, now go and get her\\Remember to let her into your heart\\Then you can start to make it better\\\\So let it out and let it in, hey Jude, begin\\You're waiting for someone to perform with\\And don't you know that it's just you, hey Jude, you'll do\\The movement you need is on your shoulder\\Nah nah nah nah nah nah nah nah nah yeah\\\\Hey Jude, don't make it bad\\Take a sad song and make it better\\Remember to let her under your skin\\Then you'll begin to make it\\Better better better better better better, oh\\\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude (fade out)
+\chapter{neil young - unknown legend}
+\noindent
+She used to work in a diner\\Never saw a woman look finer\\I used to order just to watch her float across the floor\\She grew up in a small town\\Never put her roots down\\Daddy always kept movin', so she did too.\\\\Somewhere on a desert highway\\She rides a Harley-Davidson\\Her long blonde hair flyin' in the wind\\She's been runnin' half her life\\The chrome and steel she rides\\Collidin' with the very air she breathes\\The air she breathes.\\\\You know it ain't easy\\You got to hold on\\She was an unknown legend in her time\\Now she's dressin' two kids\\Lookin' for a magic kiss\\She gets the far-away look in her eyes.\\\\Somewhere on a desert highway\\She rides a Harley-Davidson\\Her long blonde hair flyin' in the wind\\She's been runnin' half her life\\The chrome and steel she rides\\Collidin' with the very air she breathes\\The air she breathes.
+\chapter{beatles - hey jude}
+\noindent
+Hey Jude, don't make it bad\\Take a sad song and make it better\\Remember to let her into your heart\\Then you can start to make it better\\\\Hey Jude, don't be afraid\\You were made to go out and get her\\The minute you let her under your skin\\Then you begin to make it better\\\\And anytime you feel the pain, hey Jude, refrain\\Don't carry the world upon your shoulders\\For well you know that it's a fool who plays it cool\\By making his world a little colder\\Nah nah nah nah nah nah nah nah nah\\\\Hey Jude, don't let me down\\You have found her, now go and get her\\Remember to let her into your heart\\Then you can start to make it better\\\\So let it out and let it in, hey Jude, begin\\You're waiting for someone to perform with\\And don't you know that it's just you, hey Jude, you'll do\\The movement you need is on your shoulder\\Nah nah nah nah nah nah nah nah nah yeah\\\\Hey Jude, don't make it bad\\Take a sad song and make it better\\Remember to let her under your skin\\Then you'll begin to make it\\Better better better better better better, oh\\\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude\\Nah nah nah nah nah nah, nah nah nah, hey Jude (fade out)
+\chapter{neil young - unknown legend}
+\noindent
+She used to work in a diner\\Never saw a woman look finer\\I used to order just to watch her float across the floor\\She grew up in a small town\\Never put her roots down\\Daddy always kept movin', so she did too.\\\\Somewhere on a desert highway\\She rides a Harley-Davidson\\Her long blonde hair flyin' in the wind\\She's been runnin' half her life\\The chrome and steel she rides\\Collidin' with the very air she breathes\\The air she breathes.\\\\You know it ain't easy\\You got to hold on\\She was an unknown legend in her time\\Now she's dressin' two kids\\Lookin' for a magic kiss\\She gets the far-away look in her eyes.\\\\Somewhere on a desert highway\\She rides a Harley-Davidson\\Her long blonde hair flyin' in the wind\\She's been runnin' half her life\\The chrome and steel she rides\\Collidin' with the very air she breathes\\The air she breathes.
+}
+\end{multicols}
+\end{document}
