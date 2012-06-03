@@ -279,6 +279,25 @@ function createSongbook()
   return iup.DEFAULT
 end
 
+local function rebuildCache()
+  print('Rebuilding cache...')
+  -- This will get nr of items already in cache, so progress dialog will only show progress
+  -- of removal of unexisting items in cache
+  local item = 1
+  local nrItems = cache.getNrItems()
+  local progressDialog, updateLabel, progressBar = progress_dialog.getDialog("Rebuilding cache...", "Removed from cache:")
+  progressBar.max = nrItems
+  progressDialog:show()
+  cache.buildCache(
+    function(itemName)
+      updateLabel.title = itemName or updateLabel.title
+      progressBar.value = item
+      item = item + 1
+    end)
+  iup.Destroy(progressDialog)
+  updateGui('playlist', 'searchsites', 'lyrics')
+end
+
 function settingsButton:action()
   local miktexDirModified
   local function param_action(dialog, param_index)
@@ -289,12 +308,13 @@ function settingsButton:action()
     end
     return 1
   end
-  local ret, miktexDir, rescanCache, removeUnusedLyrics =
+  local ret, miktexDir, rescanCache, removeUnusedLyrics, removeHtml =
   iup.GetParam("Settings", param_action,
                   "Miktex location: %f[DIR|*.*|" .. config.miktexDir .. "|NO|NO]\n" ..
                   "Rebuild cache: %b\n" ..
-                  "Remove unused txt files from cache: %b\n",
-                  config.miktexDir, 0, 0)
+                  "Remove unused txt files from cache: %b\n" ..
+                  "Remove html files from cache: %b\n",
+                  config.miktexDir, 0, 0, 0)
 
   if ret == 0 or not ret then return end -- dialog was cancelled
 
@@ -306,22 +326,7 @@ function settingsButton:action()
       config.miktexDir = miktexDir
     end
     if rescanCache == 1 then
-      print('Rebuilding cache...')
-      -- This will get nr of items already in cache, so progress dialog will only show progress
-      -- of removal of unexisting items in cache
-      local item = 1
-      local nrItems = cache.getNrItems()
-      local progressDialog, updateLabel, progressBar = progress_dialog.getDialog("Rebuilding cache...", "Removed from cache:", nil, nil, closeCallback)
-      progressBar.max = nrItems
-      progressDialog:show()
-      cache.buildCache(
-        function(itemName)
-          updateLabel.title = itemName or updateLabel.title
-          progressBar.value = item
-          item = item + 1
-        end)
-      iup.Destroy(progressDialog)
-      updateGui('playlist', 'searchsites', 'lyrics')
+      rebuildCache()
     end
     if removeUnusedLyrics == 1 then
       local ret = iup.Alarm('Warning',  'Are you sure you want to remove unused txt files from cache?\n' ..
@@ -345,6 +350,11 @@ function settingsButton:action()
         iup.Destroy(progressDialog)
         updateGui('playlist', 'searchsites', 'lyrics')
       end
+    end
+    if removeHtml == 1 then
+      os.removeFileType(LYRICS_DIR, 'html')
+      rebuildCache()
+      updateGui('playlist', 'searchsites', 'lyrics')
     end
   end
 end

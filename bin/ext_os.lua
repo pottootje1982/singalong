@@ -130,6 +130,13 @@ os.removeDir = function(path, doNotRemoveDirs)
   os.iterateDir(path, dirFunc, function(file) os.remove(file) end)
 end
 
+os.removeFileType = function(path, ext)
+  os.iterateDir(path, dirFunc,
+    function(file)
+      if os.getExtension(file) == ext then os.remove(file) end
+    end)
+end
+
 os.gatherFiles = function(path, ext)
   local res = {}
   os.iterateDir(path, nil,
