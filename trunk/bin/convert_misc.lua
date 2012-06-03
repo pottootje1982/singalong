@@ -3,8 +3,8 @@ require 'replace'
 local misc_replacements = {
   '(\\\\%c\\\\)[%s%c\\]+',      '%1', -- replace more than 2 latex newlines
   '([%d]+:[%d]+)',              '',   -- timing tags
-  '(\n)[%s]+([^%s]+)',          '%1%2',
-  '(%c)[%c]+',                  '%1',
+  '(\n)[ \t]+([^%s]+)',         '%1%2', -- remove trailing spaces
+  --'(%c)[%c]+',                  '%1',
   '%[([^]]+)%]',                '{%1}',
 
   -- HTML tags
