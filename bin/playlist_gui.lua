@@ -20,8 +20,12 @@ end
 
 function playlist:removeSelItem()
   local tracks = playlist_api.getPlaylist()
-  table.remove(tracks, self.lastSel)
-  self:modifySelection(math.max(self.lastSel-1, 1))
+  local selTrack, selTracks = getSelection()
+  for i, track in ipairs(selTracks) do
+    local index = table.find(tracks, track)
+    table.remove(tracks, index)
+  end
+  self:modifySelection(math.min(self.lastSel, #tracks))
   updateGui('title_bar', {true}, 'playlist', 'searchsites', {true}, 'lyrics')
 end
 
@@ -55,7 +59,7 @@ local playlistMenu = iup.menu {
       local ret, removeTxt, removeHtml = iup.GetParam("Remove txt/html files", iupParamCallback,
                   "Txt files: %b\n" ..
                   "Html files: %b\n",
-                  0, 0)
+                  1, 1)
 
       if ret == 0 or not ret then return end -- dialog was cancelled
 

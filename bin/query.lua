@@ -40,7 +40,7 @@ function executeQuery(search_site, mp3, keepTempFile)
     os.remove(fn)
   end
   if content and content:find(GOOGLE_BAN) then
-    return content, fn, GOOGLE_BAN
+    error(GOOGLE_BAN)
   end
   if not content or content == '' or content:find('Your search .* did not match any documents') then
       return nil, fn
@@ -58,8 +58,7 @@ local function restrictQuery(search_site, query)
 end
 
 local function queryGoogle(search_site, mp3)
-  local content, fn, err = executeQuery(search_site, mp3, config.keepTempFile)
-  if err == GOOGLE_BAN then return GOOGLE_BAN end
+  local content, fn = executeQuery(search_site, mp3, config.keepTempFile)
   if content then
     begin_str, end_str = content:find(google_delimiter)
 
@@ -229,45 +228,44 @@ local function waitInterval(interval)
   end
 end
 
-function downloadLyrics(mp3, customSearchSites, totalWaitTime, lastMp3)
-  local artist, title, customArtist, customTitle = mp3.artist, mp3.title, mp3.customArtist, mp3.customTitle
+local function downloadLyricsAtSite(mp3, search_site, totalWaitTime, lastMp3, lastSite)
+  local beginTime = os.clock()
+  local info = cache.scanCache(mp3, search_site)
+  local lyr
+  if info and info.txt then
+    print('Lyrics were already downloaded, delete them first if you want to redownload')
+    return info.txt
+  else
+    queryGoogle(search_site, mp3)
+  end
+  lyr = extractLyrics(search_site, mp3)
 
-  --print(customArtist or artist, customTitle or title, ":")
+  if lyr then
+    print('Found lyrics for ' .. mp3.artist .. ' - ' .. mp3.title .. ' at: ' .. search_site.site)
+  end
+
+    -- determine time that we wasted with request() and rest of processing,
+  -- so we can subtract this from waitInterval() below
+  local subtractTime = os.clock() - beginTime
+
+  if totalWaitTime and
+    not (lastMp3 and
+      ((config.stopAfterFirstHit and lyr) or
+      lastSite)) then
+        waitInterval(totalWaitTime - subtractTime)
+  end
+  return lyr
+end
+
+function downloadLyrics(mp3, customSearchSites, totalWaitTime, lastMp3)
   for index, search_site in pairs(customSearchSites) do
     -- pass site name for progress bar update
     if coroutine.running() then
       coroutine.yield(search_site.site)
     end
-    local beginTime = os.clock()
-    local info = cache.scanCache(mp3, search_site)
-    if not (info and info.txt) then
-      local res = queryGoogle(search_site, mp3)
-      if res then
-        return res
-      end
-    end
-    local lyr = extractLyrics(search_site, mp3)
 
-    -- determine time that we wasted with request() and rest of processing,
-    -- so we can subtract this from waitInterval() below
-    local subtractTime = os.clock() - beginTime
+    local lyr = downloadLyricsAtSite(mp3, search_site, totalWaitTime, lastMp3, index == #customSearchSites)
 
-    if totalWaitTime and
-      not (lastMp3 and
-        ((config.stopAfterFirstHit and lyr) or
-        (index == #customSearchSites))) then
-          waitInterval(totalWaitTime - subtractTime)
-    end
-
-    if config.stopAfterFirstHit then
-      if lyr then
-        print('found: ', search_site.site, '\n\n')
-        return
-      end
-    else
-      print('\nsite ' .. index .. ': ' .. search_site.site)
-      print(lyr and lyr:sub(1,200))
-    end
+    if config.stopAfterFirstHit and lyr then return end
   end
-  return
 end
