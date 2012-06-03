@@ -110,7 +110,8 @@ local html_tags_to_ascii =
 
 html_newlines_to_latex =
 {
-  '<br%s*/*>',     [[\\]],
+  '<br%s*/*>%s+',  '\n',
+  --'<br%s*/*>',     '\n',
 }
 
 local function convertHtmlSymbolsToAscii(str)

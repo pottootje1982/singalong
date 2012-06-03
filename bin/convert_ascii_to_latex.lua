@@ -6,7 +6,7 @@ require 'replace'
 -- to the correct tag
 local html_ascii_to_latex =
 {
-    [[%c]], [[]],
+    [[%c]], [[\\]],
     [[&]],  [[\&]],                   -- 38
     [[%^]], [[\^{}]],                 -- 94
     [[_]],  [[\_]],                   -- 95
