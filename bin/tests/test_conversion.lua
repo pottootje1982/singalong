@@ -34,4 +34,3 @@ function TestConversion:testWhiteSpace()
   assert(test:match('^%s*$'))
 end
 
-TestConversion:testConvertHtmlToAscii()
