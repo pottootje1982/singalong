@@ -82,10 +82,6 @@ function generateSongbook(tracks, fileName)
   for index, track in ipairs(tracks) do
     lyrics = query.retrieveLyrics(track)
 
-    if lyrics == query.GOOGLE_BAN then
-      print('google ban')
-      break
-    end
     if lyrics then
       local needspace = config.avoidPageBreaks and string.format([[\Needspace*{%d\baselineskip}{]], string.count(lyrics, [[\\]])) or ''
       local heading = needspace .. '\\chapter{' .. getHeading(track) .. '}\n\\noindent\n'

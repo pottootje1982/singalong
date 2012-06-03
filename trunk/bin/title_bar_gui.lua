@@ -191,11 +191,8 @@ function downloadLyrics()
       end
 
       -- arguments customArtist and customTitle are non-nil if you want to specify custom query
-      message = query.downloadLyrics(mp3, selSites, totalWaitTime, lastMp3)
-      if message == query.GOOGLE_BAN then
-        closeCallback()
-        break
-      end
+      query.downloadLyrics(mp3, selSites, totalWaitTime, lastMp3)
+
       -- not that i is not always the correct index, as we're dealing with selMp3s
       -- which might be a subset of playlist tracks
       playlist_gui.widget:updateItem(nil, mp3)
@@ -215,12 +212,15 @@ function downloadLyrics()
   local function endFunc()
     iup.Destroy(progressDialog)
     updateGui('playlist', 'searchsites', 'lyrics')
-    if message == query.GOOGLE_BAN then
+  end
+  local function errorCallback(errorMessage)
+    if errorMessage:find(query.GOOGLE_BAN) then
       iup.Message('Warning', 'Google banned you, try increasing the wait time!\nAfter you click OK, you will be redirected to a page were you have\nto solve the CAPTCHA assignment.')
       showCaptchaAssignment()
+      return true
     end
   end
-  downloadCo = app.addCo(routineFunc, resumeFunc, endFunc)
+  downloadCo = app.addCo(routineFunc, resumeFunc, endFunc, errorCallback)
 end
 
 function downloadLyricsButton:action()

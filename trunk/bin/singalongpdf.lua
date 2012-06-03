@@ -99,10 +99,6 @@ function generateSongbook(tracks, fileName)
 
   for index, track in ipairs(tracks) do
     lyrics = query.retrieveLyrics(track)
-    if lyrics == query.GOOGLE_BAN then
-      print('google ban')
-      break
-    end
     if lyrics then
       track.lyrics = lyrics
       table.insert(existingMp3s, track)

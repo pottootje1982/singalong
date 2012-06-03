@@ -11,10 +11,10 @@ function application:application()
   self.coroutines = {}
 end
 
-function application:addCo(func, resumeFunc, endFunc)
+function application:addCo(func, resumeFunc, endFunc, errorCallback)
   if not APPLOADED then func() return end
   local co = coroutine.create(func)
-  table.insert(self.coroutines, {co=co, resume=resumeFunc, endFunc = endFunc})
+  table.insert(self.coroutines, {co=co, resume=resumeFunc, endFunc = endFunc, errorCallback = errorCallback})
   return co
 end
 
@@ -41,7 +41,9 @@ function application:tick()
     if coroutine.status(entry.co) ~= 'dead' then
       local res = {coroutine.resume(entry.co)}
       if not res[1] then
-        iup.Message('Warning', string.format('Error in coroutine %d: %s', i, res[2]))
+        local handled
+        if entry.errorCallback then handled = entry.errorCallback(res[2]) end
+        if not handled then iup.Message('Warning', string.format('Error in coroutine %d: %s', i, res[2])) end
         table.insert(routinesToRemove, entry.co)
       end
 
@@ -63,8 +65,8 @@ end
 
 appInstance = application()
 
-function addCo(func, resumeFunc, endFunc)
-  return appInstance:addCo(func, resumeFunc, endFunc)
+function addCo(...)
+  return appInstance:addCo(...)
 end
 
 function removeCo(co)
