@@ -1,6 +1,7 @@
 module('searchsites_gui', package.seeall)
 
 require 'list'
+require 'lyrics_gui'
 
 class 'siteslist' (list)
 
@@ -136,8 +137,7 @@ function siteslist:update(updatePos)
 
     -- White is default color
     self.c['bgcolor' .. i .. ':1'] = WHITE
-    if lyrics_gui
-    .htmlToggle.value == 'ON' then
+    if lyrics_gui.htmlToggle.value == 'ON' then
       if htmlFile then
         self.c['bgcolor' .. i .. ':1'] = GREEN
         if not txtFile then

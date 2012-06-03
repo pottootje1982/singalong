@@ -3,9 +3,9 @@ require 'cache'
 require 'playlist_api'
 require 'singalongpdf'
 
-TestSingalongPdf = {}
+_TestSingalongPdf = {}
 
-function TestSingalongPdf:testGenerateSongbook()
+function _TestSingalongPdf:testGenerateSongbook()
   local tracks = playlist_api.gatherMp3Info(F(system.getExecutablePath(), 'verukkelijke 715 zang.m3u'))
   tracks = {tracks[1], tracks[2], tracks[3], tracks[4]}
   local searchSite = search_sites[1]

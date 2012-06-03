@@ -49,5 +49,6 @@ function lyricsMultiLine:k_any( key, press)
 end
 
 function update(searchIndex)
+  lyrics_gui.saveLyricsButton.active = active
   lyricsMultiLine:updateLyrics(searchIndex)
 end
