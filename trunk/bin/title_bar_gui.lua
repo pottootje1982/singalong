@@ -390,7 +390,6 @@ widget = iup.hbox
 function update(playlistModified)
   local tracks = playlist_api.getPlaylist()
   local active = (tracks and #tracks > 0) and 'YES' or 'NO'
-  lyrics_gui.saveLyricsButton.active = active
   sortButton.active = active
   downloadLyricsButton.active = active
   createSongbookButton.active = active

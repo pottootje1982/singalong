@@ -42,7 +42,7 @@ function saveMp3Table(fn, mp3Table)
   if mp3Table and #mp3Table > 0 and fn then
     table.saveToFile(os.getFileWithoutExt(fn) .. '.sing', mp3Table)
   end
-  updateGui('title_bar')
+  updateGui('title_bar', 'lyrics')
 end
 
 

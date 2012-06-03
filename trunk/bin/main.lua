@@ -147,7 +147,7 @@ if args[1] then
 end
 
 if APPLOADED then
-  updateGui('title_bar')
+  updateGui('title_bar', 'lyrics')
 
   mainDialog:show()
 
