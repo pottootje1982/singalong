@@ -21,6 +21,7 @@ local configDefaults = {
   minWait = 5.000000,
   pdfGenerator = 'Singalong pdf',
   miktexDir = [[c:\miktex]],
+  audioPlayerLocation = [[]],
 }
 
 local function createDefaultConfig()

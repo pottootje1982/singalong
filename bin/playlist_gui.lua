@@ -101,12 +101,34 @@ local playlistMenu = iup.menu {
     end;
   },
   iup.item {
-    title = "Play on youtube";
+    title = "Play on youtube",
     action = function(self)
       widget:playOnYoutube()
-    end;
+    end
+  },
+  iup.item {
+    title = "Play in audio player",
+    action = function(self)
+      local selTrack, selTracks = getSelection()
+      playInAudioPlayer(selTracks)
+    end
   },
 }
+
+function playInAudioPlayer(selTracks)
+  local args = ''
+  for i, track in ipairs(selTracks) do
+    local playlistEntry = track.playlistEntry
+    if playlistEntry then
+      local playlistEntry, track, pathEntry = string.match(playlistEntry, playlist_api.M3U_ENTRY_MATH)
+      args = string.format('%s %q', args, pathEntry)
+    end
+  end
+  if not string.isStringEmptyOrSpace(args) then
+    local path, file = os.getPath(config.audioPlayerLocation)
+    os.shellExecute(args, file, nil, path)
+  end
+end
 
 function playlist:queryGoogle(show)
   local selMp3, selMp3s = getSelection()

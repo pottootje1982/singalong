@@ -18,10 +18,7 @@
 -- font sizes for singalong pdf
 -- album column (so read mp3 tag)
 -- remove duplicates in playlist
--- play (selected) songs with audio player
 
--- NICE TO HAVE:
--- playback of playlist
 
 require "misc"
 require "app"

@@ -130,9 +130,8 @@ function list:swapItems(prop, line1, line2)
   end
 end
 
-
-
 function list:modifySelection(startSelection, endSelection, dontCallback)
+  if not self.lastFocus then self.lastFocus = startSelection end
   if startSelection then
     self.lastSel = endSelection or startSelection or 1 -- The 1 is necessary in case you click on column, then startSelection & endSelection will be nil
   end
