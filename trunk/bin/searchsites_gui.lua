@@ -113,6 +113,11 @@ function siteslist:k_any(key)
   end
 end
 
+local RED = '255 150 150'
+local YELLOW = '255 255 150'
+local GREEN = '150 255 150'
+local WHITE = '255 255 255'
+
 function siteslist:update(updatePos)
   local found
   local selMp3 = playlist_gui.getSelection()
@@ -129,25 +134,28 @@ function siteslist:update(updatePos)
     local htmlFile, _, info = query.getLyrics('html', search_site, selMp3 or {})
     local txtFile, _, info = query.getLyrics('txt', search_site, selMp3 or {})
 
-    if lyrics_gui.htmlToggle.value == 'ON' and htmlFile and not txtFile then
-      -- display item in red if html file is present and no txt could be found (only when htmlToggle is on)
-      -- Since getLyrics is implemented with cache, this case can never happen because html item is only set when txt file was found (see cache.buildCache)
-      self.c['bgcolor' .. i .. ':1'] = '255 150 150'
-    elseif (lyrics_gui.htmlToggle.value == 'ON' and htmlFile or txtFile) then
+    -- White is default color
+    self.c['bgcolor' .. i .. ':1'] = WHITE
+    if lyrics_gui
+    .htmlToggle.value == 'ON' then
+      if htmlFile then
+        self.c['bgcolor' .. i .. ':1'] = GREEN
+        if not txtFile then
+          -- display item in red if html file is present and no txt could be found (only when htmlToggle is on)
+          -- Since getLyrics is implemented with cache, this case can never happen because html item is only set when txt file was found (see cache.buildCache)
+          self.c['bgcolor' .. i .. ':1'] = RED
+        end
+      end
+    else
       if info and not info.ignore then
         if not found then found = i end
         -- display item in green if html and txt were found
-        self.c['bgcolor' .. i .. ':1'] = '150 255 150'
+        self.c['bgcolor' .. i .. ':1'] = GREEN
       elseif info and info.ignore then
         -- display item in yellow if html and txt were found, but not selected for songbook
-        self.c['bgcolor' .. i .. ':1'] = '255 255 150'
+        self.c['bgcolor' .. i .. ':1'] = YELLOW
       else
-        -- display item in white if nothing was found
-        self.c['bgcolor' .. i .. ':1'] = '255 255 255'
       end
-    else
-      -- display item in white if nothing was found
-      self.c['bgcolor' .. i .. ':1'] = '255 255 255'
     end
   end
   self.c.redraw= 'yes'
