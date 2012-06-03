@@ -8,6 +8,8 @@ require 'playlist_helpers'
 local playlistFileName
 local playlist = {}
 
+M3U_ENTRY_MATH = "(#EXTINF:[%d]+,([^%c]*)\n([^%c]*)\n)"
+
 local function setPlaylistFileName(fn)
   if mainDialog then mainDialog.title = 'SinGaLonG' .. ' - ' .. tostring(fn) end
   playlistFileName = fn
@@ -211,7 +213,7 @@ function gatherMp3Info(fn)
   assert(file, string.format("File %q doesn't exist!", fn))
   content = file:read("*a")
   tracks = {}
-  for playlistEntry, track, pathEntry in (string.gmatch(content, "(#EXTINF:[%d]+,([^%c]*)\n([^%c]*)\n)")) do
+  for playlistEntry, track, pathEntry in (string.gmatch(content, M3U_ENTRY_MATH)) do
     local artist, title
     artist, title = playlist_helpers.extractArtistTitle(track)
     if not artist or not title then

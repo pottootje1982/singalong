@@ -305,22 +305,25 @@ local function rebuildCache()
 end
 
 function settingsButton:action()
-  local miktexDirModified
+  local miktexDirModified, audioPlayerLocationModified
   local function param_action(dialog, param_index)
     if (param_index == 0) then
       miktexDirModified = true
+    elseif param_index == 1 then
+      audioPlayerLocationModified = true
     elseif (param_index == -2) then
       setDialogIcon(dialog)
     end
     return 1
   end
-  local ret, miktexDir, rescanCache, removeUnusedLyrics, removeHtml =
+  local ret, miktexDir, audioPlayerLocation, rescanCache, removeUnusedLyrics, removeHtml =
   iup.GetParam("Settings", param_action,
                   "Miktex location: %f[DIR|*.*|" .. config.miktexDir .. "|NO|NO]\n" ..
+                  "Audio player location: %f[FILE|*.exe|" .. config.audioPlayerLocation .. "|NO|NO]\n" ..
                   "Rebuild cache: %b\n" ..
                   "Remove unused txt files from cache: %b\n" ..
                   "Remove html files from cache: %b\n",
-                  config.miktexDir, 0, 0, 0)
+                  config.miktexDir, config.audioPlayerLocation, 0, 0, 0)
 
   if ret == 0 or not ret then return end -- dialog was cancelled
 
@@ -330,6 +333,9 @@ function settingsButton:action()
     miktexDir = miktexDir:gsub('\n', '')
     if miktexDirModified and os.checkIfFileExists(miktex.getMiktexDir(miktexDir), 'texify.exe', ' Go to http://www.miktex.org to obtain Miktex and make sure the Miktex location is set correctly in the Settings Dialog') then
       config.miktexDir = miktexDir
+    end
+    if audioPlayerLocationModified then
+      config.audioPlayerLocation = audioPlayerLocation
     end
     if rescanCache == 1 then
       rebuildCache()

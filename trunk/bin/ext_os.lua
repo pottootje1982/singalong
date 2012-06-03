@@ -43,7 +43,7 @@ os.copy = function(fn1, fn2)
 end
 
 os.getPath = function(fn)
-  return fn:match('^(.-)\\+[^\\]+$')
+  return fn:match('^(.-)\\+([^\\]+)$')
 end
 
 os.exists = function(fn)
