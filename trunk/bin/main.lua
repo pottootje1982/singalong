@@ -3,12 +3,10 @@
 -- BUGS:
 
 -- mem leak
--- font sizes for singalong pdf
 -- remove \\ from standard ascii files, replace with newlines
 -- progress bar multiple site selection klopt nog niet (1 song)
 -- why do we need to ignore libcmtd.lib in singalong.vcproj for release???
 -- progress bar in download dialog doesn't proceed in case wait time was set to 0
--- add to playlist with ctrl-N
 -- change playlist while downloading shouldn't be possible (kill coroutines when loading new playlist. Also the cache.rescanPlaylist() routine throws errors when loading new list
 -- never overwrite .sing file, ask if opening .m3u: open .sing instead?
 
@@ -17,9 +15,10 @@
 -- check if solving CAPTCHA works
 
 -- FEATURES
+-- font sizes for singalong pdf
 -- album column (so read mp3 tag)
 -- remove duplicates in playlist
--- settings dialog: remove all html files
+-- play (selected) songs with audio player
 
 -- NICE TO HAVE:
 -- playback of playlist

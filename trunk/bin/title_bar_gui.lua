@@ -4,8 +4,10 @@ require 'misc'
 require 'playlist_api'
 require 'progress_dialog'
 require 'icon'
+require 'add_icon'
 
 local newPlaylistButton = iup.button{title="", image = 'IUP_FileNew', tip="New playlist (ctr-n)"}
+local addToPlaylistButton = iup.button{title="", image = addIcon, tip="Add to current playlist"}
 local openPlaylistButton = iup.button{title="", image = 'IUP_FileOpen', tip="Open playlist (ctr-o)"}
 local savePlaylistButton = iup.button{title="", image = 'IUP_FileSave', tip="Save playlist (ctr-s)"}
 local downloadLyricsButton = iup.button{tip="Download lyrics (ctr-d)", image=downloadIcon, active = 'NO'}
@@ -17,6 +19,10 @@ local AVG_REQUEST_TIME = 0.7
 function newPlaylistButton:action()
   playlist_api.makeNewPlaylist()
   return iup.DEFAULT
+end
+
+function addToPlaylistButton:action()
+  playlist_api.makeNewPlaylist(true)
 end
 
 function openPlaylistButton:action()
@@ -365,6 +371,7 @@ widget = iup.hbox
         expand="horizontal",
 
         newPlaylistButton,
+        addToPlaylistButton,
         openPlaylistButton,
         savePlaylistButton,
         sortButton,

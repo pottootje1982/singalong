@@ -61,7 +61,7 @@ local function showNewPlaylistDialog()
   end
 end
 
-function makeNewPlaylist()
+function makeNewPlaylist(add)
   local sample = [[The Beatles - Yellow Submarine
 Neil Young - Old man
 ]]
@@ -73,16 +73,20 @@ Neil Young - Old man
 
   if not playlistEntries then return end
 
-  local playlistName = showNewPlaylistDialog()
-  if not playlistName then return end
-  if os.getExtension(playlistName) ~= 'sing' then playlistName = playlistName .. '.sing' end
-  if not os.isFileWritable(playlistName) then iup.Message('Warning', string.format('Cannot write to file "%s"! Make sure it is not write protected.', playlistName)) return end
+  if add then
+    addToPlaylist(playlistEntries)
+  else
+    local playlistName = showNewPlaylistDialog()
+    if not playlistName then return end
+    if os.getExtension(playlistName) ~= 'sing' then playlistName = playlistName .. '.sing' end
+    if not os.isFileWritable(playlistName) then iup.Message('Warning', string.format('Cannot write to file "%s"! Make sure it is not write protected.', playlistName)) return end
 
-  -- Save currently loaded mp3 table
-  saveMp3Table()
-  -- Save new custom playlist
-  saveMp3Table(playlistName, playlistEntries)
-  openPlaylist(playlistName, true, table.isEmpty(playlistEntries))
+    -- Save currently loaded mp3 table
+    saveMp3Table()
+    -- Save new custom playlist
+    saveMp3Table(playlistName, playlistEntries)
+    openPlaylist(playlistName, true, table.isEmpty(playlistEntries))
+  end
 end
 
 local function showOpenPlaylistDialog()
