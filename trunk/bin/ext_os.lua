@@ -81,18 +81,19 @@ os.writeTo = function(fn, content, binary)
   file:close()
 end
 
-os.shellExecute = function(fileName, command, action, dir)
+os.shellExecute = function(fileName, command, action, dir, doNotWait)
+  local executeFunc = doNotWait and system.shellExecute or system.shellExecuteWait
   if command == 'html' then -- in case an url needs to be opened
     if fileName and fileName ~= '' then
-      system.shellExecuteWait(fileName, '', action)
+      executeFunc(fileName, '', action)
     end
   else -- in case an file has to be opened
     if command or os.exists(fileName) then
       if action == 'select' then
         local selectCommand = string.format('/select,"%s"', fileName)
-        system.shellExecuteWait('explorer.exe', selectCommand, 'open')
+        executeFunc('explorer.exe', selectCommand, 'open')
       else
-        system.shellExecuteWait(command or 'explorer.exe', fileName, 'open', dir)
+        executeFunc(command or 'explorer.exe', fileName, 'open', dir)
       end
     else
       iup.Message('Warning', string.format([["%s" cannot be opened!]], fileName))

@@ -125,8 +125,13 @@ function playInAudioPlayer(selTracks)
     end
   end
   if not string.isStringEmptyOrSpace(args) then
+    if not os.exists(config.audioPlayerLocation) then
+      local errorMessage = string.format("Audio player %q couldn't be found!", config.audioPlayerLocation)
+      iup.Message('Error', errorMessage)
+      return
+    end
     local path, file = os.getPath(config.audioPlayerLocation)
-    os.shellExecute(args, file, nil, path)
+    os.shellExecute(args, config.audioPlayerLocation, nil, nil, true)
   end
 end
 
