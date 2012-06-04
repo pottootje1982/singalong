@@ -25,8 +25,9 @@ int lua_shellExecute(lua_State *L)
   const char* command = lua_tostring(L,1);
   const char* args = lua_tostring(L,2);
   const char* action = lua_tostring(L, 3);
+  const char* dir = lua_tostring(L, 4);
 
-  HINSTANCE r = ShellExecute(NULL, action, command, strcmp(args, "") == 0 ? NULL : args, NULL, SW_SHOWNORMAL);
+  HINSTANCE r = ShellExecute(NULL, action, command, strcmp(args, "") == 0 ? NULL : args, dir, SW_SHOWNORMAL);
   DWORD e = GetLastError();
 
   lua_pushlightuserdata(L, (void*)r);
