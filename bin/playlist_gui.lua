@@ -121,6 +121,7 @@ function playInAudioPlayer(selTracks)
     local playlistEntry = track.playlistEntry
     if playlistEntry then
       local playlistEntry, track, pathEntry = string.match(playlistEntry, playlist_api.M3U_ENTRY_MATH)
+      pathEntry = os.makeAbsolute(pathEntry, playlist_api.getPlaylistName())
       args = string.format('%s %q', args, pathEntry)
     end
   end
