@@ -11,11 +11,13 @@ function TestPlaylistGui:testQueryGoogle()
   assert(content:match(playlist_gui.YOUTUBE_MATCH):match('http://www.youtube.com'))
 end
 
+--[[
 function TestPlaylistGui:testLaunchYoutube()
 	playlist_api.setPlaylist({{artist='beatles', title='hey jude'}})
 	playlist_gui.widget:modifySelection(1, 1, true)
 	playlist_gui.widget:playOnYoutube(true)
 end
+--]]
 
 function TestPlaylistGui:testFileStringToTable()
   local res = playlist_gui.fileStringToTable([[a

@@ -93,7 +93,7 @@ end
 
 local function showOpenPlaylistDialog()
   local filedlg = iup.filedlg{dialogtype = "OPEN", title = "Open playlist",
-                        extfilter = "All Playlist Types (*.sing; *.m3u; *.txt)|*.sing;*.m3u;*.txt|SingAlonG Playlists (*.sing)|*.sing;|Playlists (*.m3u)|*.m3u;|Text Files (*.txt)|*.txt;|"}
+                        extfilter = "All Playlist Types (*.sing; *.m3u; *.m3u8; *.txt)|*.sing;*.m3u;*.m3u8;*.txt|SingAlonG Playlists (*.sing)|*.sing;|Playlists (*.m3u)|*.m3u;|m3u8 Playlists (*.m3u8)|*.m3u8;|Text Files (*.txt)|*.txt;|"}
   filedlg:popup (iup.ANYWHERE, iup.ANYWHERE)
   if filedlg.status == '0' then
     return filedlg.value
@@ -110,7 +110,7 @@ function openPlaylist(fn, newSingFile, clearPlaylist)
       local reloadM3u = false
       local strippedFile, ext = os.getFileWithoutExt(fn)
       local singFile = strippedFile .. '.sing'
-      if ext == '.m3u' and os.exists(singFile) then
+      if (ext == '.m3u' or ext=='.m3u8') and os.exists(singFile) then
         local ret = iup.Alarm('Warning', 'Do you want to discard of copy "' .. strippedFile .. '"?', 'Yes', 'No', 'Cancel')
         if ret == 1 then -- Ok
           reloadM3u = true
@@ -124,7 +124,7 @@ function openPlaylist(fn, newSingFile, clearPlaylist)
         saveMp3Table()
       end
       local tracks
-      if ext == '.m3u' then
+      if ext == '.m3u' or ext == '.m3u8' then
         if reloadM3u then
           tracks = gatherMp3Info(fn)
         end

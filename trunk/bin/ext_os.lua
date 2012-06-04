@@ -51,8 +51,21 @@ end
 
 os.getDrive = function(fn)
   local drive = fn:match('^(%w%:)\\')
-  if string.isStringEmptyOrSpace(path) then drive = nil end
+  if string.isStringEmptyOrSpace(drive) then drive = nil end
   return drive
+end
+
+os.makeAbsolute = function(fn, absPath)
+  local path, file = os.getPath(fn)
+  local drive = os.getDrive(fn)
+  if not drive then
+    if not path then
+      fn = F(os.getPath(absPath), fn)
+    else
+      fn = os.getDrive(absPath) .. fn
+    end
+  end
+  return fn
 end
 
 os.exists = function(fn)
