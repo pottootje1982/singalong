@@ -1,5 +1,7 @@
 module('lyrics_gui', package.seeall)
 
+require 'searchsites_gui'
+
 lyricsFileNameLabel = iup.label{title = "", expand = "HORIZONTAL"}
 
 saveLyricsButton = iup.button

@@ -36,3 +36,10 @@ function TestPlaylistGui:testDropFiles()
   assertEquals(tracks[2].artist, "neil young")
   assertEquals(tracks[2].title, "unknown legend")
 end
+
+function TestPlaylistGui:playInAudioPlayer()
+  playlist_api.openPlaylist([[e:\sample music\sample_rel.sing]])
+  playlist_gui.playInAudioPlayer(playlist_api.getPlaylist())
+end
+
+--TestPlaylistGui:playInAudioPlayer()
