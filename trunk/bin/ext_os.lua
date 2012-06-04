@@ -49,6 +49,12 @@ os.getPath = function(fn)
   return path, file
 end
 
+os.getDrive = function(fn)
+  local drive = fn:match('^(%w%:)\\')
+  if string.isStringEmptyOrSpace(path) then drive = nil end
+  return drive
+end
+
 os.exists = function(fn)
   if fn then
     f = io.open(fn, 'r')

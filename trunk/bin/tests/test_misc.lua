@@ -21,4 +21,16 @@ function TestMisc:testGetNoFile()
   assertEquals(path, [[c:\temp]])
 end
 
-TestMisc:testGetNoFile()
+function TestMisc:testGetDrive()
+  local drive = os.getDrive([[c:\temp]])
+  assertEquals(drive, 'c:')
+  drive = os.getDrive([[C:\temp]])
+  assertEquals(drive, 'C:')
+end
+
+function TestMisc:testGetNoDrive()
+  local drive = os.getDrive([[\temp]])
+  assert(not drive)
+  drive = os.getDrive([[test.txt]])
+  assert(not drive)
+end
