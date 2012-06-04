@@ -43,7 +43,10 @@ os.copy = function(fn1, fn2)
 end
 
 os.getPath = function(fn)
-  return fn:match('^(.-)\\+([^\\]+)$')
+  local path, file = fn:match('^(.-)\\*([^\\]*)$')
+  if string.isStringEmptyOrSpace(path) then path = nil end
+  if string.isStringEmptyOrSpace(file) then file = nil end
+  return path, file
 end
 
 os.exists = function(fn)
