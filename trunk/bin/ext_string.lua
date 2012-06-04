@@ -7,5 +7,5 @@ string.count = function(str, occurrence)
 end
 
 string.isStringEmptyOrSpace = function(str)
-  return str:match('^[%s%c]*$')
+  return str and str:match('^[%s%c]*$')
 end

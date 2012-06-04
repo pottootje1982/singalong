@@ -130,8 +130,9 @@ function playInAudioPlayer(selTracks)
       iup.Message('Error', errorMessage)
       return
     end
-    local path, file = os.getPath(config.audioPlayerLocation)
-    os.shellExecute(args, config.audioPlayerLocation, nil, nil, true)
+    local _, file = os.getPath(config.audioPlayerLocation)
+    local path = os.getPath(playlist_api.getPlaylistName())
+    os.shellExecute(args, config.audioPlayerLocation, nil, path, true)
   end
 end
 

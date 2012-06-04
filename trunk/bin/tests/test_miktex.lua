@@ -9,5 +9,3 @@ function TestMiktex:testViewTexFile()
     assert(os.exists(F(system.getExecutablePath(), 'tests\\test.pdf')))
   end
 end
-
-TestMiktex:testViewTexFile()
