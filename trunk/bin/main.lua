@@ -7,7 +7,6 @@
 -- progress bar in download dialog doesn't proceed in case wait time was set to 0
 -- change playlist while downloading shouldn't be possible (kill coroutines when loading new playlist. Also the cache.rescanPlaylist() routine throws errors when loading new list
 -- never overwrite .sing file, ask if opening .m3u: open .sing instead?
--- cannot confirm with enter in iup.getParam settings dialog (a newline will be written in string of miktex location or audio player location)
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
@@ -23,6 +22,7 @@ require "cache"
 require "query"
 require "playlist_gui"
 require "searchsites_gui"
+require "iup_getparam"
 require "lyrics_gui"
 require "miktex"
 require "singalongpdf"
