@@ -290,7 +290,6 @@ function playlist:update()
     self.c[i .. ':1'] = mp3.customArtist or mp3.artist
     self.c[i .. ':2'] = mp3.customTitle or mp3.title
     self.c[i .. ':3'] = mp3.id3 and mp3.id3.album
-    print(self.c[i .. ':3'], self.c[i .. ':2'])
     self:updateItem(i, mp3, true)
   end
 
