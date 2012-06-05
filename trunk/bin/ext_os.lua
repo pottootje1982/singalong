@@ -1,3 +1,5 @@
+require 'lfs'
+
 function verify(succ, mess)
   if not succ then
     local debugMessage = '\n' .. debug.traceback()
@@ -69,17 +71,8 @@ os.makeAbsolute = function(fn, absPath)
 end
 
 os.exists = function(fn)
-  if fn then
-    f = io.open(fn, 'r')
-    if f then
-      f:close()
-      return true
-    else
-      return false
-    end
-  else
-    return false
-  end
+  local attribs = lfs.attributes(fn)
+  return attribs ~= nil
 end
 
 os.isFileWritable = function(fn)

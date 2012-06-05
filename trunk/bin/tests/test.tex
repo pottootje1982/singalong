@@ -9,10 +9,19 @@
 \pagestyle{plain} % No page headers
 
 \titleclass{\chapter}{straight} % No page break before chapter heading:
-\titleformat{\chapter}[hang] % Remove 'Chapter' label before chapter headings
-{\normalfont\small\bfseries}{\thechapter}{10pt}{\small} % Change chapter fonts/sizes
+\titleformat{\chapter}[hang]
+  {\normalfont\sffamily\huge\bfseries}
+  {\thechapter}{5pt}{\Huge}
 \titlespacing{\chapter} % Change chapter spacing
 {0pt}{10pt}{5pt}
+
+\renewcommand\Huge{
+   \@setfontsize\Huge{40.5pt}{12pt}
+   \abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
+   \abovedisplayshortskip \z@ \@plus3\p@
+   \belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}\normalsize
 
 \renewcommand{\cftchapnumwidth}{3em} % A little more space for heading numbers in TOC
 \setlength{\cftbeforechapskip}{0em} % Position TOC entries closer to each other
