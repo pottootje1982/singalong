@@ -85,19 +85,25 @@ function table.ifilter(tab, func)
   return table.filter(tab, func, ipairs)
 end
 
-table.find = function(tab, key, iterator)
-  for _, entry in (iterator or pairs)(tab) do
-    if type(key) == 'function' then
-      if key(_, entry) then return _, entry end
-    else
-      if entry == key then return _, entry end
-    end
+local function compare(operand, i, entry)
+  if type(operand) == 'function' then
+    if operand(i, entry) then return i, entry end
+  else
+    if entry == operand then return i, entry end
   end
-  return nil
 end
 
-table.ifind = function(tab, key)
-  return table.find(tab, key, ipairs)
+
+table.find = function(tab, operand)
+  for i, entry in pairs(tab) do
+    if compare(operand, i, entry) then return i, entry end
+  end
+end
+
+table.ifind = function(tab, operand, from)
+  for i = from or 1, #tab do
+    if compare(operand, i, tab[i]) then return i, tab[i] end
+  end
 end
 
 table.copy = function(tab, iterator)
@@ -128,8 +134,10 @@ end
 
 table.equals = function(tab1, tab2)
   if #tab1 ~= #tab2 then return false end
-  for i, v in ipairs(tab1) do
-    if v ~= tab2[i] then return false end
+  for i, v in pairs(tab1) do
+    if type(v) == 'table' and type(tab2[i]) == 'table' then
+      if not table.equals(v, tab2[i]) then return false end
+    elseif v ~= tab2[i] then return false end
   end
   return true
 end
@@ -151,4 +159,22 @@ table.zeroConcat = function(tab, delimiter)
     res = res .. delimiter .. tab[i]
   end
   return res .. delimiter
+end
+
+table.removeDoubles = function(tab, func)
+  for i = 1, #tab do
+    local entry = tab[i]
+    local foundI, foundEntry = true, nil
+    local compareFunc = function(i,v)
+      if func then return func(entry, v)
+      else return v == entry end
+    end
+    while foundI and tab[i+1] do
+      foundI, foundEntry = table.ifind(tab, compareFunc, i+1)
+      if foundI then
+        table.remove(tab, foundI)
+      end
+    end
+  end
+  return tab
 end

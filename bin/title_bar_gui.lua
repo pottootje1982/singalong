@@ -12,6 +12,7 @@ local openPlaylistButton = iup.button{title="", image = 'IUP_FileOpen', tip="Ope
 local savePlaylistButton = iup.button{title="", image = 'IUP_FileSave', tip="Save playlist (ctr-s)"}
 local downloadLyricsButton = iup.button{tip="Download lyrics (ctr-d)", image=downloadIcon, active = 'NO'}
 local sortButton = iup.button{tip="Sort playlist", image='IUP_ToolsSortAscend', active = 'NO'}
+local removeDoublesButton = iup.button{tip="Remove doubles", image='IUP_ZoomActualSize', active = 'NO'}
 local createSongbookButton = iup.button{tip="Create songbook (ctr-b)", image = 'IUP_FileText', active = 'NO'}
 local settingsButton = iup.button{tip="Settings", image = 'IUP_ToolsSettings', alignment='ARIGHT'}
 local AVG_REQUEST_TIME = 0.7
@@ -48,6 +49,16 @@ end
 function sortButton:action()
   local tracks = playlist_api.getPlaylist()
   sortTracks(tracks)
+  updateGui('playlist', 'searchsites', 'lyrics')
+end
+
+function compareTracks(a,b)
+  return a.artist == b.artist and a.title == b.title
+end
+
+function removeDoublesButton:action()
+  local tracks = playlist_api.getPlaylist()
+  table.removeDoubles(tracks, compareTracks)
   updateGui('playlist', 'searchsites', 'lyrics')
 end
 
@@ -381,6 +392,7 @@ widget = iup.hbox
         openPlaylistButton,
         savePlaylistButton,
         sortButton,
+        removeDoublesButton,
         downloadLyricsButton,
         createSongbookButton,
         iup.label{title = "", expand = "HORIZONTAL"}, -- Tried to do this with iup.fill but this doesn't work...
@@ -391,6 +403,7 @@ function update(playlistModified)
   local tracks = playlist_api.getPlaylist()
   local active = (tracks and #tracks > 0) and 'YES' or 'NO'
   sortButton.active = active
+  removeDoublesButton.active = active
   downloadLyricsButton.active = active
   createSongbookButton.active = active
   savePlaylistButton.active = (playlistModified and tracks and #tracks > 0) and 'YES' or 'NO'
