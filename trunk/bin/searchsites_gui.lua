@@ -114,11 +114,6 @@ function siteslist:k_any(key)
   end
 end
 
-local RED = '255 150 150'
-local YELLOW = '255 255 150'
-local GREEN = '150 255 150'
-local WHITE = '255 255 255'
-
 function siteslist:update(updatePos)
   local found
   local selMp3 = playlist_gui.getSelection()

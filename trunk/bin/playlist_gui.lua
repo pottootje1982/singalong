@@ -2,6 +2,7 @@ module('playlist_gui', package.seeall)
 
 require 'list'
 require 'class'
+require 'playlist_helpers'
 
 class 'playlist' (list)
 
@@ -14,8 +15,10 @@ function playlist:playlist(params)
   self.c['0:0'] = 'Track'
   self.c['0:1'] = 'Artist'
   self.c['0:2'] = 'Title'
+  self.c['0:3'] = 'Album'
   self.c['alignment1'] = 'aleft'
   self.c['alignment2'] = 'aleft'
+  self.c['alignment3'] = 'aleft'
 end
 
 function playlist:removeSelItem()
@@ -118,23 +121,17 @@ local playlistMenu = iup.menu {
 function playInAudioPlayer(selTracks)
   local args = ''
   for i, track in ipairs(selTracks) do
-    local playlistEntry = track.playlistEntry
-    if playlistEntry then
-      local playlistEntry, track, pathEntry = string.match(playlistEntry, playlist_api.M3U_ENTRY_MATH)
-      pathEntry = os.makeAbsolute(pathEntry, playlist_api.getPlaylistName())
-      args = string.format('%s %q', args, pathEntry)
+    local file = track.file
+    if file then
+      args = string.format('%s %q', args, file)
     end
   end
-  if not string.isStringEmptyOrSpace(args) then
-    if not os.exists(config.audioPlayerLocation) then
-      local errorMessage = string.format("Audio player %q couldn't be found!", config.audioPlayerLocation)
-      iup.Message('Error', errorMessage)
-      return
-    end
-    local _, file = os.getPath(config.audioPlayerLocation)
-    local path = os.getPath(playlist_api.getPlaylistName())
-    os.shellExecute(args, config.audioPlayerLocation, nil, path, true)
-  end
+  assert(not string.isStringEmptyOrSpace(args), 'No files could be found from selection')
+  local errorMessage = string.format("Audio player %q couldn't be found!", config.audioPlayerLocation)
+  assert(os.exists(config.audioPlayerLocation), errorMessage)
+  local _, file = os.getPath(config.audioPlayerLocation)
+  local path = os.getPath(playlist_api.getPlaylistName())
+  os.shellExecute(args, config.audioPlayerLocation, nil, path, true)
 end
 
 function playlist:queryGoogle(show)
@@ -162,16 +159,8 @@ function playlist:queryGoogle(show)
   return content, fn
 end
 
-function fileStringToTable(fileList)
-  local result = {}
-  for line in fileList:gmatch('[^%c]+') do
-    table.insert(result, line)
-  end
-  return result
-end
-
 function playlist:dropFiles(fileList)
-  local files = fileStringToTable(fileList)
+  local files = playlist_helpers.fileStringToTable(fileList)
   assert(files)
   local newSongs = {}
   for i, file in ipairs(files) do
@@ -272,6 +261,13 @@ function playlist:onDraggingStopped(draggedItem, droppedOnItem)
   update()
 end
 
+function playlist:setRowColor(row, color)
+  for column = 1, self.c.numcol do
+    self.c['bgcolor' .. row .. ':' .. column] = color
+    column = column + 1
+  end
+end
+
 function playlist:updateItem(i, mp3, dontUpdate)
   -- Check if lyrics do not exist
   local tracks = playlist_api.getPlaylist()
@@ -280,13 +276,7 @@ function playlist:updateItem(i, mp3, dontUpdate)
     i = table.find(tracks, mp3)
   end
   exists = cache.IsTxtInCache(mp3)
-  if not exists then
-    self.c['bgcolor' .. i .. ':1'] = '255 150 150'
-    self.c['bgcolor' .. i .. ':2'] = '255 150 150'
-  else
-    self.c['bgcolor' .. i .. ':1'] = '255 255 255'
-    self.c['bgcolor' .. i .. ':2'] = '255 255 255'
-  end
+  self:setRowColor(i, exists and WHITE or RED)
   if not dontUpdate then
     iup.Update(self.c)
   end
@@ -299,6 +289,8 @@ function playlist:update()
     self.c[i .. ':0'] = tostring(i)
     self.c[i .. ':1'] = mp3.customArtist or mp3.artist
     self.c[i .. ':2'] = mp3.customTitle or mp3.title
+    self.c[i .. ':3'] = mp3.id3 and mp3.id3.album
+    print(self.c[i .. ':3'], self.c[i .. ':2'])
     self:updateItem(i, mp3, true)
   end
 
@@ -329,12 +321,13 @@ function update()
   widget:update()
 end
 
-widget = playlist({readonly = 'yes', minsize = '100x', numcol=2, markmode='lin', multiple='yes', autoredraw = 'yes', border = 'yes', numcol_visible=2, resizematrix = 'yes', })
+widget = playlist({readonly = 'yes', minsize = '100x', numcol=3, markmode='lin', multiple='yes', autoredraw = 'yes', border = 'yes', numcol_visible=2, resizematrix = 'yes', })
 
 function resize_cb()
   --widget.c.fittosize = 'columns'
   widget.c.fittotext = 'C1'
   widget.c.fittotext = 'C2'
+  widget.c.fittotext = 'C3'
 end
 
 function getSelection(trks)

@@ -1,11 +1,11 @@
---- A simple module to read ID3 tags from MP3 files. 
+--- A simple module to read ID3 tags from MP3 files.
 -- Supports ID3v1 tags and a (meaningful) subset of ID3v2 tags.
 -- @class module
 -- @name id3
 -- @author Michal Kottman
 -- @copyright 2011, released under MIT license
 
-local id3 = {}
+module('id3', package.seeall)
 
 local function textFrame(name)
 	return function (reader, info, frameSize)
@@ -37,7 +37,7 @@ end
 
 function isbitset(x, p)
 	local b = 2 ^ (p - 1)
-	return x % (b + b) >= b       
+	return x % (b + b) >= b
 end
 
 --- Read ID3 tags from MP3 file. First tries ID3v2 tags, then ID3v1 and returns those
@@ -48,20 +48,21 @@ end
 -- @return Table containing the metadata from ID3 tag, or nil.
 function id3.readtags(file)
 	if type(file) == 'string' then
-		file = assert(io.open(file, 'rb'))
+		file = io.open(file, 'rb')
+    if not file then return end
 	elseif type(file) ~= 'userdata' then
 		error('Expecting file or filename as #1, not '..type(file), 2)
 	end
 
 	local position = file:seek()
-	
+
 	local function decodeID3v2(reader)
 		local info = {}
 		local rb = reader.readByte
 		local version = reader.readInt(2)
 		local flags = rb()
 		local size = reader.readInt(4, 128)
-		
+
 		if isbitset(flags, 7) then
 			local mult = version >= 0x0400 and 128 or 256
 			local extendedSize = reader.readInt(4, mult)
@@ -82,7 +83,7 @@ function id3.readtags(file)
 		file:seek('set', position)
 		return info
 	end
-	
+
 	local function decodeID3v1(reader)
 		local info = {}
 		info.title = reader.readStr(30)
@@ -99,7 +100,7 @@ function id3.readtags(file)
 		else
 			info.comment = unpad(info.comment .. string.char(zero, track, genre))
 		end
-		
+
 		file:seek('end', -128 - 227)
 		local hdr = reader.readStr(4)
 		if hdr == "TAG+" then
@@ -108,11 +109,11 @@ function id3.readtags(file)
 			info.album = unpad(info.album .. reader.readStr(60))
 			-- some other tags omitted
 		end
-		
+
 		file:seek('set', position)
 		return info
 	end
-	
+
 	local function readByte()
 		local byte = assert(file:read(1), 'Could not read byte.')
 		return string.byte(byte)
@@ -134,25 +135,18 @@ function id3.readtags(file)
 		position = function() return file:seek() end,
 		skip = function(offset) file:seek('cur', offset) end
 	}
-	
+
 	-- try ID3v2
 	file:seek('set', 0)
 	local header = file:read(3)
 	if header == "ID3" then
 		return decodeID3v2(reader)
 	end
-	
+
 	-- try ID3v1
 	file:seek('end', -128)
 	header = file:read(3)
 	if header == "TAG" then
 		return decodeID3v1(reader)
 	end
-end
-
-if not ... then
-	-- debug if not called by 'require' as module
-	require 'pl.pretty'.dump(id3.readtags('song.mp3'))
-else
-	return id3
 end
