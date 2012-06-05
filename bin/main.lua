@@ -13,9 +13,9 @@
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
 -- check if solving CAPTCHA works
+-- CHECK MIKTEX pdf generation wrt font sizes, and remove fontSizes and all its references
 
 -- FEATURES
--- font sizes for singalong pdf
 -- remove duplicates in playlist
 
 require "misc"

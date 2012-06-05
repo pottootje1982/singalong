@@ -91,8 +91,8 @@ function generateSongbook(tracks, fileName)
 
   local pdf = pdfdoc(config.twoside)
 
-  pdf.headerFont = pdf:getFont("Times-Bold", 12)
-  pdf.normalFont = pdf:getFont("Times-Roman", 9)
+  pdf.headerFont = pdf:getFont("Times-Bold", tonumber(config.fontSize) + 3)
+  pdf.normalFont = pdf:getFont("Times-Roman", tonumber(config.fontSize))
 
   local notFound = 0
   local existingMp3s = {}

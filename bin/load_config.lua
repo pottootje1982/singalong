@@ -7,7 +7,7 @@ EXECUTABLE_PATH = system.getExecutablePath()
 
 local configDefaults = {
   downloadSelSites = false,
-  fontSize = "normalsize",
+  fontSize = "12",
   fontColor = '0 0 0',
   stopAfterFirstHit = true,
   preview = true,

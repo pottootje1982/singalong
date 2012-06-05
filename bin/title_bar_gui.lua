@@ -248,7 +248,7 @@ function createSongbook()
                       "PDF generator: %l"  .. table.zeroConcat(pdfGenerators, '|') .. "\n"..
                       "Use selected songs only: %b\n" ..
                       "%t\n" ..
-                      "Font size: %l" .. table.zeroConcat(fontSizes, '|') .. "\n" ..
+                      "Font size (pts): %l" .. table.zeroConcat(fontSizes, '|') .. "\n" ..
                       "Font color: %c\n" ..
                       "Two sided page layout: %b\n" ..
                       "Try to avoid page breaks within lyrics: %b\n" ..

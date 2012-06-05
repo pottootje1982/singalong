@@ -1,4 +1,4 @@
-local header = [[\documentclass[a4paper,12pt]{%s} %% ********* two sided *********
+local header = [[\documentclass[a4paper,%spt]{%s} %% ********* two sided *********
 \makeatletter
 \usepackage[latin1]{inputenc}
 \usepackage[titles]{tocloft}
@@ -25,7 +25,6 @@ local header = [[\documentclass[a4paper,12pt]{%s} %% ********* two sided *******
 \usepackage{multicol}
 \begin{document}
 \begin{multicols}{2}
-\%s %% ********* Font size *********
 \textcolor{customColor}{
 %s %% ********* Content *********
 ]]
@@ -40,16 +39,22 @@ pdfGenerators = table.makeZeroBased
 }
 fontSizes = table.makeZeroBased
 {
-  'tiny',
-  'scriptsize',
-  'footnotesize',
-  'small',
-  'normalsize',
-  'large',
-  'Large',
-  'LARGE',
-  'huge',
-  'Huge',
+  '8',
+  '9',
+  '10',
+  '11',
+  '12',
+  '14',
+  '16',
+  '18',
+  '10',
+  '12',
+  '14',
+  '16',
+  '18',
+  '36',
+  '48',
+  '72'
 }
 whichSelection = table.makeZeroBased
 {
@@ -66,9 +71,9 @@ local footer = [[
 function getHeader(useContent)
   local r, g, b = getFontColor(config.fontColor)
   return string.format(header,
+    config.fontSize,
     config.twoside and 'book' or 'report',
     r, g, b,
-    config.fontSize,
     useContent and content or '')
 end
 
