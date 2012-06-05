@@ -3,6 +3,14 @@ module('playlist_helpers', package.seeall)
 artist_title = '([^%c]-)%s+%-%s+([^%c]+)'
 artist_title_ext = artist_title .. '%.([^.]+)$'
 
+function fileStringToTable(fileList)
+  local result = {}
+  for line in fileList:gmatch('[^%c]+') do
+    table.insert(result, line)
+  end
+  return result
+end
+
 function gatherFromCustomPlaylist(playlist)
   local tracks = {}
   for artist, title in playlist:gmatch(artist_title) do

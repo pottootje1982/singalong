@@ -1,6 +1,11 @@
 require 'class'
 class 'list'
 
+RED = '255 150 150'
+YELLOW = '255 255 150'
+GREEN = '150 255 150'
+WHITE = '255 255 255'
+
 function rowColStr(prop, row, col)
   return string.format('%s%d:%d', prop, row, col)
 end

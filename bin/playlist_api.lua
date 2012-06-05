@@ -4,6 +4,7 @@ require 'query'
 require 'misc'
 require 'spotify_playlist'
 require 'playlist_helpers'
+require 'id3'
 
 local playlistFileName
 local playlist = {}
@@ -123,19 +124,9 @@ function openPlaylist(fn, newSingFile, clearPlaylist)
       if not newSingFile then
         saveMp3Table()
       end
-      local tracks
-      if ext == '.m3u' or ext == '.m3u8' then
-        if reloadM3u then
-          tracks = gatherMp3Info(fn)
-        end
-      elseif ext == '.txt' then
-        tracks = openTXT(fn)
-      elseif ext == '.sing' then -- do nothing, sing files will be opened in loadMp3Table()
-      end
 
-      if clearPlaylist then
-        tracks = {}
-      elseif not reloadM3u then
+      local tracks
+      if not reloadM3u then
         local newMp3s = loadMp3Table(singFile)
         if not newMp3s then
           iup.Message('Warning', string.format('Loading of sing file "%s" failed!', singFile))
@@ -144,8 +135,20 @@ function openPlaylist(fn, newSingFile, clearPlaylist)
         tracks = newMp3s
       end
 
-      setPlaylist(tracks)
       setPlaylistFileName(fn)
+
+      if ext == '.m3u' or ext == '.m3u8' and reloadM3u then
+        tracks = gatherMp3Info(fn)
+      elseif ext == '.txt' then
+        tracks = openTXT(fn)
+      elseif ext == '.sing' then -- do nothing, sing files will be opened in loadMp3Table()
+      end
+
+      if clearPlaylist then
+        tracks = {}
+      end
+
+      setPlaylist(tracks)
     end)
   end
 end
@@ -208,6 +211,15 @@ local function getArtistTitleFromFile(pathEntry)
   return artist, title
 end
 
+local function addTrack(tracks, artist, title, file)
+  if artist and title then
+    file = os.makeAbsolute(file, playlist_api.getPlaylistName())
+    local track = {artist = artist, title = title, file = file, id3=id3.readtags(file)}
+    table.insert(tracks, track)
+    return track
+  end
+end
+
 function gatherMp3Info(fn)
   file = io.open(fn)
   assert(file, string.format("File %q doesn't exist!", fn))
@@ -219,9 +231,13 @@ function gatherMp3Info(fn)
     if not artist or not title then
       artist, title = getArtistTitleFromFile(pathEntry)
     end
-    if artist and title then
-      table.insert(tracks, {artist = artist, title = title, playlistEntry = playlistEntry})
-    end
+    local newTrack = addTrack(tracks, artist, title, pathEntry)
+    if newTrack then newTrack.playlistEntry = playlistEntry end
+  end
+  -- Try to open it as txt file (m3u can also contain file entries only)
+  if table.isEmpty(tracks) then
+    local files = playlist_helpers.fileStringToTable(content)
+    tracks = gatherMp3InfoFromFiles(files)
   end
 
   return tracks
@@ -231,9 +247,7 @@ function gatherMp3InfoFromFiles(files)
   local tracks = {}
   for i, file in ipairs(files) do
     local artist, title = getArtistTitleFromFile(file)
-    if artist and title then
-      table.insert(tracks, {artist = artist, title = title, playlistEntry = file})
-    end
+    addTrack(tracks, artist, title, file)
   end
   return tracks
 end
