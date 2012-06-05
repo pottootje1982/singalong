@@ -1,4 +1,6 @@
-local header = [[\documentclass[a4paper,%spt]{%s} %% ********* two sided *********
+require 'misc'
+
+local header = [[\documentclass[a4paper,12pt]{%s} %% ********* two sided *********
 \makeatletter
 \usepackage[latin1]{inputenc}
 \usepackage[titles]{tocloft}
@@ -25,6 +27,7 @@ local header = [[\documentclass[a4paper,%spt]{%s} %% ********* two sided *******
 \usepackage{multicol}
 \begin{document}
 \begin{multicols}{2}
+\fontsize{%d}{%d}\selectfont %% ********* Font size *********
 \textcolor{customColor}{
 %s %% ********* Content *********
 ]]
@@ -47,11 +50,11 @@ fontSizes = table.makeZeroBased
   '14',
   '16',
   '18',
-  '10',
-  '12',
-  '14',
-  '16',
-  '18',
+  '20',
+  '22',
+  '24',
+  '26',
+  '28',
   '36',
   '48',
   '72'
@@ -71,9 +74,9 @@ local footer = [[
 function getHeader(useContent)
   local r, g, b = getFontColor(config.fontColor)
   return string.format(header,
-    config.fontSize,
     config.twoside and 'book' or 'report',
     r, g, b,
+    config.fontSize, tonumber(config.fontSize) * 1.2,
     useContent and content or '')
 end
 
