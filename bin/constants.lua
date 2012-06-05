@@ -11,10 +11,20 @@ local header = [[\documentclass[a4paper,12pt]{%s} %% ********* two sided *******
 \pagestyle{plain} %% No page headers
 
 \titleclass{\chapter}{straight} %% No page break before chapter heading:
-\titleformat{\chapter}[hang] %% Remove 'Chapter' label before chapter headings
-{\normalfont\small\bfseries}{\thechapter}{10pt}{\small} %% Change chapter fonts/sizes
+\titleformat{\chapter}[hang]
+  {\normalfont\sffamily\Huge\bfseries} %% The Huge is this line applies to the chapter #
+  {\thechapter}{10pt}{\Huge} %% Removed 'chapter #' before heading
 \titlespacing{\chapter} %% Change chapter spacing
 {0pt}{10pt}{5pt}
+
+%% Set font size of chapter by changing font size of Huge
+\renewcommand\Huge{
+   \@setfontsize\Huge{%.1fpt}{%.1fpt}
+   \abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
+   \abovedisplayshortskip \z@ \@plus3\p@
+   \belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}\normalsize
 
 \renewcommand{\cftchapnumwidth}{3em} %% A little more space for heading numbers in TOC
 \setlength{\cftbeforechapskip}{0em} %% Position TOC entries closer to each other
@@ -75,6 +85,7 @@ function getHeader(useContent)
   local r, g, b = getFontColor(config.fontColor)
   return string.format(header,
     config.twoside and 'book' or 'report',
+    tonumber(config.fontSize) * 1.2, tonumber(config.fontSize) * 1.44,
     r, g, b,
     config.fontSize, tonumber(config.fontSize) * 1.2,
     useContent and content or '')
