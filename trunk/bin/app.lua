@@ -49,7 +49,11 @@ function application:tick()
 
       -- the coroutine could've been killed in the coroutine.resume above
       if entry.resume and coroutine.status(entry.co) ~= 'dead' then
-        entry.resume(unpack(res))
+        -- First argument contains only bool if there was error
+        table.remove(res, 1)
+        os.pcall(function()
+          entry.resume(unpack(res))
+        end)
       end
     else
       table.insert(routinesToRemove, entry.co)

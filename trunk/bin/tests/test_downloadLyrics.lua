@@ -1,4 +1,5 @@
 require 'test_setup'
+os.removeDir(LOCALAPPDATADIR, true)
 require 'title_bar_gui'
 
 local function downloadLyrics()

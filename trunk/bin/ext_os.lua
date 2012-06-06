@@ -183,3 +183,7 @@ os.checkIfFileExists = function(dir, file, extraInfo)
   end
 end
 
+os.pcall = function(func, ...)
+  local succ, mess = pcall(func, ...)
+  if not succ then print(mess) end
+end
