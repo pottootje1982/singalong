@@ -5,6 +5,7 @@
 -- progress bar in download dialog doesn't proceed in case wait time was set to 0
 -- change playlist while downloading shouldn't be possible (kill coroutines when loading new playlist. Also the cache.rescanPlaylist() routine throws errors when loading new list
 -- never overwrite .sing file, ask if opening .m3u: open .sing instead?
+-- use event mechanism to get test_downloadLyrics.lua running (mainDialog should be removed from title_bar_gui.downloadLyrics)
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
