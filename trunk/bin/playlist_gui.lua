@@ -116,6 +116,14 @@ local playlistMenu = iup.menu {
       playInAudioPlayer(selTracks)
     end
   },
+  iup.separator{},
+  iup.item {
+    title = "Show track in explorer",
+    action = function(self)
+      local selTrack, selTracks = getSelection()
+      if selTrack.file then os.shellExecute(selTrack.file, nil, 'select') end
+    end
+  },
 }
 
 function playInAudioPlayer(selTracks)
