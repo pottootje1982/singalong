@@ -13,7 +13,7 @@ function TestPlaylistApi:testExtractArtistTitle()
 end
 
 function TestPlaylistApi:testGatherMp3Info()
-  local tracks = playlist_api.gatherMp3Info(F(system.getExecutablePath(), 'verukkelijke 715 zang.m3u'))
+  local tracks = playlist_api.gatherMp3Info(testDataDir('verukkelijke 715 zang.m3u'))
   assertEquals(#tracks, 73)
 end
 
@@ -36,7 +36,7 @@ function TestPlaylistApi:testGatherMp3InfoFromPaths()
 end
 
 function TestPlaylistApi:testSavePlaylistAsText()
-  local res = playlist_api.gatherMp3Info(F(system.getExecutablePath(), 'verukkelijke 715 zang.m3u'))
-  table.saveToFileText('verukkelijke 715 zang.sing', res)
+  local res = playlist_api.gatherMp3Info(testDataDir('verukkelijke 715 zang.m3u'))
+  table.saveToFileText(testDataDir('verukkelijke 715 zang.sing'), res)
 end
 
