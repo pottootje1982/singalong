@@ -3,8 +3,8 @@ module('title_bar_gui', package.seeall)
 require 'misc'
 require 'playlist_api'
 require 'progress_dialog'
-require 'icon'
-require 'add_icon'
+local downloadIcon = require 'icon'
+local addIcon = require 'add_icon'
 
 local newPlaylistButton = iup.button{title="", image = 'IUP_FileNew', tip="New playlist (ctr-n)"}
 local addToPlaylistButton = iup.button{title="", image = addIcon, tip="Add to current playlist"}

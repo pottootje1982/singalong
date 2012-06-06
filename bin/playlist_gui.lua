@@ -333,3 +333,7 @@ function getSelection(trks)
   local allTracks = playlist_api.getPlaylist()
   return widget:getSelection(trks or allTracks)
 end
+
+function destroy()
+  iup.Destroy(playlistMenu)
+end

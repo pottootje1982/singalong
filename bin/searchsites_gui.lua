@@ -302,48 +302,6 @@ searchSiteMenu = iup.menu {
   _DEBUG and discardItem,
 }
 
-local scores = {['good']=1, ['reasonable']=0.8}
-calcRankSitesButton = iup.button
-{
-  title="Rank sites",
-  expand='HORIZONTAL',
-  action=function()
-    for _, search_site in pairs(search_sites) do
-      search_site.score = 0
-      search_site.missed = 0
-      search_site.found = 0
-      search_site.reasonable = 0
-    end
-    local selMp3, selMp3s = playlist_gui.getSelection()
-    for _, mp3 in pairs(selMp3s) do
-      if mp3.sitesSucceeded then
-        for i, search_site in pairs(search_sites) do
-          local rank = mp3.sitesSucceeded[search_site.site]
-          local score = scores[rank] or 0
-          if rank == 'reasonable' then search_site.reasonable = search_site.reasonable + 1 end
-          search_site.score = search_sites[i].score + score
-          if query.getLyrics('txt', search_site, mp3) then
-            search_site.found = search_site.found + 1
-            if rank == nil then
-              search_site.missed = search_site.missed + 1
-              print(mp3.artist, mp3.title, search_site.site)
-            end
-          end
-        end
-      end
-    end
-    table.sort(search_sites, function(a,b) return a.score > b.score end)
-    local display = ''
-    for _, search_site in pairs(search_sites) do
-      display = string.format('%s%25.25s: %5.1f %5.2f %5.d\n', display, search_site.site, search_site.score, search_site.missed/search_site.found * 100, search_site.reasonable)
-    end
-
-    local rankPopup = iup.dialog
-    {
-      title="Site order",
-      iup.label{title=display, font="COURIER_NORMAL_8"},
-      size = "100x100"
-    }
-    rankPopup:popup(iup.center, iup.center)
-  end
-}
+function destroy()
+  iup.Destroy(searchSiteMenu)
+end
