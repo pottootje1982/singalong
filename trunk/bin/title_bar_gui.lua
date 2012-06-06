@@ -92,7 +92,7 @@ local function determineWaitInterval()
   end
 end
 
-function downloadLyrics()
+function downloadLyrics(parentDialogTitle)
   -- First check if there's internet access
   local err = socketinterface.request('http://www.google.com/search?q=test')
   if err then
@@ -181,7 +181,7 @@ function downloadLyrics()
   local progressDialog, updateLabel, downloadProgressbar = progress_dialog.getDialog("Downloading lyrics...", "Downloading lyrics:", closeCallback, "Stop downloading", closeCallback)
 
   downloadProgressbar.max = numSites > 1 and numMp3s or ((numMp3s - 1) + AVG_REQUEST_TIME/avgWaitTime)
-  progressDialog.parentdialog = mainDialog.title
+  progressDialog.parentdialog = parentDialogTitle
 
   progressDialog:show()
 
@@ -242,7 +242,7 @@ function downloadLyrics()
 end
 
 function downloadLyricsButton:action()
-  downloadLyrics()
+  downloadLyrics(mainDialog.title)
 end
 
 function createSongbookButton:action()
