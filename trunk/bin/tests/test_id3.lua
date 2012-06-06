@@ -8,5 +8,3 @@ TestId3 = {}
 function TestId3:testReadAlbum()
   table.print(id3.readtags('song.mp3'))
 end
-
-TestId3:testReadAlbum()

@@ -1,8 +1,6 @@
 -- Main.lua : script invoked directly from singalong.exe when no arguments are given
 
 -- BUGS:
-
--- mem leak
 -- progress bar multiple site selection klopt nog niet (1 song)
 -- progress bar in download dialog doesn't proceed in case wait time was set to 0
 -- change playlist while downloading shouldn't be possible (kill coroutines when loading new playlist. Also the cache.rescanPlaylist() routine throws errors when loading new list
