@@ -33,16 +33,24 @@ function setDialogIcon(dialog)
   system.setIcon(HINSTANCE, dialog.title)
 end
 
-function updateGui(...)
+local function invokeOnGui(func, ...)
   for i, v in ipairs(arg) do
     local args = {}
     if type(arg[i+1]) == 'table' then
       args = arg[i+1]
     end
     if type(v) == 'string' then
-      require(v .. '_gui').update(unpack(args))
+      require(v .. '_gui')[func](unpack(args))
     end
   end
+end
+
+function updateGui(...)
+  invokeOnGui('update', ...)
+end
+
+function destroyGui(...)
+  invokeOnGui('destroy', ...)
 end
 
 function iupParamCallback(dialog, paramIndex)

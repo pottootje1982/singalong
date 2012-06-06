@@ -128,6 +128,7 @@ function mainDialog:close_cb()
   saveSearchSites()
   iup.ExitLoop()
   mainDialog:destroy()
+  destroyGui('playlist', 'searchsites')
   return iup.IGNORE
 end
 
