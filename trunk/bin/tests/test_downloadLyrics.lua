@@ -5,6 +5,6 @@ local function downloadLyrics()
 end
 
 -- We don't want this code to be executed when running unit tests
-if not TEST_PATH then
+if not RUN_UNIT_TESTS then
   downloadLyrics()
 end

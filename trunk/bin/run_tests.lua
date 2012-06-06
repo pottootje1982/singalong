@@ -7,6 +7,8 @@ function testFile(file)
   return F(TEST_PATH, file)
 end
 
+RUN_UNIT_TESTS = true
+
 for file in lfs.dir(TEST_PATH) do
   if file:match('lua$') and not file:match('run_tests') then
     local fileWithoutExt = file:match('(.*)%.lua$')
