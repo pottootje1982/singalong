@@ -48,4 +48,26 @@ function TestTableExt:testTableRemoveDoubles()
     ))
 end
 
-TestTableExt:testTableRemoveDoubles()
+function TestTableExt:testTableRemoveDoubles2()
+  local tableDoubles = {
+    {artist = 'beatles', title = 'hey jude'},
+    {artist = 'beatles', title = 'hey jude', customArtist='beatles2'},
+    {artist = 'neil young', title = 'unknown legend'},
+    {artist = 'beatles3', title = 'hey jude', customArtist='beatles'},
+    {artist = 'beatles', title = 'hey jude', customTitle='hey jude2'},
+    {artist = 'neil young', title = 'king'}
+  }
+  unique = table.removeDoubles(tableDoubles, title_bar_gui.compareTracks)
+  --  check if customArtist & customTitle have prio over artist & title
+  assert(table.equals(unique,
+  {
+    {artist = 'beatles', title = 'hey jude'},
+    {artist = 'beatles', title = 'hey jude', customArtist='beatles2'},
+    {artist = 'neil young', title = 'unknown legend'},
+    {artist = 'beatles', title = 'hey jude', customTitle='hey jude2'},
+    {artist = 'neil young', title = 'king'}
+  }
+    ))
+end
+
+TestTableExt:testTableRemoveDoubles2()
