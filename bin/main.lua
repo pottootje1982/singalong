@@ -13,7 +13,6 @@
 -- check if solving CAPTCHA works
 
 -- FEATURES
--- remove duplicates in playlist
 
 require "misc"
 require "app"
