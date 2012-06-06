@@ -170,7 +170,10 @@ function removeEmptyOccurrences(artist, title)
 end
 
 function removeFromCache(info, ext)
-  if info and not table.isEmpty(info) and lyricsCache[info.artist][info.title][info.site] then
+  if info and not table.isEmpty(info) and
+          lyricsCache[info.artist] and
+          lyricsCache[info.artist][info.title] and
+          lyricsCache[info.artist][info.title][info.site] then
     if info[ext] and os.exists(info[ext]) then
       os.remove(info[ext])
     end
@@ -233,7 +236,7 @@ function scanCache(track, searchSite, rescan)
         end
       end
     end
-    coroutine.waitFor()
+    coroutine.wait()
   end
 end
 
@@ -249,7 +252,7 @@ function rescanPlaylist(tracks)
         print('Found following song with thorough search!:', index, track.artist, track.title)
         playlist_gui.widget:updateItem(index, track)
       end
-      coroutine.waitFor()
+      coroutine.wait()
     end
   end, nil,
   function()

@@ -217,15 +217,18 @@ function downloadLyrics(parentDialogTitle)
     end
   end
   -- Function called when routine func calls coroutine.yield()
-  local function resumeFunc(resume, res)
+  local function resumeFunc(siteIndex)
     -- wait time can be longer than expected due to wait for socketinterface.request to finish
-    --print(cumWaitTime, totalWaitTime, lastWaitTime, res)
+    siteIndex = siteIndex or 1
     local nrWaits = lastMp3 and (#selSites - 1) or #selSites
-    local maxProgress = math.min(os.clock() - beginTime, (totalWaitTime or avgWaitTime) * nrWaits)
-    downloadProgressbar.value = currMp3Index - 1 + maxProgress / ((totalWaitTime or avgWaitTime) * nrWaits)
-    if res and type(res) == 'string' then
-      updateLabel.title = string.format('%s - %s (%s)' , currMp3.artist, currMp3.title, res)
+    local waitTime = totalWaitTime or avgWaitTime
+    local maxProgress = math.min(os.clock() - beginTime, waitTime * nrWaits)
+    if waitTime > 0 then
+      downloadProgressbar.value = currMp3Index - 1 + (siteIndex - 1) / nrWaits + maxProgress / (waitTime * nrWaits)
+    else
+      downloadProgressbar.value = currMp3Index - 1 + (siteIndex - 1) / nrWaits
     end
+    updateLabel.title = string.format('%s - %s (%s)' , currMp3.artist, currMp3.title, selSites[siteIndex].site)
   end
   local function endFunc()
     iup.Destroy(progressDialog)

@@ -217,15 +217,9 @@ function retrieveLyrics(mp3)
 end
 
 local function waitInterval(interval)
-  print('waiting ' .. interval .. ' seconds...')
+  print('waiting ' .. interval .. ' seconds...', siteIndex)
   local beginTime = os.clock()
-  while os.clock() - beginTime < interval do
-     -- when downloadLyrics is invoked by test code we are not in coroutine
-     -- so coroutine.yield() will fail
-    if coroutine.running() then
-      coroutine.yield()
-    end
-  end
+  coroutine.waitFunc(function() return os.clock() - beginTime >= interval end)
 end
 
 local function downloadLyricsAtSite(mp3, search_site, totalWaitTime, lastMp3, lastSite)
@@ -260,9 +254,7 @@ end
 function downloadLyrics(mp3, customSearchSites, totalWaitTime, lastMp3)
   for index, search_site in pairs(customSearchSites) do
     -- pass site name for progress bar update
-    if coroutine.running() then
-      coroutine.yield(search_site.site)
-    end
+    coroutine.wait(index)
 
     local lyr = downloadLyricsAtSite(mp3, search_site, totalWaitTime, lastMp3, index == #customSearchSites)
 
