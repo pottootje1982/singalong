@@ -178,3 +178,7 @@ table.removeDoubles = function(tab, func)
   end
   return tab
 end
+
+table.areEquals = function(tab1, tab2)
+  assert(table.equals(tab1, tab2))
+end
