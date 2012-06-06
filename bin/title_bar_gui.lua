@@ -53,7 +53,7 @@ function sortButton:action()
 end
 
 function compareTracks(a,b)
-  return a.artist == b.artist and a.title == b.title
+  return (a.customArtist or a.artist) == (b.customArtist or b.artist) and (a.customTitle or a.title) == (b.customTitle or b.title)
 end
 
 function removeDoublesButton:action()

@@ -60,7 +60,7 @@ end
 os.makeAbsolute = function(fn, absPath)
   local path, file = os.getPath(fn)
   local drive = os.getDrive(fn)
-  if not drive then
+  if not drive and fn and absPath then
     if not path then
       fn = F(os.getPath(absPath), fn)
     else

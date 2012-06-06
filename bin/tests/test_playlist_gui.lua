@@ -20,7 +20,7 @@ end
 --]]
 
 function TestPlaylistGui:testFileStringToTable()
-  local res = playlist_gui.fileStringToTable([[a
+  local res = playlist_helpers.fileStringToTable([[a
 b
 c
 d]])
