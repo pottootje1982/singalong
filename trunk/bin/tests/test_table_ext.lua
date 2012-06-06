@@ -69,5 +69,3 @@ function TestTableExt:testTableRemoveDoubles2()
   }
     ))
 end
-
-TestTableExt:testTableRemoveDoubles2()
