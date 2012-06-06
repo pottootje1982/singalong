@@ -3,7 +3,7 @@ require 'socketinterface'
 TestSocketInterface = {}
 
 function TestSocketInterface:testRequest()
-  local neilYoungQuery = testFile('neilyoungquery.html')
+  local neilYoungQuery = outputDir('neilyoungquery.html')
   socketinterface.request('http://www.google.com/search?q=neil+young+unknown+legend+site%3Awww.lyricsfreak.com', neilYoungQuery)
   os.exists(neilYoungQuery)
   local content = os.read(neilYoungQuery)

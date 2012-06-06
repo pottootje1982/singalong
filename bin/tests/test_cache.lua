@@ -26,7 +26,7 @@ end
 
 function TestCache:testSaveCache()
   cache.addToCache(testMp3, search_site, testMp3Name)
-  cacheFileName = testFile('cache.lua.txt')
+  cacheFileName = outputDir('cache.lua.txt')
   cache.saveTxtCache(cacheFileName)
   assert(os.exists(cacheFileName))
   local testCache = dofile(cacheFileName)
