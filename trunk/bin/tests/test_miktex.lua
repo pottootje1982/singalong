@@ -1,11 +1,17 @@
 require 'load_config'()
 require 'miktex'
+require 'test_setup'
+require 'misc'
 
 TestMiktex = {}
 
 function TestMiktex:testViewTexFile()
-  if os.exists(config.miktexDir) then
-    miktex.viewTexFile(F(system.getExecutablePath(), 'tests\\test'), true)
-    assert(os.exists(F(system.getExecutablePath(), 'tests\\test.pdf')))
-  end
+  os.shellExecute(' tests/test_miktex.lua pause', 'singalong.exe', nil, system.getExecutablePath())
+  assert(os.exists(testDataDir('test.pdf')))
 end
+
+if not RUN_UNIT_TESTS then
+  miktex.viewTexFile(testDataDir('test'), false)
+end
+
+
