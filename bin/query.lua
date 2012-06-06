@@ -244,7 +244,7 @@ local function downloadLyricsAtSite(mp3, search_site, totalWaitTime, lastMp3, la
     print('Found lyrics for ' .. mp3.artist .. ' - ' .. mp3.title .. ' at: ' .. search_site.site)
   end
 
-    -- determine time that we wasted with request() and rest of processing,
+  -- determine time that we wasted with request() and rest of processing,
   -- so we can subtract this from waitInterval() below
   local subtractTime = os.clock() - beginTime
 

@@ -2,6 +2,7 @@ module('title_bar_gui', package.seeall)
 
 require 'misc'
 require 'playlist_api'
+require 'playlist_gui'
 require 'progress_dialog'
 local downloadIcon = require 'icon'
 local addIcon = require 'add_icon'
