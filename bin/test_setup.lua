@@ -8,5 +8,9 @@ function testDataDir(file)
   return F(TEST_PATH, 'testdata', file)
 end
 
+function outputDir(file)
+  return F(TEST_PATH, 'output', file)
+end
+
 require 'load_config'(TEST_PATH)
 require 'lfs'

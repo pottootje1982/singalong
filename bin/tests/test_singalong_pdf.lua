@@ -15,7 +15,7 @@ function testGenerateSongbook()
     assert(content, 'File not found!')
     cache.addToCache(track, searchSite, os.format_file('txt', searchSite, track), content)
   end
-  getPdfGenerator().generateSongbook(tracks, 'testGenerateSongbook')
+  getPdfGenerator().generateSongbook(tracks, outputDir('testGenerateSongbook'))
 end
 
 if not RUN_UNIT_TESTS then
