@@ -216,14 +216,20 @@ function retrieveLyrics(mp3)
   return doAsciiConversions(lyr)
 end
 
-local function waitInterval(interval)
-  print('waiting ' .. interval .. ' seconds...', siteIndex)
-  local beginTime = os.clock()
-  coroutine.waitFunc(function() return os.clock() - beginTime >= interval end)
+local function waitInterval(totalWaitTime, startSite)
+  local endSite = os.clock()
+  -- determine time that we wasted with request() and rest of processing,
+  -- so we can subtract this from waitInterval() below
+  local subtractTime = endSite - startSite
+  local interval = totalWaitTime - subtractTime
+  print('waiting ' .. interval .. ' seconds...', totalWaitTime)
+  coroutine.waitFunc(function()
+    local currentTime = os.clock()
+    return currentTime - endSite >= interval, currentTime - startSite
+  end)
 end
 
-local function downloadLyricsAtSite(mp3, search_site, totalWaitTime, lastMp3, lastSite)
-  local beginTime = os.clock()
+local function downloadLyricsAtSite(mp3, search_site)
   local info = cache.scanCache(mp3, search_site)
   local lyr
   if info and info.txt then
@@ -238,25 +244,28 @@ local function downloadLyricsAtSite(mp3, search_site, totalWaitTime, lastMp3, la
     print('Found lyrics for ' .. mp3.artist .. ' - ' .. mp3.title .. ' at: ' .. search_site.site)
   end
 
-  -- determine time that we wasted with request() and rest of processing,
-  -- so we can subtract this from waitInterval() below
-  local subtractTime = os.clock() - beginTime
-
-  if totalWaitTime and
-    not (lastMp3 and
-      ((config.stopAfterFirstHit and lyr) or
-      lastSite)) then
-        waitInterval(totalWaitTime - subtractTime)
-  end
   return lyr
 end
 
 function downloadLyrics(mp3, customSearchSites, totalWaitTime, lastMp3)
   for index, search_site in pairs(customSearchSites) do
     -- pass site name for progress bar update
-    coroutine.wait(index)
+    coroutine.wait(index, search_site.site)
 
-    local lyr = downloadLyricsAtSite(mp3, search_site, totalWaitTime, lastMp3, index == #customSearchSites)
+    local startSite = os.clock()
+
+    local lyr = downloadLyricsAtSite(mp3, search_site, totalWaitTime)
+
+    local lastSite = index == #customSearchSites
+    if totalWaitTime and
+      not (lastMp3 and
+        ((config.stopAfterFirstHit and lyr) or
+        lastSite)) then
+          waitInterval(totalWaitTime, startSite)
+    end
+
+    -- make sure the progress-bar gets filled
+    coroutine.wait(index + 1, search_site.site)
 
     if config.stopAfterFirstHit and lyr then return end
   end

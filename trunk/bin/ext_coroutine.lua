@@ -9,9 +9,10 @@ coroutine.wait = function(...)
 end
 
 coroutine.waitFunc = function(func, ...)
-  while not func() do
-    yield(...)
-  end
+  repeat
+    local res = {func()}
+    yield(unpack(res))
+  until res[1]
 end
 
 coroutine.waitTicks = function(ticks, ...)
@@ -19,8 +20,10 @@ coroutine.waitTicks = function(ticks, ...)
   local waitTicks = func
   local func = function()
     i = i + 1
-    return i >= waitTicks
+    return i >= ticks
   end
 
-  coroutine.waitFunc(func, ...)
+  while not func() do
+    yield(...)
+  end
 end
