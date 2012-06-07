@@ -1,6 +1,7 @@
 require 'test_setup'
 os.removeDir(LOCALAPPDATADIR, true)
 require 'title_bar_gui'
+require 'app'
 
 local function downloadLyrics()
   config.downloadWhichMp3s = 'All'

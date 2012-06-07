@@ -170,7 +170,7 @@ function downloadLyrics(parentDialogTitle)
   local selSite, selSites = searchsites_gui.widget:getSelection(search_sites)
   selSites = config.downloadSelSites and selSites or search_sites
 
-  numSites = #selSites
+  local numSites = #selSites
   local numMp3s = #selMp3s
   local avgWaitTime = config.minWait + config.maxWait / 2
 
@@ -180,26 +180,22 @@ function downloadLyrics(parentDialogTitle)
   end
   local progressDialog, updateLabel, downloadProgressbar = progress_dialog.getDialog("Downloading lyrics...", "Downloading lyrics:", closeCallback, "Stop downloading", closeCallback)
 
-  downloadProgressbar.max = numSites > 1 and numMp3s or ((numMp3s - 1) + AVG_REQUEST_TIME/avgWaitTime)
+  downloadProgressbar.max = numMp3s * numSites
   progressDialog.parentdialog = parentDialogTitle
 
   progressDialog:show()
 
   local currMp3Index = nil
   local currMp3 = nil
+  local currSiteIndex = nil
   local totalWaitTime = nil
   local lastMp3 = nil
-  local cumWaitTime = nil
-  local beginTime = os.clock()
-  local res
 
   -- Download routine func
   local function routineFunc()
     for i, mp3 in ipairs(selMp3s) do
       currMp3Index = i
       currMp3 = mp3
-      cumWaitTime = 0
-      beginTime = os.clock()
 
       lastMp3 = i == #selMp3s
       if not (lastMp3 and numSites == 1) then
@@ -217,18 +213,16 @@ function downloadLyrics(parentDialogTitle)
     end
   end
   -- Function called when routine func calls coroutine.yield()
-  local function resumeFunc(siteIndex)
-    -- wait time can be longer than expected due to wait for socketinterface.request to finish
-    siteIndex = siteIndex or 1
-    local nrWaits = lastMp3 and (#selSites - 1) or #selSites
-    local waitTime = totalWaitTime or avgWaitTime
-    local maxProgress = math.min(os.clock() - beginTime, waitTime * nrWaits)
-    if waitTime > 0 then
-      downloadProgressbar.value = currMp3Index - 1 + (siteIndex - 1) / nrWaits + maxProgress / (waitTime * nrWaits)
-    else
-      downloadProgressbar.value = currMp3Index - 1 + (siteIndex - 1) / nrWaits
+  local function resumeFunc(siteIndex, waitingPerSite)
+    if type(siteIndex) == 'number' then
+      local siteName = waitingPerSite
+      currSiteIndex = siteIndex
+      updateLabel.title = string.format('%s - %s (%s)' , currMp3.artist, currMp3.title, siteName)
+      downloadProgressbar.value = (currMp3Index - 1) * numSites + currSiteIndex - 1
+    elseif waitingPerSite then
+      local waitTime = totalWaitTime or avgWaitTime
+      downloadProgressbar.value = (currMp3Index - 1) * numSites + currSiteIndex - 1 + waitingPerSite / waitTime
     end
-    updateLabel.title = string.format('%s - %s (%s)' , currMp3.artist, currMp3.title, selSites[siteIndex].site)
   end
   local function endFunc()
     iup.Destroy(progressDialog)
