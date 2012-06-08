@@ -322,7 +322,10 @@ function playlist:k_any(key, press)
     self:editOrAddEntry()
   elseif key == iup.K_F2 then
     self:editOrAddEntry(self.lastSel)
+  else
+    return iup.CONTINUE
   end
+  return iup.IGNORE
 end
 
 function update()

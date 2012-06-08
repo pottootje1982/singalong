@@ -32,7 +32,7 @@ function TestTableExt:testTableRemoveDoubles()
 
   local tableDoubles = {
     {artist = 'beatles', title = 'hey jude'},
-    {artist = 'beatles', title = 'hey jude'},
+    {artist = 'beatles', title = 'hey Jude'},
     {artist = 'neil young', title = 'unknown legend'},
     {artist = 'beatles', title = 'hey jude'},
     {artist = 'beatles', title = 'hey jude'},

@@ -90,9 +90,9 @@ function list:list(params)
         self.c.focus_cell = index .. col
       end
     else
-      self:call('k_any', key, press)
+      return self:call('k_any', key, press)
     end
-    return iup.CONTINUE
+    return iup.IGNORE
   end
 
   self.c.dropfiles_cb = function(widget, files)
@@ -117,7 +117,7 @@ function list:list(params)
 end
 
 function list:call(func, ...)
-  if self[func] then self[func](self, ...) end
+  if self[func] then return self[func](self, ...) end
 end
 
 function list:initSelection()

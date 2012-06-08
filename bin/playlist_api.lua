@@ -1,18 +1,18 @@
 module('playlist_api', package.seeall)
 
+require 'event'
+openPlaylistEvent = event()
+
 require 'query'
 require 'misc'
 require 'spotify_playlist'
 require 'playlist_helpers'
 require 'id3'
-require 'event'
 
 local playlistFileName
 local playlist = {}
 
 M3U_ENTRY_MATH = "(#EXTINF:[%d]+,([^%c]*)\n([^%c]*)\n)"
-
-openPlaylistEvent = event()
 
 local function setPlaylistFileName(fn)
   if mainDialog then mainDialog.title = 'SinGaLonG' .. ' - ' .. tostring(fn) end
