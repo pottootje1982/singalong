@@ -282,6 +282,7 @@ function playlist:updateItem(i, mp3, dontUpdate)
   local exists
   if not i then
     i = table.find(tracks, mp3)
+    if not i then return end
   end
   exists = cache.IsTxtInCache(mp3)
   self:setRowColor(i, exists and WHITE or RED)
