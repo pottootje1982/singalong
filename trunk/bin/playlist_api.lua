@@ -5,11 +5,14 @@ require 'misc'
 require 'spotify_playlist'
 require 'playlist_helpers'
 require 'id3'
+require 'event'
 
 local playlistFileName
 local playlist = {}
 
 M3U_ENTRY_MATH = "(#EXTINF:[%d]+,([^%c]*)\n([^%c]*)\n)"
+
+openPlaylistEvent = event()
 
 local function setPlaylistFileName(fn)
   if mainDialog then mainDialog.title = 'SinGaLonG' .. ' - ' .. tostring(fn) end
@@ -55,10 +58,12 @@ local function openTXT(fn)
   return tracks
 end
 
-local function showNewPlaylistDialog()
+function showNewPlaylistDialog(file)
   local filedlg = iup.filedlg{dialogtype = "SAVE", title = "Save new playlist as",
-                        extfilter = "SingAlonG Playlists (*.sing)|*.sing;|"}
+                        extfilter = "SingAlonG Playlists (*.sing)|*.sing;|",
+                        file=file}
   filedlg:popup (iup.ANYWHERE, iup.ANYWHERE)
+
   if filedlg.status == '1' or filedlg.status == '0' then -- 1: new file, 0: existing
     return filedlg.value
   end
@@ -106,50 +111,41 @@ function openPlaylist(fn, newSingFile, clearPlaylist)
     fn = showOpenPlaylistDialog()
   end
   if fn and os.exists(fn) then
-    os.calcTime('open playlist', function()
+    local strippedFile, ext = os.getFileWithoutExt(fn)
+    local loadSingFile = ext == 'sing'
+    local singFile = strippedFile .. '.sing'
+    if ext ~= 'sing' and os.exists(singFile) then
+      singFile = showNewPlaylistDialog(singFile)
+      if not singFile then return end
+    end
+    if not newSingFile then
+      saveMp3Table()
+    end
 
-      local reloadM3u = false
-      local strippedFile, ext = os.getFileWithoutExt(fn)
-      local singFile = strippedFile .. '.sing'
-      if (ext == '.m3u' or ext=='.m3u8') and os.exists(singFile) then
-        local ret = iup.Alarm('Warning', 'Do you want to discard of copy "' .. strippedFile .. '"?', 'Yes', 'No', 'Cancel')
-        if ret == 1 then -- Ok
-          reloadM3u = true
-        elseif ret == 3 then -- Cancel
-          return
-        end
-      elseif not os.exists(singFile) then
-        reloadM3u = true
+
+    local tracks
+    if loadSingFile then
+      local newMp3s = loadMp3Table(singFile)
+      if not newMp3s then
+        iup.Message('Warning', string.format('Loading of sing file "%s" failed!', singFile))
+        return
       end
-      if not newSingFile then
-        saveMp3Table()
-      end
+      tracks = newMp3s
+    end
 
-      local tracks
-      if not reloadM3u then
-        local newMp3s = loadMp3Table(singFile)
-        if not newMp3s then
-          iup.Message('Warning', string.format('Loading of sing file "%s" failed!', singFile))
-          return
-        end
-        tracks = newMp3s
-      end
+    setPlaylistFileName(singFile) -- we will only save as .sing file
 
-      setPlaylistFileName(fn)
+    if ext == 'm3u' or ext == 'm3u8' then
+      tracks = gatherMp3Info(fn)
+    elseif ext == 'txt' then
+      tracks = openTXT(fn)
+    end
 
-      if ext == '.m3u' or ext == '.m3u8' and reloadM3u then
-        tracks = gatherMp3Info(fn)
-      elseif ext == '.txt' then
-        tracks = openTXT(fn)
-      elseif ext == '.sing' then -- do nothing, sing files will be opened in loadMp3Table()
-      end
+    if clearPlaylist then
+      tracks = {}
+    end
 
-      if clearPlaylist then
-        tracks = {}
-      end
-
-      setPlaylist(tracks)
-    end)
+    setPlaylist(tracks)
   end
 end
 
@@ -162,13 +158,13 @@ function setPlaylist(tracks)
   playlist = tracks
   playlistUpdate()
   playlist_gui.widget:modifySelection(1)
-  cache.rescanPlaylist(tracks)
+  openPlaylistEvent:fire(tracks)
 end
 
 function addToPlaylist(newTracks)
   playlist = table.imerge(playlist, newTracks)
   playlistUpdate(true)
-  cache.rescanPlaylist(newTracks)
+  openPlaylistEvent:fire(newTracks)
 end
 
 function getPlaylist()

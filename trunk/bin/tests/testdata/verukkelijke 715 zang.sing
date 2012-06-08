@@ -1,0 +1,659 @@
+return {
+  [1] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:307,ELO - Mr. Blue Sky
+b:\mp3\diversen\Verrukkelijke715\692 ELO - Mr. Blue Sky.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\692 ELO - Mr. Blue Sky.mp3]=],
+    ["artist"] = [=[ELO]=],
+    ["title"] = [=[Mr. Blue Sky]=],
+  },
+  [2] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:309,Sinead 'O Conner - Nothing Compares To You
+b:\mp3\diversen\Verrukkelijke715\446 Sinead 'O Conner - Nothing Compares To You.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\446 Sinead 'O Conner - Nothing Compares To You.mp3]=],
+    ["artist"] = [=[Sinead 'O Conner]=],
+    ["title"] = [=[Nothing Compares To You]=],
+  },
+  [3] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:325,Live - Lightning crashes
+b:\mp3\diversen\Verrukkelijke715\004 Live - Lightning crashes.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\004 Live - Lightning crashes.mp3]=],
+    ["artist"] = [=[Live]=],
+    ["title"] = [=[Lightning crashes]=],
+  },
+  [4] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:383,Radiohead - Paranoid Android
+b:\mp3\diversen\Verrukkelijke715\008 Radiohead - Paranoid Android.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\008 Radiohead - Paranoid Android.mp3]=],
+    ["artist"] = [=[Radiohead]=],
+    ["title"] = [=[Paranoid Android]=],
+  },
+  [5] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:317,Pink Floyd - Wish you were here
+b:\mp3\diversen\Verrukkelijke715\018 Pink Floyd - Wish you were here.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\018 Pink Floyd - Wish you were here.mp3]=],
+    ["artist"] = [=[Pink Floyd]=],
+    ["title"] = [=[Wish you were here]=],
+  },
+  [6] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:230,Live - I alone
+b:\mp3\diversen\Verrukkelijke715\022 Live - I alone.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\022 Live - I alone.mp3]=],
+    ["artist"] = [=[Live]=],
+    ["title"] = [=[I alone]=],
+  },
+  [7] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:388,Metallica - Nothing else matters
+b:\mp3\diversen\Verrukkelijke715\030 Metallica - Nothing else matters.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\030 Metallica - Nothing else matters.mp3]=],
+    ["artist"] = [=[Metallica]=],
+    ["title"] = [=[Nothing else matters]=],
+  },
+  [8] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:391,Eagles - Hotel California
+b:\mp3\diversen\Verrukkelijke715\039 Eagles - Hotel California.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\039 Eagles - Hotel California.mp3]=],
+    ["artist"] = [=[Eagles]=],
+    ["title"] = [=[Hotel California]=],
+  },
+  [9] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:261,Radiohead - Karma police
+b:\mp3\diversen\Verrukkelijke715\045 Radiohead - Karma police.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\045 Radiohead - Karma police.mp3]=],
+    ["artist"] = [=[Radiohead]=],
+    ["title"] = [=[Karma police]=],
+  },
+  [10] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:300,Bruce Springsteen - The river
+b:\mp3\diversen\Verrukkelijke715\049 Bruce Springsteen - The river.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\049 Bruce Springsteen - The river.mp3]=],
+    ["artist"] = [=[Bruce Springsteen]=],
+    ["title"] = [=[The river]=],
+  },
+  [11] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:256,Nirvana - Lithium
+b:\mp3\diversen\Verrukkelijke715\063 Nirvana - Lithium.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\063 Nirvana - Lithium.mp3]=],
+    ["artist"] = [=[Nirvana]=],
+    ["title"] = [=[Lithium]=],
+  },
+  [12] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:216,Bryan Adams - Summer of '69
+b:\mp3\diversen\Verrukkelijke715\066 Bryan Adams - Summer of '69.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\066 Bryan Adams - Summer of '69.mp3]=],
+    ["artist"] = [=[Bryan Adams]=],
+    ["title"] = [=[Summer of '69]=],
+  },
+  [13] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:207,Skunk Anansie - Hedonism (Just Because You Look)
+b:\mp3\diversen\Verrukkelijke715\068 Skunk Anansie - Hedonism (Just Because You Look).mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\068 Skunk Anansie - Hedonism (Just Because You Look).mp3]=],
+    ["artist"] = [=[Skunk Anansie]=],
+    ["title"] = [=[Hedonism (Just Because You Look)]=],
+  },
+  [14] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:268,R.E.M. - Losing My Religion
+b:\mp3\diversen\Verrukkelijke715\071 R.E.M. - Losing My Religion.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\071 R.E.M. - Losing My Religion.mp3]=],
+    ["artist"] = [=[R.E.M.]=],
+    ["title"] = [=[Losing My Religion]=],
+  },
+  [15] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:219,Nirvana - Come As You Are
+b:\mp3\diversen\Verrukkelijke715\082 Nirvana - Come As You Are.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\082 Nirvana - Come As You Are.mp3]=],
+    ["artist"] = [=[Nirvana]=],
+    ["title"] = [=[Come As You Are]=],
+  },
+  [16] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:227,Bob Marley - Redemption Song
+b:\mp3\diversen\Verrukkelijke715\089 Bob Marley - Redemption Song.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\089 Bob Marley - Redemption Song.mp3]=],
+    ["artist"] = [=[Bob Marley]=],
+    ["title"] = [=[Redemption Song]=],
+  },
+  [17] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:343,Pink Floyd - Another brick in the wall
+b:\mp3\diversen\Verrukkelijke715\096 Pink Floyd - Another brick in the wall.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\096 Pink Floyd - Another brick in the wall.mp3]=],
+    ["artist"] = [=[Pink Floyd]=],
+    ["title"] = [=[Another brick in the wall]=],
+  },
+  [18] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:321,Red Hot Chili Peppers - Californication
+b:\mp3\diversen\Verrukkelijke715\097 Red Hot Chili Peppers - Californication.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\097 Red Hot Chili Peppers - Californication.mp3]=],
+    ["artist"] = [=[Red Hot Chili Peppers]=],
+    ["title"] = [=[Californication]=],
+  },
+  [19] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:242,Ugly kid Joe - Cats in the cradle
+b:\mp3\diversen\Verrukkelijke715\103 Ugly kid Joe - Cats in the cradle.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\103 Ugly kid Joe - Cats in the cradle.mp3]=],
+    ["artist"] = [=[Ugly kid Joe]=],
+    ["title"] = [=[Cats in the cradle]=],
+  },
+  [20] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:290,Manic Street Preachers - If You Tolerate This
+b:\mp3\diversen\Verrukkelijke715\106 Manic Street Preachers - If You Tolerate This.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\106 Manic Street Preachers - If You Tolerate This.mp3]=],
+    ["artist"] = [=[Manic Street Preachers]=],
+    ["title"] = [=[If You Tolerate This]=],
+  },
+  [21] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:518,Prince - Purple Rain
+b:\mp3\diversen\Verrukkelijke715\108 Prince - Purple Rain.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\108 Prince - Purple Rain.mp3]=],
+    ["artist"] = [=[Prince]=],
+    ["title"] = [=[Purple Rain]=],
+  },
+  [22] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:368,Manic Street Preachers - Motorcycle emptiness
+b:\mp3\diversen\Verrukkelijke715\118 Manic Street Preachers - Motorcycle emptiness.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\118 Manic Street Preachers - Motorcycle emptiness.mp3]=],
+    ["artist"] = [=[Manic Street Preachers]=],
+    ["title"] = [=[Motorcycle emptiness]=],
+  },
+  [23] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:258,Beatles - Come together
+b:\mp3\diversen\Verrukkelijke715\130 Beatles - Come together.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\130 Beatles - Come together.mp3]=],
+    ["artist"] = [=[Beatles]=],
+    ["title"] = [=[Come together]=],
+  },
+  [24] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:188,Eels - Novocaine for the soul
+b:\mp3\diversen\Verrukkelijke715\131 Eels - Novocaine for the soul.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\131 Eels - Novocaine for the soul.mp3]=],
+    ["artist"] = [=[Eels]=],
+    ["title"] = [=[Novocaine for the soul]=],
+  },
+  [25] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:317,Soundgarden - Black hole sun
+b:\mp3\diversen\Verrukkelijke715\154 Soundgarden - Black hole sun.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\154 Soundgarden - Black hole sun.mp3]=],
+    ["artist"] = [=[Soundgarden]=],
+    ["title"] = [=[Black hole sun]=],
+  },
+  [26] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:237,Racoon - Blue Days
+b:\mp3\diversen\Verrukkelijke715\165 Racoon - Blue Days.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\165 Racoon - Blue Days.mp3]=],
+    ["artist"] = [=[Racoon]=],
+    ["title"] = [=[Blue Days]=],
+  },
+  [27] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:235,Beck - Loser
+b:\mp3\diversen\Verrukkelijke715\190 Beck - Loser.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\190 Beck - Loser.mp3]=],
+    ["artist"] = [=[Beck]=],
+    ["title"] = [=[Loser]=],
+  },
+  [28] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:206,Live - Selling the drama
+b:\mp3\diversen\Verrukkelijke715\193 Live - Selling the drama.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\193 Live - Selling the drama.mp3]=],
+    ["artist"] = [=[Live]=],
+    ["title"] = [=[Selling the drama]=],
+  },
+  [29] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:217,Nirvana - About A Girl (unplugged)
+b:\mp3\diversen\Verrukkelijke715\197 Nirvana - About A Girl (unplugged).mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\197 Nirvana - About A Girl (unplugged).mp3]=],
+    ["artist"] = [=[Nirvana]=],
+    ["title"] = [=[About A Girl (unplugged)]=],
+  },
+  [30] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:341,Deep Purple - Smoke on the water
+b:\mp3\diversen\Verrukkelijke715\215 Deep Purple - Smoke on the water.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\215 Deep Purple - Smoke on the water.mp3]=],
+    ["artist"] = [=[Deep Purple]=],
+    ["title"] = [=[Smoke on the water]=],
+  },
+  [31] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:241,Novastar - Wrong
+b:\mp3\diversen\Verrukkelijke715\218 Novastar - Wrong.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\218 Novastar - Wrong.mp3]=],
+    ["artist"] = [=[Novastar]=],
+    ["title"] = [=[Wrong]=],
+  },
+  [32] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:157,Weezer - Buddy Holly
+b:\mp3\diversen\Verrukkelijke715\223 Weezer - Buddy Holly.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\223 Weezer - Buddy Holly.mp3]=],
+    ["artist"] = [=[Weezer]=],
+    ["title"] = [=[Buddy Holly]=],
+  },
+  [33] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:272,Sheryl Crow - All I wanna do
+b:\mp3\diversen\Verrukkelijke715\225 Sheryl Crow - All I wanna do.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\225 Sheryl Crow - All I wanna do.mp3]=],
+    ["artist"] = [=[Sheryl Crow]=],
+    ["title"] = [=[All I wanna do]=],
+  },
+  [34] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:336,Guns 'n' Roses - Knockin' on Heaven's Door
+b:\mp3\diversen\Verrukkelijke715\234 Guns 'n' Roses - Knockin' on Heaven's Door.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\234 Guns 'n' Roses - Knockin' on Heaven's Door.mp3]=],
+    ["artist"] = [=[Guns 'n' Roses]=],
+    ["title"] = [=[Knockin' on Heaven's Door]=],
+  },
+  [35] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:228,Radiohead - No Surprises
+b:\mp3\diversen\Verrukkelijke715\239 Radiohead - No Surprises.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\239 Radiohead - No Surprises.mp3]=],
+    ["artist"] = [=[Radiohead]=],
+    ["title"] = [=[No Surprises]=],
+  },
+  [36] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:343,Lenny Kravitz - Let love rule
+b:\mp3\diversen\Verrukkelijke715\251 Lenny Kravitz - Let love rule.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\251 Lenny Kravitz - Let love rule.mp3]=],
+    ["artist"] = [=[Lenny Kravitz]=],
+    ["title"] = [=[Let love rule]=],
+  },
+  [37] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:255,Queen - I Want To Break Free
+b:\mp3\diversen\Verrukkelijke715\270 Queen - I Want To Break Free.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\270 Queen - I Want To Break Free.mp3]=],
+    ["artist"] = [=[Queen]=],
+    ["title"] = [=[I Want To Break Free]=],
+  },
+  [38] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:203,Phil Collins - Against all odds
+b:\mp3\diversen\Verrukkelijke715\284 Phil Collins - Against all odds.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\284 Phil Collins - Against all odds.mp3]=],
+    ["artist"] = [=[Phil Collins]=],
+    ["title"] = [=[Against all odds]=],
+  },
+  [39] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:228,David Bowie - This Is Not America
+b:\mp3\diversen\Verrukkelijke715\314 David Bowie - This Is Not America.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\314 David Bowie - This Is Not America.mp3]=],
+    ["artist"] = [=[David Bowie]=],
+    ["title"] = [=[This Is Not America]=],
+  },
+  [40] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:264,Travis - Why Does It Always Rain On Me
+b:\mp3\diversen\Verrukkelijke715\321 Travis - Why Does It Always Rain On Me.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\321 Travis - Why Does It Always Rain On Me.mp3]=],
+    ["artist"] = [=[Travis]=],
+    ["title"] = [=[Why Does It Always Rain On Me]=],
+  },
+  [41] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:279,The Kinks - Lola (live)
+b:\mp3\diversen\Verrukkelijke715\334 The Kinks - Lola (live).mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\334 The Kinks - Lola (live).mp3]=],
+    ["artist"] = [=[The Kinks]=],
+    ["title"] = [=[Lola (live)]=],
+  },
+  [42] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:335,Extreme - More than words
+b:\mp3\diversen\Verrukkelijke715\337 Extreme - More than words.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\337 Extreme - More than words.mp3]=],
+    ["artist"] = [=[Extreme]=],
+    ["title"] = [=[More than words]=],
+  },
+  [43] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:183,Fun lovin' criminals - Scooby snacks
+b:\mp3\diversen\Verrukkelijke715\342 Fun lovin' criminals - Scooby snacks.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\342 Fun lovin' criminals - Scooby snacks.mp3]=],
+    ["artist"] = [=[Fun lovin' criminals]=],
+    ["title"] = [=[Scooby snacks]=],
+  },
+  [44] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:192,The Police - Roxanne
+b:\mp3\diversen\Verrukkelijke715\344 The Police - Roxanne.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\344 The Police - Roxanne.mp3]=],
+    ["artist"] = [=[The Police]=],
+    ["title"] = [=[Roxanne]=],
+  },
+  [45] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:245,Raemonn - Supergirl
+b:\mp3\diversen\Verrukkelijke715\349 Raemonn - Supergirl.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\349 Raemonn - Supergirl.mp3]=],
+    ["artist"] = [=[Raemonn]=],
+    ["title"] = [=[Supergirl]=],
+  },
+  [46] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:225,Blof - Ze is er niet
+b:\mp3\diversen\Verrukkelijke715\351 Blof - Ze is er niet.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\351 Blof - Ze is er niet.mp3]=],
+    ["artist"] = [=[Blof]=],
+    ["title"] = [=[Ze is er niet]=],
+  },
+  [47] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:217,Alanis Morissette - Hand In My Pocket
+b:\mp3\diversen\Verrukkelijke715\377 Alanis Morissette - Hand In My Pocket.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\377 Alanis Morissette - Hand In My Pocket.mp3]=],
+    ["artist"] = [=[Alanis Morissette]=],
+    ["title"] = [=[Hand In My Pocket]=],
+  },
+  [48] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:291,Bloodhound Gang - Fire Water Burn
+b:\mp3\diversen\Verrukkelijke715\383 Bloodhound Gang - Fire Water Burn.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\383 Bloodhound Gang - Fire Water Burn.mp3]=],
+    ["artist"] = [=[Bloodhound Gang]=],
+    ["title"] = [=[Fire Water Burn]=],
+  },
+  [49] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:162,Queen - Crazy Little Thing Called Love
+b:\mp3\diversen\Verrukkelijke715\423 Queen - Crazy Little Thing Called Love.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\423 Queen - Crazy Little Thing Called Love.mp3]=],
+    ["artist"] = [=[Queen]=],
+    ["title"] = [=[Crazy Little Thing Called Love]=],
+  },
+  [50] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:205,Blues Brothers - Everybody Needs Somebody to Love
+b:\mp3\diversen\Verrukkelijke715\433 Blues Brothers - Everybody Needs Somebody to Love.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\433 Blues Brothers - Everybody Needs Somebody to Love.mp3]=],
+    ["artist"] = [=[Blues Brothers]=],
+    ["title"] = [=[Everybody Needs Somebody to Love]=],
+  },
+  [51] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:314,Stone Temple Pilots - Plush
+b:\mp3\diversen\Verrukkelijke715\450 Stone Temple Pilots - Plush.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\450 Stone Temple Pilots - Plush.mp3]=],
+    ["artist"] = [=[Stone Temple Pilots]=],
+    ["title"] = [=[Plush]=],
+  },
+  [52] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:232,Toploader - Dancing In The Moonlight
+b:\mp3\diversen\Verrukkelijke715\488 Toploader - Dancing In The Moonlight.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\488 Toploader - Dancing In The Moonlight.mp3]=],
+    ["artist"] = [=[Toploader]=],
+    ["title"] = [=[Dancing In The Moonlight]=],
+  },
+  [53] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:302,Marvin Gaye - I Heard It Through The Grapevine
+b:\mp3\diversen\Verrukkelijke715\503 Marvin Gaye - I Heard It Through The Grapevine.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\503 Marvin Gaye - I Heard It Through The Grapevine.mp3]=],
+    ["artist"] = [=[Marvin Gaye]=],
+    ["title"] = [=[I Heard It Through The Grapevine]=],
+  },
+  [54] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:287,Seal - Kiss from a rose
+b:\mp3\diversen\Verrukkelijke715\508 Seal - Kiss from a rose.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\508 Seal - Kiss from a rose.mp3]=],
+    ["artist"] = [=[Seal]=],
+    ["title"] = [=[Kiss from a rose]=],
+  },
+  [55] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:207,Joy Division - Love Will Tear Us Apart
+b:\mp3\diversen\Verrukkelijke715\514 Joy Division - Love Will Tear Us Apart.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\514 Joy Division - Love Will Tear Us Apart.mp3]=],
+    ["artist"] = [=[Joy Division]=],
+    ["title"] = [=[Love Will Tear Us Apart]=],
+  },
+  [56] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:395,Tom Waits - Tom Traubert's Blues (Waltzing Mathilda)
+b:\mp3\diversen\Verrukkelijke715\541 Tom Waits - Tom Traubert's Blues (Waltzing Mathilda).mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\541 Tom Waits - Tom Traubert's Blues (Waltzing Mathilda).mp3]=],
+    ["artist"] = [=[Tom Waits]=],
+    ["title"] = [=[Tom Traubert's Blues (Waltzing Mathilda)]=],
+  },
+  [57] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:125,Bill Withers - Ain't No Sunshine
+b:\mp3\diversen\Verrukkelijke715\558 Bill Withers - Ain't No Sunshine.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\558 Bill Withers - Ain't No Sunshine.mp3]=],
+    ["artist"] = [=[Bill Withers]=],
+    ["title"] = [=[Ain't No Sunshine]=],
+  },
+  [58] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:210,Jimi Hendrix - Hey Joe
+b:\mp3\diversen\Verrukkelijke715\566 Jimi Hendrix - Hey Joe.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\566 Jimi Hendrix - Hey Joe.mp3]=],
+    ["artist"] = [=[Jimi Hendrix]=],
+    ["title"] = [=[Hey Joe]=],
+  },
+  [59] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:257,Lenny Kravitz - I belong to you
+b:\mp3\diversen\Verrukkelijke715\576 Lenny Kravitz - I belong to you.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\576 Lenny Kravitz - I belong to you.mp3]=],
+    ["artist"] = [=[Lenny Kravitz]=],
+    ["title"] = [=[I belong to you]=],
+  },
+  [60] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:242,Lenny Kravitz - It ain't over til it's over
+b:\mp3\diversen\Verrukkelijke715\583 Lenny Kravitz - It ain't over til it's over.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\583 Lenny Kravitz - It ain't over til it's over.mp3]=],
+    ["artist"] = [=[Lenny Kravitz]=],
+    ["title"] = [=[It ain't over til it's over]=],
+  },
+  [61] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:237,Foo Fighters - Learn To Fly
+b:\mp3\diversen\Verrukkelijke715\585 Foo Fighters - Learn To Fly.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\585 Foo Fighters - Learn To Fly.mp3]=],
+    ["artist"] = [=[Foo Fighters]=],
+    ["title"] = [=[Learn To Fly]=],
+  },
+  [62] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:255,Red Hot Chili Peppers - Otherside
+b:\mp3\diversen\Verrukkelijke715\601 Red Hot Chili Peppers - Otherside.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\601 Red Hot Chili Peppers - Otherside.mp3]=],
+    ["artist"] = [=[Red Hot Chili Peppers]=],
+    ["title"] = [=[Otherside]=],
+  },
+  [63] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:333,Toto - Rosanna
+b:\mp3\diversen\Verrukkelijke715\610 Toto - Rosanna.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\610 Toto - Rosanna.mp3]=],
+    ["artist"] = [=[Toto]=],
+    ["title"] = [=[Rosanna]=],
+  },
+  [64] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:277,The Rolling Stones - Waiting on a friend
+b:\mp3\diversen\Verrukkelijke715\627 The Rolling Stones - Waiting on a friend.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\627 The Rolling Stones - Waiting on a friend.mp3]=],
+    ["artist"] = [=[The Rolling Stones]=],
+    ["title"] = [=[Waiting on a friend]=],
+  },
+  [65] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:272,The Connels - '74 '75
+b:\mp3\diversen\Verrukkelijke715\637 The Connels - '74 '75.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\637 The Connels - '74 '75.mp3]=],
+    ["artist"] = [=[The Connels]=],
+    ["title"] = [=['74 '75]=],
+  },
+  [66] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:170,Rare Earth - Get Ready
+b:\mp3\diversen\Verrukkelijke715\671 Rare Earth - Get Ready.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\671 Rare Earth - Get Ready.mp3]=],
+    ["artist"] = [=[Rare Earth]=],
+    ["title"] = [=[Get Ready]=],
+  },
+  [67] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:240,Genesis - Follow you follow me
+b:\mp3\diversen\Verrukkelijke715\673 Genesis - Follow you follow me.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\673 Genesis - Follow you follow me.mp3]=],
+    ["artist"] = [=[Genesis]=],
+    ["title"] = [=[Follow you follow me]=],
+  },
+  [68] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:107,Janis Joplin - Mercedes Benz
+b:\mp3\diversen\Verrukkelijke715\695 Janis Joplin - Mercedes Benz.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\695 Janis Joplin - Mercedes Benz.mp3]=],
+    ["artist"] = [=[Janis Joplin]=],
+    ["title"] = [=[Mercedes Benz]=],
+  },
+  [69] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:262,Soul Asylum - Runaway Train
+b:\mp3\diversen\Verrukkelijke715\696 Soul Asylum - Runaway Train.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\696 Soul Asylum - Runaway Train.mp3]=],
+    ["artist"] = [=[Soul Asylum]=],
+    ["title"] = [=[Runaway Train]=],
+  },
+  [70] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:216,Steve Miller Band - The Joker
+b:\mp3\diversen\Verrukkelijke715\700 Steve Miller Band - The Joker.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\700 Steve Miller Band - The Joker.mp3]=],
+    ["artist"] = [=[Steve Miller Band]=],
+    ["title"] = [=[The Joker]=],
+  },
+  [71] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:323,Sheryl Crow - If It Makes You Happy
+b:\mp3\diversen\Verrukkelijke715\702 Sheryl Crow - If It Makes You Happy.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\702 Sheryl Crow - If It Makes You Happy.mp3]=],
+    ["artist"] = [=[Sheryl Crow]=],
+    ["title"] = [=[If It Makes You Happy]=],
+  },
+  [72] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:181,Tracy Bonham - Mother mother
+b:\mp3\diversen\Verrukkelijke715\708 Tracy Bonham - Mother mother.mp3
+]=],
+    ["file"] = [=[b:\mp3\diversen\Verrukkelijke715\708 Tracy Bonham - Mother mother.mp3]=],
+    ["artist"] = [=[Tracy Bonham]=],
+    ["title"] = [=[Mother mother]=],
+  },
+  [73] = 
+  {
+    ["playlistEntry"] = [=[#EXTINF:306,Nirvana - Where Did You Sleep Last Night
+B:\mp3\#Mp3 DVD 7\Nirvana - Unplugged In New York\14. Where Did You Sleep Last Night.mp3
+]=],
+    ["file"] = [=[B:\mp3\#Mp3 DVD 7\Nirvana - Unplugged In New York\14. Where Did You Sleep Last Night.mp3]=],
+    ["artist"] = [=[Nirvana]=],
+    ["title"] = [=[Where Did You Sleep Last Night]=],
+  },
+}

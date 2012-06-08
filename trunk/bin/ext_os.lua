@@ -22,7 +22,7 @@ os.format_file = function(ext, search_site, mp3)
 end
 
 os.getFileWithoutExt = function(fn)
-  return fn:match('^(.+)(%..+)$')
+  return fn:match('^(.+)%.(.+)$')
 end
 
 os.createDir = function(dir)
