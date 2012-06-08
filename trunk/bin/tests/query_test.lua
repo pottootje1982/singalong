@@ -58,7 +58,7 @@ function TestQuery:testExtractLyrics()
 end
 
 function TestQuery:testDownloadLyrics()
-  local searchSite = search_sites[4]
+  local searchSite = search_sites[1]
   query.downloadLyrics(testMp3, {searchSite})
   local txtFn = os.format_file('txt', searchSite, testMp3)
   local htmlFn = os.format_file('html', searchSite, testMp3)

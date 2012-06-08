@@ -1,6 +1,7 @@
 -- Main.lua : script invoked directly from singalong.exe when no arguments are given
 
 -- BUGS:
+-- start app in monitor where it was closed before (save monitor index to config)
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
@@ -108,7 +109,10 @@ function mainDialog:k_any( key, press)
     playlist_api.saveMp3Table()
   elseif (key == iup.K_F1) then
     os.shellExecute('https://sites.google.com/site/walterreddock/home', 'html')
+  else
+    return iup.CONTINUE
   end
+  return iup.IGNORE
 end
 
 function mainDialog:close_cb()

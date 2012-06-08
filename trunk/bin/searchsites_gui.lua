@@ -111,7 +111,10 @@ function siteslist:k_any(key)
   if key == iup.K_DEL then
     siteslist:deleteFile('txt')
     siteslist:deleteFile('html')
+  else
+    return iup.CONTINUE
   end
+  return iup.IGNORE
 end
 
 function siteslist:update(updatePos)
