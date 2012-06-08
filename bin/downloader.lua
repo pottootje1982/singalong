@@ -10,6 +10,60 @@ local function determineWaitInterval()
   end
 end
 
+-- Download routine func
+local function routineFunc(ds, selMp3s, selSites)
+  return function()
+    for i, mp3 in ipairs(selMp3s) do
+      ds.currMp3Index = i
+      ds.currMp3 = mp3
+
+      local lastMp3 = i == #selMp3s
+      if not (lastMp3 and ds.numSites == 1) then
+        ds.totalWaitTime = determineWaitInterval()
+      else
+        ds.totalWaitTime = nil
+      end
+
+      -- arguments customArtist and customTitle are non-nil if you want to specify custom query
+      query.downloadLyrics(mp3, selSites, ds.totalWaitTime, lastMp3)
+
+      -- not that i is not always the correct index, as we're dealing with selMp3s
+      -- which might be a subset of playlist tracks
+      playlist_gui.widget:updateItem(nil, mp3)
+    end
+  end
+end
+
+local function endFunc(progressDialog)
+  return function()
+    iup.Destroy(progressDialog)
+    updateGui('playlist', 'searchsites', 'lyrics')
+  end
+end
+
+local function errorCallback(errorMessage)
+  if errorMessage:find(query.GOOGLE_BAN) then
+    iup.Message('Warning', 'Google banned you, try increasing the wait time!\nAfter you click OK, you will be redirected to a page were you have\nto solve the CAPTCHA assignment.')
+    showCaptchaAssignment()
+    return true
+  end
+end
+
+-- Function called when routine func calls coroutine.yield()
+local function resumeFunc(ds)
+  return function(siteIndex, waitingPerSite)
+    if type(siteIndex) == 'number' then
+      local siteName = waitingPerSite
+      ds.currSiteIndex = siteIndex
+      ds.updateLabel.title = string.format('%s - %s (%s)' , ds.currMp3.artist, ds.currMp3.title, siteName)
+      ds.downloadProgressbar.value = (ds.currMp3Index - 1) * ds.numSites + ds.currSiteIndex - 1
+    elseif waitingPerSite then
+      local waitTime = ds.totalWaitTime or ds.avgWaitTime
+      ds.downloadProgressbar.value = (ds.currMp3Index - 1) * ds.numSites + ds.currSiteIndex - 1 + waitingPerSite / waitTime
+    end
+  end
+end
+
 function downloadLyrics(parentDialogTitle)
   -- First check if there's internet access
   local err = socketinterface.request('http://www.google.com/search?q=test')
@@ -103,56 +157,20 @@ function downloadLyrics(parentDialogTitle)
 
   progressDialog:show()
 
-  local currMp3Index = nil
-  local currMp3 = nil
-  local currSiteIndex = nil
-  local totalWaitTime = nil
-  local lastMp3 = nil
+  local ds =
+  {
+    currMp3Index = nil,
+    currMp3 = nil,
+    currSiteIndex = nil,
+    totalWaitTime = nil,
+    numSites = numSites,
+    avgWaitTime = avgWaitTime,
+    downloadProgressbar = downloadProgressbar,
+    updateLabel = updateLabel
+  }
 
-  -- Download routine func
-  local function routineFunc()
-    for i, mp3 in ipairs(selMp3s) do
-      currMp3Index = i
-      currMp3 = mp3
-
-      lastMp3 = i == #selMp3s
-      if not (lastMp3 and numSites == 1) then
-        totalWaitTime = determineWaitInterval()
-      else
-        totalWaitTime = nil
-      end
-
-      -- arguments customArtist and customTitle are non-nil if you want to specify custom query
-      query.downloadLyrics(mp3, selSites, totalWaitTime, lastMp3)
-
-      -- not that i is not always the correct index, as we're dealing with selMp3s
-      -- which might be a subset of playlist tracks
-      playlist_gui.widget:updateItem(nil, mp3)
-    end
-  end
-  -- Function called when routine func calls coroutine.yield()
-  local function resumeFunc(siteIndex, waitingPerSite)
-    if type(siteIndex) == 'number' then
-      local siteName = waitingPerSite
-      currSiteIndex = siteIndex
-      updateLabel.title = string.format('%s - %s (%s)' , currMp3.artist, currMp3.title, siteName)
-      downloadProgressbar.value = (currMp3Index - 1) * numSites + currSiteIndex - 1
-    elseif waitingPerSite then
-      local waitTime = totalWaitTime or avgWaitTime
-      downloadProgressbar.value = (currMp3Index - 1) * numSites + currSiteIndex - 1 + waitingPerSite / waitTime
-    end
-  end
-  local function endFunc()
-    iup.Destroy(progressDialog)
-    updateGui('playlist', 'searchsites', 'lyrics')
-  end
-  local function errorCallback(errorMessage)
-    if errorMessage:find(query.GOOGLE_BAN) then
-      iup.Message('Warning', 'Google banned you, try increasing the wait time!\nAfter you click OK, you will be redirected to a page were you have\nto solve the CAPTCHA assignment.')
-      showCaptchaAssignment()
-      return true
-    end
-  end
-  downloadCo = app.addCo(routineFunc, resumeFunc, endFunc, errorCallback)
+  downloadCo = app.addCo( routineFunc(ds, selMp3s, selSites),
+                          resumeFunc(ds),
+                          endFunc(progressDialog), errorCallback)
 end
 

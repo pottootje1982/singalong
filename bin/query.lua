@@ -222,7 +222,7 @@ local function waitInterval(totalWaitTime, startSite)
   -- so we can subtract this from waitInterval() below
   local subtractTime = endSite - startSite
   local interval = totalWaitTime - subtractTime
-  print('waiting ' .. interval .. ' seconds...', totalWaitTime)
+  print('waiting ' .. interval .. ' seconds...')
   coroutine.waitFunc(function()
     local currentTime = os.clock()
     return currentTime - endSite >= interval, currentTime - startSite
