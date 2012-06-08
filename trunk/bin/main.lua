@@ -23,6 +23,7 @@ require "iup_getparam"
 require "lyrics_gui"
 require "miktex"
 require "singalongpdf"
+require "downloader"
 require "title_bar_gui"
 require "debug_frame"
 
@@ -102,7 +103,7 @@ function mainDialog:k_any( key, press)
   elseif (key == iup.K_co or key == iup.K_cO) then
     playlist_api.openPlaylist()
   elseif (key == iup.K_cd or key == iup.K_cD) then
-    title_bar_gui.downloadLyrics()
+    downloader.downloadLyrics()
   elseif (key == iup.K_cb or key == iup.K_cB) then
     title_bar_gui.createSongbook()
   elseif (key == iup.K_cp or key == iup.K_cP) then
