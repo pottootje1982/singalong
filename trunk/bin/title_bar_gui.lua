@@ -46,6 +46,7 @@ local function sortTracks(tracks)
     local btitle = b.customTitle or b.title
     return (aartist:lower() == bartist:lower() and atitle:lower() < btitle:lower()) or aartist:lower() < bartist:lower()
   end)
+  update(true)
 end
 
 function sortButton:action()
