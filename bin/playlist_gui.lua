@@ -87,7 +87,7 @@ local playlistMenu = iup.menu {
   iup.item {
     title = "Add";
     action = function(self)
-      widget:editOrAddEntry()
+      editOrAddEntry()
     end;
   },
   iup.item {
@@ -211,8 +211,36 @@ function playlist:onSelectionChanged(line)
   end
 end
 
-function playlist:editOrAddEntry(line)
-  local add = not line
+function editEntry(line)
+  local selTrack, selTracks = getSelection()
+  if #selTracks == 1 then
+    editOrAddEntry(line)
+  elseif #selTracks > 1 then
+    editArtistSelection(selTracks)
+  end
+end
+
+function editArtistSelection(selTracks)
+  local ret, artist =
+  iup.GetParam( "Change artist value (for web search only)", iupParamCallback,
+                "Change artist name: %s\n", selTracks[1].customArtist or selTracks[1].artist)
+  if ret == 0 or not ret then return end -- dialog was cancelled
+  if string.isStringEmptyOrSpace(artist) then
+    iup.Message('Warning', 'Artist field cannot be empty!')
+  else
+    for i, track in ipairs(selTracks) do
+      if cache.IsTxtInCache(track) then
+        track.customArtist = artist
+      else
+        track.artist = artist
+      end
+    end
+    cache.rescanPlaylist(selTracks)
+    playlist_api.playlistUpdate(true)
+  end
+end
+
+function editOrAddEntry(line)
   local tracks = playlist_api.getPlaylist()
   line = line or (#tracks + 1)
   local track = tracks[line]
@@ -227,12 +255,9 @@ function playlist:editOrAddEntry(line)
 
   if ret == 0 or not ret then return end -- dialog was cancelled
 
-  if artist == '' or title == '' then
+  if string.isStringEmptyOrSpace(artist) or string.isStringEmptyOrSpace(title) then
     iup.Message('Warning', 'Artist or title field cannot be empty!')
   else
-    -- remove newlines (This can happen when user presses enter to close dialog)
-    artist = artist:gsub('\n', '')
-    title = title:gsub('\n', '')
     if track then
       -- if track already resides in cache, we only adapt customArtist/customTitle,
       -- which is only used for visual representation and querying
@@ -257,7 +282,7 @@ function playlist:onDouble(line)
     self.c.fittotext = 'C1'
     self.c.fittotext = 'C2'
   else
-    self:editOrAddEntry(line)
+    editEntry(line)
   end
 end
 
@@ -319,9 +344,9 @@ function playlist:k_any(key, press)
   elseif key == iup.K_DEL then
     self:removeSelItem()
   elseif key == iup.K_INS then
-    self:editOrAddEntry()
+    editOrAddEntry()
   elseif key == iup.K_F2 then
-    self:editOrAddEntry(self.lastSel)
+    editEntry(self.lastSel)
   else
     return iup.CONTINUE
   end
