@@ -234,7 +234,7 @@ local function downloadLyricsAtSite(mp3, search_site)
   local lyr
   if info and info.txt then
     print('Lyrics were already downloaded, delete them first if you want to redownload')
-    return info.txt
+    return info.txt, true
   else
     queryGoogle(search_site, mp3)
   end
@@ -254,14 +254,14 @@ function downloadLyrics(mp3, customSearchSites, totalWaitTime, lastMp3)
 
     local startSite = os.clock()
 
-    local lyr = downloadLyricsAtSite(mp3, search_site, totalWaitTime)
+    local lyr, skipWait = downloadLyricsAtSite(mp3, search_site, totalWaitTime)
 
     local lastSite = index == #customSearchSites
-    if totalWaitTime and
-      not (lastMp3 and
-        ((config.stopAfterFirstHit and lyr) or
-        lastSite)) then
-          waitInterval(totalWaitTime, startSite)
+    if lastMp3 then
+      skipWait = skipWait or ((config.stopAfterFirstHit and lyr) or lastSite)
+    end
+    if totalWaitTime and not skipWait then
+      waitInterval(totalWaitTime, startSite)
     end
 
     -- make sure the progress-bar gets filled
