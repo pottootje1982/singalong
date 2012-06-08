@@ -3,12 +3,14 @@ module('cache', package.seeall)
 require 'app'
 require 'misc'
 require 'query'
+require 'playlist_api'
 require 'playlist_helpers'
 require 'compare_playlists'
 
 local cacheFile = F(LYRICS_DIR, 'cache')
 local lyricsCache = {}
 local fileTypes = {'html', 'txt'}
+local scanPlaylistRoutine = nil
 
 LEVENSHTEIN_ARTIST_TRESHOLD = 0.5
 LEVENSHTEIN_TITLE_TRESHOLD = 0.8
@@ -243,7 +245,7 @@ end
 -- Function that is called when playlist is loaded
 function rescanPlaylist(tracks)
   local allTracks = playlist_api.getPlaylist()
-  app.addCo(function()
+  scanPlaylistRoutine = app.addCo(function()
     for i, track in ipairs(tracks) do
       local notFoundInCache = not IsTxtInCache(track)
       IsTxtInCache(track, true)
@@ -287,4 +289,10 @@ os.calcTime('Loading cache', function()
   loadCache()
   createLyricsDirs()
 end)
+
+playlist_api.openPlaylistEvent:subscribe(function(tracks)
+  app.removeCo(scanPlaylistRoutine)
+  rescanPlaylist(tracks)
+end)
+
 

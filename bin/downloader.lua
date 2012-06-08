@@ -115,8 +115,6 @@ function downloadLyrics(parentDialogTitle)
   downloadProgressbar.max = numMp3s * numSites
   progressDialog.parentdialog = parentDialogTitle
 
-  progressDialog:show()
-
   local ds =
   {
     currMp3Index = nil,
@@ -132,5 +130,7 @@ function downloadLyrics(parentDialogTitle)
   downloadCo = app.addCo( routineFunc(ds, selMp3s, selSites),
                           resumeFunc(ds),
                           endFunc(progressDialog), errorCallback)
+
+  progressDialog:popup()
 end
 

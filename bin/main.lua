@@ -1,8 +1,6 @@
 -- Main.lua : script invoked directly from singalong.exe when no arguments are given
 
 -- BUGS:
--- change playlist while downloading shouldn't be possible (kill coroutines when loading new playlist. Also the cache.rescanPlaylist() routine throws errors when loading new list
--- never overwrite .sing file, ask if opening .m3u: open .sing instead?
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
