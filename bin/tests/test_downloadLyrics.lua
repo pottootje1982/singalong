@@ -10,7 +10,7 @@ local function downloadLyrics()
     {artist = 'neil young', title = 'unknown legend'},
     {artist = 'neil young', title = 'king'}
   })
-  title_bar_gui.downloadLyrics()
+  downloader.downloadLyrics()
 end
 
 -- We don't want this code to be executed when running unit tests
