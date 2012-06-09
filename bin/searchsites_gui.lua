@@ -94,7 +94,7 @@ function siteslist:selectFile(ext)
 end
 
 function siteslist:onDouble()
-  self:viewFile('html')
+  self:viewFile(lyrics_gui.htmlToggle.value == 'ON' and 'html' or 'txt')
 end
 
 function siteslist:deleteFile(ext)

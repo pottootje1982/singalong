@@ -71,6 +71,7 @@ os.makeAbsolute = function(fn, absPath)
 end
 
 os.exists = function(fn)
+  if not fn then return false end
   local attribs = lfs.attributes(fn)
   return attribs ~= nil
 end

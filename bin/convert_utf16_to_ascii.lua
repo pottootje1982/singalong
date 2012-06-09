@@ -1,8 +1,10 @@
 require 'replace'
 
-local utf16_to_ascii = 
+local utf16_to_ascii =
 {
   -- UTF16 conversions
+  [[√¢‚Ç¨≈ì]],                    [[ì]], -- because of testdata/tests/the beatles - spiritual christmas.html
+  [[√¢‚Ç¨¬ù]],                     [[î]], -- because of testdata/tests/the beatles - spiritual christmas.html
   [[√Ä]],                         [[¿]],
   [[√Å]],                          [[¡]],
   [[√Ç]],                         [[¬]],
@@ -71,7 +73,7 @@ local utf16_to_ascii =
   [[≈ì]],                         [[ú]],
 }
 
-return 
+return
 function(str)
   return replace(str, utf16_to_ascii)
 end
