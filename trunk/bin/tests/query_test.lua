@@ -1,9 +1,11 @@
 require 'query'
+require 'test_setup'
 require 'luaunit'
 
 TestQuery = {}
 
 local testMp3 = {artist='neil young', title='unknown legend'}
+local testMp32 = {artist='Beatles', title='Spiritual Christmas'}
 
 function TestQuery:tearDown()
   -- remove test app data dir
@@ -46,15 +48,46 @@ function TestQuery:testExtractUnexistingLyrics()
 end
 
 
-function TestQuery:testExtractLyrics()
+local function testExtractLyrics(testMp3)
   local search_site = search_sites[1]
   local fileName = os.format_file('html', search_site, testMp3)
-  os.copy(testDataDir(testMp3.artist .. ' - ' .. testMp3.title .. '.html'), os.getPath(fileName))
+  local sourceFile = os.format_bare_file(testMp3.artist, testMp3.title, 'html' )
+  os.copy(testDataDir(sourceFile), os.getPath(fileName))
   assert(os.exists(fileName))
   -- we've to add it to cache first otherwise getLyrics won't find it
   cache.addToCache(testMp3, search_site, fileName)
   local lyrics = query.extractLyrics(search_site, testMp3)
-  assert(lyrics)
+  return lyrics
+end
+
+function TestQuery:testExtractLyrics()
+  testExtractLyrics(testMp3)
+end
+
+function TestQuery:testExtractLyrics2()
+  local lyrics = testExtractLyrics(testMp32)
+  assertEquals(lyrics, [[Rockin' around the Christmas tree
+At the Christmas party hop
+Mistletoe hung where you can see
+Ev'ry couple tries to stop
+
+Rockin' around the Christmas tree
+Let the Christmas spirit ring
+Later we'll have some pumpkin pie
+And we'll do some caroling
+
+You will get a sentimental feeling when you hear
+Voices singing “Let's be jolly
+Deck the halls with boughs of holly”
+
+Rockin' around the Christmas tree
+Have a happy holiday
+Ev'ryone dancing merrily
+In the new old fashioned way
+
+Rockin' around the Christmas tree
+Have a happy holiday
+Ev'ryone dancing merrily]])
 end
 
 function TestQuery:testDownloadLyrics()
