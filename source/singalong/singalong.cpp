@@ -139,7 +139,8 @@ int main(int argc, char ** argv)
   {
     lua_pushboolean(L, true);
     lua_setfield(L, LUA_GLOBALSINDEX, "APPLOADED");
-    strcpy_s(luaFile, sizeof(luaFile), "main.lua");
+	const char* execPath = getExecutablePath();
+	sprintf_s(luaFile, sizeof(luaFile), "%s%s", execPath, "main.lua");
   }
     
   int temp_int = luaL_loadfile(L,luaFile);

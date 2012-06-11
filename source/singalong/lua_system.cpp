@@ -16,6 +16,11 @@ void setExecutablePath(char* charPath)
   }
 }
 
+const char* getExecutablePath()
+{
+	return executablePath.c_str();
+}
+
 int lua_getExecutablePath(lua_State *L)
 {
   lua_pushstring(L, executablePath.c_str());
