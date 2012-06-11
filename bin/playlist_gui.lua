@@ -116,6 +116,13 @@ local playlistMenu = iup.menu {
       playInAudioPlayer(selTracks)
     end
   },
+  iup.item {
+    title = "Save as playlist",
+    action = function(self)
+      local selTrack, selTracks = getSelection()
+      saveAsPlaylist(selTracks)
+    end
+  },
   iup.separator{},
   iup.item {
     title = "Show track in explorer",
@@ -140,6 +147,17 @@ function playInAudioPlayer(selTracks)
   local _, file = os.getPath(config.audioPlayerLocation)
   local path = os.getPath(playlist_api.getPlaylistName())
   os.shellExecute(args, config.audioPlayerLocation, nil, path, true)
+end
+
+function saveAsPlaylist(selTracks)
+  local playlist = ''
+  for i, track in ipairs(selTracks) do
+    playlist = playlist .. track.file .. '\n'
+  end
+  local res = playlist_api.showNewPlaylistDialog(nil, "Playlists (*.m3u)|*.m3u;|")
+  if res then
+    os.writeTo(res, playlist)
+  end
 end
 
 function playlist:queryGoogle(show)

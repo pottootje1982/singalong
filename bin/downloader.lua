@@ -113,7 +113,7 @@ function downloadLyrics(parentDialogTitle)
   local progressDialog, updateLabel, downloadProgressbar = progress_dialog.getDialog("Downloading lyrics...", "Downloading lyrics:", closeCallback, "Stop downloading", closeCallback)
 
   downloadProgressbar.max = numMp3s * numSites
-  progressDialog.parentdialog = parentDialogTitle
+  progressDialog.parentdialog = mainDialog
 
   local ds =
   {
@@ -131,6 +131,7 @@ function downloadLyrics(parentDialogTitle)
                           resumeFunc(ds),
                           endFunc(progressDialog), errorCallback)
 
-  progressDialog:popup()
+  -- cannot make it popup @ parent
+  progressDialog:popup(iup.CENTERPARENT, iup.CENTERPARENT)
 end
 
