@@ -145,7 +145,7 @@ if APPLOADED then
   updateGui('title_bar', 'lyrics')
 
   if config.screenPosition then
-    mainDialog:showxy(config.screenPosition:match('(%d+),(%d+)'))
+    mainDialog:showxy(config.screenPosition:match('(%-?%d+),(%-?%d+)'))
   else
     mainDialog:show()
   end
