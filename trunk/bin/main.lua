@@ -119,6 +119,7 @@ function mainDialog:close_cb()
   config.mainDialogSize = mainDialog.size
   config.splitterValue = splitter.value
   config.playlistSitesSplitter = playlistSitesSplitter.value
+  config.screenPosition = mainDialog.screenposition
   table.saveToFileText(F(LOCALAPPDATADIR, 'config.lua'), config)
   os.calcTime('Saving cache', function()
     cache.saveCache()
@@ -143,7 +144,11 @@ end
 if APPLOADED then
   updateGui('title_bar', 'lyrics')
 
-  mainDialog:show()
+  if config.screenPosition then
+    mainDialog:showxy(config.screenPosition:match('(%d+),(%d+)'))
+  else
+    mainDialog:show()
+  end
 
   if config.loadplaylist then
     local succ, mess = pcall(function()
