@@ -16,7 +16,7 @@ function list:list(params)
   self.c.click_cb = function(widget, line, col, status)
     if iup.isdouble(status) then
       self:call('onDouble', line)
-    elseif iup.isbutton1(status) then
+    elseif iup.isbutton1(status) and line > 0 then -- we shouldn't be able to drag column headers
       self.addToSel = iup.iscontrol(status)
       local isshift = iup.isshift(status)
       if (not self.addToSel and not isshift) or not widget.selection then
