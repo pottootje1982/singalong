@@ -3,10 +3,10 @@ require 'replace'
 
 local html_tags_to_ascii =
 {
-  [[&quot;]], [["]],                   -- 34
-  [[&amp;]]  ,[[&]],                   -- 38
-  [[&lt;]]   ,[[<]],                   -- 60
-  [[&gt;]]   ,[[>]],                   -- 62
+  [[&quot;]],      [["]],              -- 34
+  [[&amp;]],       [[&]],              -- 38
+  [[&lt;]],        [[<]],              -- 60
+  [[&gt;]],        [[>]],              -- 62
   [[&nbsp;]],      [[ ]],              -- 160
   [[&iexcl;]],     [[¡]],              -- 161
   [[&cent;]],      [[¢]],              -- 162
@@ -165,6 +165,11 @@ end
 return
 function(content)
   content = convertHtmlNewlines(content)
+  content = convertHtmlSymbolsToAscii(content)
+  -- do it twice to tackle instances like &amp;quot;
+  -- (the first & is written as &amp;
+  -- This is an error in html, which happens sometimes
+  -- at justsomelyrics.com
   content = convertHtmlSymbolsToAscii(content)
   content = convertHtmlCharsToAscii(content, true)
   content = convertHtmlCharsToAscii(content)
