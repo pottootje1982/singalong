@@ -58,7 +58,7 @@ function buildCache(updateCallback)
   for i, searchSite in ipairs(search_sites) do
     local site = searchSite.site
     for file in lfs.dir(F(LYRICS_DIR, site)) do
-      local artist, title, ext = file:match(playlist_helpers.artist_title_ext)
+      local artist, title, ext = file:match(playlist_helpers.getArtistTitleExtMatch())
       if site and artist and title and (ext == 'txt' or ext == 'html') then
         file = F(LYRICS_DIR, site, file)
         addToCache({artist=artist, title=title}, searchSite, file)

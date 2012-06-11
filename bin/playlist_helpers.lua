@@ -1,7 +1,11 @@
 module('playlist_helpers', package.seeall)
 
-artist_title = '([^%c]-)%s+%-%s+([^%c]+)'
-artist_title_ext = artist_title .. '%.([^.]+)$'
+local lineMatch = '[^\n]*'
+local artist_title = '([^\n]-)%s+%-%s+([^\n]+)'
+
+function getArtistTitleExtMatch()
+  return artist_title .. '%.([^.]+)$'
+end
 
 function fileStringToTable(fileList)
   local result = {}
@@ -13,7 +17,8 @@ end
 
 function gatherFromCustomPlaylist(playlist)
   local tracks = {}
-  for artist, title in playlist:gmatch(artist_title) do
+  for line in playlist:gmatch(lineMatch) do
+    local artist, title = line:match(config.artistTitleMatch)
     if artist and title then
       table.insert(tracks, {artist = artist, title = title})
     end

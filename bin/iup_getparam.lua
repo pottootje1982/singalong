@@ -15,7 +15,7 @@ iup.GetParam = function(title, callback, ...)
         iup.GetParamParam(dialog, paramIndex).value = value:gsub('%c', '')
       end
     end
-    if callback then return callback end
+    if callback then return callback(dialog, paramIndex) end
     return 1
   end
   return getParamOld(title, customCallback, ...)

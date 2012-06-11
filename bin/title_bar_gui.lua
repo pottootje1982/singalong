@@ -170,6 +170,7 @@ function settingsButton:action()
     elseif param_index == 1 then
       audioPlayerLocationModified = true
     elseif (param_index == -2) then
+      dialog.size = "500x150"
       setDialogIcon(dialog)
     end
     return 1
@@ -178,10 +179,11 @@ function settingsButton:action()
   iup.GetParam("Settings", param_action,
                   "Miktex location: %f[DIR|*.*|" .. config.miktexDir .. "|NO|NO]\n" ..
                   "Audio player location: %f[FILE|*.exe|" .. config.audioPlayerLocation .. "|NO|NO]\n" ..
+                  "Playlist track match: %s\n" ..
                   "Rebuild cache: %b\n" ..
                   "Remove unused txt files from cache: %b\n" ..
                   "Remove html files from cache: %b\n",
-                  config.miktexDir, config.audioPlayerLocation, 0, 0, 0)
+                  config.miktexDir, config.audioPlayerLocation, config.artistTitleMatch, 0, 0, 0)
 
   if ret == 0 or not ret then return end -- dialog was cancelled
 
