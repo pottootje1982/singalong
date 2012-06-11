@@ -16,6 +16,7 @@ M3U_ENTRY_MATH = "(#EXTINF:[%d]+,([^%c]*)\n([^%c]*)\n)"
 
 local function setPlaylistFileName(fn)
   if mainDialog then mainDialog.title = 'SinGaLonG' .. ' - ' .. tostring(fn) end
+  config.loadplaylist = fn
   playlistFileName = fn
 end
 
