@@ -59,9 +59,9 @@ local function openTXT(fn)
   return tracks
 end
 
-function showNewPlaylistDialog(file)
+function showNewPlaylistDialog(file, extfilter)
   local filedlg = iup.filedlg{dialogtype = "SAVE", title = "Save new playlist as",
-                        extfilter = "SingAlonG Playlists (*.sing)|*.sing;|",
+                        extfilter = extfilter or "SingAlonG Playlists (*.sing)|*.sing;|",
                         file=file}
   filedlg:popup (iup.ANYWHERE, iup.ANYWHERE)
 
