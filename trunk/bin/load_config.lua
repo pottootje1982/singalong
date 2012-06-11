@@ -22,6 +22,7 @@ local configDefaults = {
   pdfGenerator = 'Singalong pdf',
   miktexDir = [[c:\miktex]],
   audioPlayerLocation = [[]],
+  artistTitleMatch = '(.-)%s+%-%s+(.+)'
 }
 
 local function createDefaultConfig()
