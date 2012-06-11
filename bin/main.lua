@@ -1,8 +1,6 @@
 -- Main.lua : script invoked directly from singalong.exe when no arguments are given
 
 -- BUGS:
--- start app in monitor where it was closed before (save monitor index to config)
--- you can drag currently selected track to column bar of playlist, and the two rows will swap!
 
 -- TESTING:
 -- check &quot; somewhere in the zwarte lijst
