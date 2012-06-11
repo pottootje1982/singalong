@@ -3,10 +3,10 @@
 -- BUGS:
 
 -- TESTING:
--- check &quot; somewhere in the zwarte lijst
 -- check if solving CAPTCHA works
 
 -- FEATURES
+-- save songtekst in .sing file
 
 require "misc"
 require "app"
