@@ -27,6 +27,14 @@ In that fair land to which I go
 I'm goin' home to see my mother]])
 end
 
+function TestConversion:testConvertHtmlToAscii2()
+  local text = [[He said &amp;quot;Son you are a bachelor boy<br />
+and that's the way to stay.]]
+  local converted = require 'convert_html_to_ascii'(text)
+  assertEquals(converted, [[He said "Son you are a bachelor boy
+and that's the way to stay.]])
+end
+
 function TestConversion:testWhiteSpace()
   local test = [[
 
