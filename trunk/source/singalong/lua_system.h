@@ -3,6 +3,7 @@
 #include "global.h"
 
 void setExecutablePath(char* charPath);
+const char* getExecutablePath();
 
 int lua_sleep(lua_State *L);
 int lua_getExecutablePath(lua_State *L);

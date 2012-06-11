@@ -25,8 +25,6 @@ require "downloader"
 require "title_bar_gui"
 require "debug_frame"
 
-dofile  "compare_playlists.lua"
-
 local args = {...}
 
 local playlistSitesSplitter =
