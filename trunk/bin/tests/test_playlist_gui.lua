@@ -11,6 +11,15 @@ function TestPlaylistGui:testQueryGoogle()
   assert(content:match(playlist_gui.YOUTUBE_MATCH):match('http://www.youtube.com'))
 end
 
+function TestPlaylistGui:testReplace()
+  local html = [[<a href="/url?q=http://www.lyricsfreak.com/n/neil%2Byoung/unknown%2Blegend_20099115.html&amp;sa=U&amp;ei=gfPWT8CFN8XPhAfYlPDcAw&amp;ved=0CBIQFjAA&amp;usg=AFQjCNE7JXUoNmThDNZwIcW1qq5QExQp6w"><b>Unknown Legend</b>]]
+  for str in html:gmatch('/url%?q=(.-)&') do
+    print(str)
+  end
+  local validUrl = playlist_gui.fixUrls(html)
+  assertEquals(validUrl, [[<a href="http://www.lyricsfreak.com/n/neil%2Byoung/unknown%2Blegend_20099115.html"><b>Unknown Legend</b>]])
+end
+
 --[[
 function TestPlaylistGui:testLaunchYoutube()
 	playlist_api.setPlaylist({{artist='beatles', title='hey jude'}})
