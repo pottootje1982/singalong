@@ -19,7 +19,7 @@ local function request(url, fn)
   socketinterface.request(url, fn)
 end
 
-function executeQuery(search_site, mp3, keepTempFile)
+function executeQuery(search_site, mp3, keepTempFile, appendix)
   local artist, title, customArtist, customTitle = mp3.artist, mp3.title, mp3.customArtist, mp3.customTitle
 
   local tmpname = os.tmpname():gsub('\\', '')
@@ -27,14 +27,13 @@ function executeQuery(search_site, mp3, keepTempFile)
 
   artist = replace(customArtist or artist, repl_for_query)
   title = replace(customTitle or title, repl_for_query)
-  query_str = title
-  query_str = artist .. "+" .. query_str
 
   local onSite = search_site and (' on ' .. search_site.site) or ''
   print(string.format("Searching for %s - %s%s", artist, title, onSite))
   local content
   local siteAppendix = search_site and ('+site%3A' .. search_site.site) or ''
-  request(string.format('http://www.google.com/search?q=%s%s', query_str, siteAppendix), fn)
+  appendix = appendix and ("+" .. appendix) or ''
+  request(string.format('http://www.google.com/search?q=%s+%s%s%s', artist, title, siteAppendix, appendix), fn)
   content = os.read(fn)
   if not keepTempFile then
     os.remove(fn)

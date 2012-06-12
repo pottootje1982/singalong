@@ -1,5 +1,5 @@
-require 'query'
 require 'test_setup'
+require 'query'
 require 'luaunit'
 
 TestQuery = {}

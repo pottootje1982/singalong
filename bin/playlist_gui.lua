@@ -98,9 +98,9 @@ local playlistMenu = iup.menu {
   },
   iup.separator{},
   iup.item {
-    title = "Search with google for artist - title";
+    title = "Search google for lyrics";
     action = function(self)
-      widget:queryGoogle(true)
+      widget:queryGoogle(true, 'lyrics')
     end;
   },
   iup.item {
@@ -160,15 +160,19 @@ function saveAsPlaylist(selTracks)
   end
 end
 
-function playlist:queryGoogle(show)
+-- remove /url?q=] from html because this breaks links that have image thumbnail
+function fixUrls(htmlContent)
+  return htmlContent:gsub('/url%?q=(.-)&amp;.-%"', '%1"')
+end
+
+function playlist:queryGoogle(show, appendix)
   local selMp3, selMp3s = getSelection()
   local content, fn
 
   local queryGoogle = function()
-    content, fn = query.executeQuery(nil, selMp3, true)
+    content, fn = query.executeQuery(nil, selMp3, true, appendix)
     if fn and os.exists(fn) then
-      -- remove /url?q=] from html because this breaks links that have image thumbnail
-      content = content:gsub([[/url%?q=]], [[]])
+      content = fixUrls(content)
       os.writeTo(fn, content)
       if show then
         os.shellExecute(fn)
