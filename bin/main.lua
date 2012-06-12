@@ -1,7 +1,6 @@
 -- Main.lua : script invoked directly from singalong.exe when no arguments are given
 
 -- BUGS:
--- dragged file should be inserted where dropped
 
 -- TESTING:
 -- check if solving CAPTCHA works
