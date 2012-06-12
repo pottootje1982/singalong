@@ -1,3 +1,4 @@
+module('iup_getparam', package.seeall)
 
 assert(iup)
 
@@ -11,8 +12,8 @@ iup.GetParam = function(title, callback, ...)
   local customCallback = function(dialog, paramIndex)
     if paramIndex >= 0 then
       local value = iup.GetParamParam(dialog, paramIndex).value
-      if type(value) == 'string' and value:find('%c') then
-        iup.GetParamParam(dialog, paramIndex).value = value:gsub('%c', '')
+      if type(value) == 'string' and value:find('\n') then
+        iup.GetParamParam(dialog, paramIndex).value = value:gsub('\n', '')
       end
     end
     if callback then return callback(dialog, paramIndex) end

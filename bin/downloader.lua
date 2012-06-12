@@ -113,7 +113,7 @@ function downloadLyrics(parentDialogTitle)
   local progressDialog, updateLabel, downloadProgressbar = progress_dialog.getDialog("Downloading lyrics...", "Downloading lyrics:", closeCallback, "Stop downloading", closeCallback)
 
   downloadProgressbar.max = numMp3s * numSites
-  progressDialog.parentdialog = mainDialog
+  --progressDialog.parentdialog = mainDialog
 
   local ds =
   {
@@ -131,7 +131,9 @@ function downloadLyrics(parentDialogTitle)
                           resumeFunc(ds),
                           endFunc(progressDialog), errorCallback)
 
-  -- cannot make it popup @ parent
-  progressDialog:popup(iup.CENTERPARENT, iup.CENTERPARENT)
+  -- TODO: cannot make it popup @ parent. The statement
+  -- progressDialog:popup(iup.CENTERPARENT, iup.CENTERPARENT)
+  -- causes crashes when downloadLyrics() is invoked twice
+  progressDialog:popup()
 end
 
