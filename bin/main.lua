@@ -1,6 +1,7 @@
 -- Main.lua : script invoked directly from singalong.exe when no arguments are given
 
 -- BUGS:
+-- dragged file should be inserted where dropped
 
 -- TESTING:
 -- check if solving CAPTCHA works
@@ -142,6 +143,7 @@ end
 if APPLOADED then
   updateGui('title_bar', 'lyrics')
 
+  iup.SetHandle("mainDialog", mainDialog)
   if config.screenPosition then
     mainDialog:showxy(config.screenPosition:match('(%-?%d+),(%-?%d+)'))
   else

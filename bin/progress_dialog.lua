@@ -26,6 +26,7 @@ function getDialog(title, activityLableTitle, buttonCallback, buttonTitle, close
     --nativeparent = mainDialog,
     hidetaskbar = 'YES',
     toolbox = 'YES',
+    parentdialog = 'mainDialog',
 
     menubox = "NO",
     resize = "NO",

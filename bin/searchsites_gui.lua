@@ -270,7 +270,7 @@ lyricsSearchConfigItem = iup.item {
   action = function(self)
     local selSite = searchsites_gui.widget:getSelection(search_sites)
     local ret, searchSiteBegin, searchSiteEnd =
-    iup.GetParam("Set beginning/ending search queries of lyrics in html page", iupParamCallback,
+    iup.GetParam("Set beginning/ending search queries of lyrics in html page", nil,
                     "Begin query (separate with newlines for multiple searches): %m\n" ..
                     "End query: %m\n",
                     table.concat(selSite.lyric_begin, '\n'), selSite.lyric_end)
