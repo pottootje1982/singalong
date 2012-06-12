@@ -162,8 +162,8 @@ function setPlaylist(tracks)
   openPlaylistEvent:fire(tracks)
 end
 
-function addToPlaylist(newTracks)
-  playlist = table.imerge(playlist, newTracks)
+function addToPlaylist(newTracks, index)
+  playlist = table.imerge(playlist, newTracks, index)
   playlistUpdate(true)
   openPlaylistEvent:fire(newTracks)
 end
