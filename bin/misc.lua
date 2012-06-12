@@ -53,9 +53,3 @@ function destroyGui(...)
   invokeOnGui('destroy', ...)
 end
 
-function iupParamCallback(dialog, paramIndex)
-  if paramIndex == -2 then -- -2 = after the dialog is mapped and just before it is shown;
-    setDialogIcon(dialog)
-  end
-end
-
