@@ -34,6 +34,7 @@ function list:list(params)
   end
 
   self.c.mousemove_cb = function(widget, line, col)
+    self.mouseIsAtRow = line
     if not widget.disableDragging and line > 0 and col > 0 then
       self.dragging = self.pressed
       if self.dragging and self.itemToDrag and self.itemToDrag ~= line then
@@ -95,8 +96,10 @@ function list:list(params)
     return iup.IGNORE
   end
 
-  self.c.dropfiles_cb = function(widget, files)
-    self:call('dropFiles', files)
+  self.c.dropfiles_cb = function(widget, files, num)
+    self.nextInsertion = self.nextInsertion or self.mouseIsAtRow
+    self.nextInsertion = self.nextInsertion + self:call('dropFiles', files, self.nextInsertion)
+    if num == 0 then self.nextInsertion = nil end
   end
 
   -- Used to modify selection when navigating with keys like k_up k_down, k_pgdn & p_pgup

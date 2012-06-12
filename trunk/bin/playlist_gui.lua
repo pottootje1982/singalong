@@ -189,7 +189,7 @@ function playlist:queryGoogle(show, appendix)
   return content, fn
 end
 
-function playlist:dropFiles(fileList)
+function playlist:dropFiles(fileList, index)
   local files = playlist_helpers.fileStringToTable(fileList)
   assert(files)
   local newSongs = {}
@@ -206,7 +206,8 @@ function playlist:dropFiles(fileList)
     songs = playlist_api.gatherMp3InfoFromFiles(songs)
     newSongs = table.imerge(newSongs, songs)
   end
-  playlist_api.addToPlaylist(newSongs)
+  playlist_api.addToPlaylist(newSongs, index)
+  return #newSongs
 end
 
 function playlist:playOnYoutube()
