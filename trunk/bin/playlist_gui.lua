@@ -59,7 +59,7 @@ local playlistMenu = iup.menu {
   iup.item {
     title = "Remove txt/html files";
     action = function(self)
-      local ret, removeTxt, removeHtml = iup.GetParam("Remove txt/html files", iupParamCallback,
+      local ret, removeTxt, removeHtml = iup.GetParam("Remove txt/html files", nil,
                   "Txt files: %b\n" ..
                   "Html files: %b\n",
                   1, 1)
@@ -244,7 +244,7 @@ end
 
 function editArtistSelection(selTracks)
   local ret, artist =
-  iup.GetParam( "Change artist value (for web search only)", iupParamCallback,
+  iup.GetParam( "Change artist value (for web search only)", nil,
                 "Change artist name: %s\n", selTracks[1].customArtist or selTracks[1].artist)
   if ret == 0 or not ret then return end -- dialog was cancelled
   if string.isStringEmptyOrSpace(artist) then
@@ -267,7 +267,7 @@ function editOrAddEntry(line)
   line = line or (#tracks + 1)
   local track = tracks[line]
   local ret, artist, title =
-  iup.GetParam(add and "Add entry" or "Change fields (for web search only)", iupParamCallback,
+  iup.GetParam(add and "Add entry" or "Change fields (for web search only)", nil,
                   add and "Artist name: %s\n" ..
                           "Title name: %s\n"
                   or      "Change artist name: %s\n" ..

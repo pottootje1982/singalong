@@ -75,7 +75,7 @@ local function showCaptchaAssignment()
   os.writeTo(fn, content)
   os.shellExecute(fn)
   if url and captchaId then
-    local ret, captchaAns = iup.GetParam("Enter Captcha string", iupParamCallback,
+    local ret, captchaAns = iup.GetParam("Enter Captcha string", nil,
                     "Enter characters from image: %s\n", '')
 
     if ret == 0 or not ret then return end -- dialog was cancelled
@@ -102,7 +102,7 @@ function createSongbook()
   local fontSize = table.find(fontSizes, config.fontSize)
   assert(fontSize, 'Font size ' .. tostring(config.fontSize) .. ' is unknown!')
   local ret, pdfGenerator, texifySelMp3s, fontSize, fontColor, twoside, avoidPageBreaks, preview =
-    iup.GetParam("Create songbook", iupParamCallback,
+    iup.GetParam("Create songbook", nil,
                       "PDF generator: %l"  .. table.zeroConcat(pdfGenerators, '|') .. "\n"..
                       "Use selected songs only: %b\n" ..
                       "%t\n" ..

@@ -10,7 +10,10 @@ local getParamOld = iup.GetParam
 
 iup.GetParam = function(title, callback, ...)
   local customCallback = function(dialog, paramIndex)
-    if paramIndex >= 0 then
+    if paramIndex == -2 then
+      dialog.parentdialog = 'mainDialog'
+      setDialogIcon(dialog)
+    elseif paramIndex >= 0 then
       local value = iup.GetParamParam(dialog, paramIndex).value
       if type(value) == 'string' and value:find('\n') then
         iup.GetParamParam(dialog, paramIndex).value = value:gsub('\n', '')
