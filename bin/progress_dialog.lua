@@ -23,14 +23,13 @@ function getDialog(title, activityLableTitle, buttonCallback, buttonTitle, close
       setDialogIcon(dialog)
     end,
     title = title,
-    --nativeparent = mainDialog,
     hidetaskbar = 'YES',
     toolbox = 'YES',
     parentdialog = 'mainDialog',
 
     menubox = "NO",
     resize = "NO",
-    minsize="400x100",
+    --minsize="400x100", -- causes app to crash in combination with parentdialog = 'mainDialog'
     size="400x100",
   }
   return progressDialog, updateLabel, progressBar
