@@ -96,10 +96,13 @@ function list:list(params)
     return iup.IGNORE
   end
 
-  self.c.dropfiles_cb = function(widget, files, num)
-    self.nextInsertion = self.nextInsertion or self.mouseIsAtRow
-    self.nextInsertion = self.nextInsertion + self:call('dropFiles', files, self.nextInsertion)
-    if num == 0 then self.nextInsertion = nil end
+  self.droppedFiles = {}
+  self.c.dropfiles_cb = function(widget, file, num)
+    table.insert(self.droppedFiles, file)
+    if num == 0 then
+      self:call('dropFiles', self.droppedFiles, self.mouseIsAtRow)
+      self.droppedFiles = {}
+    end
   end
 
   -- Used to modify selection when navigating with keys like k_up k_down, k_pgdn & p_pgup
