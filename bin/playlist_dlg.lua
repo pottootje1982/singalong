@@ -1,5 +1,7 @@
 module('playlist_dlg', package.seeall)
 
+require 'playlist_helpers'
+
 return function(sample)
   local playlistEntries = nil
   local multiline = iup.text{expand = 'YES', multiline = 'YES', value = sample}

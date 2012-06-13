@@ -127,11 +127,7 @@ function openPlaylist(fn, newSingFile, clearPlaylist)
     local tracks
     if loadSingFile then
       local newMp3s = loadMp3Table(singFile)
-      if not newMp3s then
-        iup.Message('Warning', string.format('Loading of sing file "%s" failed!', singFile))
-        return
-      end
-      tracks = newMp3s
+      tracks = newMp3s or {}
     end
 
     setPlaylistFileName(singFile) -- we will only save as .sing file

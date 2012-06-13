@@ -175,7 +175,7 @@ function settingsButton:action()
     end
     return 1
   end
-  local ret, miktexDir, audioPlayerLocation, rescanCache, removeUnusedLyrics, removeHtml =
+  local ret, miktexDir, audioPlayerLocation, artistTitleMatch, rescanCache, removeUnusedLyrics, removeHtml =
   iup.GetParam("Settings", param_action,
                   "Miktex location: %f[DIR|*.*|" .. config.miktexDir .. "|NO|NO]\n" ..
                   "Audio player location: %f[FILE|*.exe|" .. config.audioPlayerLocation .. "|NO|NO]\n" ..
@@ -187,6 +187,7 @@ function settingsButton:action()
 
   if ret == 0 or not ret then return end -- dialog was cancelled
 
+  config.artistTitleMatch = artistTitleMatch:gsub([[\t]], '\t')
   if miktexDir == '' then
     iup.Message('Error', 'Miktex location cannot be empty!')
   else
