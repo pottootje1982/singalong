@@ -189,9 +189,7 @@ function playlist:queryGoogle(show, appendix)
   return content, fn
 end
 
-function playlist:dropFiles(fileList, index)
-  local files = playlist_helpers.fileStringToTable(fileList)
-  assert(files)
+function playlist:dropFiles(files, index)
   local newSongs = {}
   for i, file in ipairs(files) do
     local attribs = lfs.attributes(file)
@@ -207,7 +205,6 @@ function playlist:dropFiles(fileList, index)
     newSongs = table.imerge(newSongs, songs)
   end
   playlist_api.addToPlaylist(newSongs, index)
-  return #newSongs
 end
 
 function playlist:playOnYoutube()
