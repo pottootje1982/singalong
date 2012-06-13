@@ -1,6 +1,8 @@
 -- Main.lua : script invoked directly from singalong.exe when no arguments are given
 
 -- BUGS:
+-- when pressing windows menu button, spawn menu at selected item location
+
 
 -- TESTING:
 -- check if solving CAPTCHA works
