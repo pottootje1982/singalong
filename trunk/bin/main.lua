@@ -7,6 +7,7 @@
 
 -- FEATURES
 -- save songtekst in .sing file
+-- button to restore default config (settings dialog)
 
 require "misc"
 require "app"
