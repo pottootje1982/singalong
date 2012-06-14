@@ -10,28 +10,6 @@ YOUTUBE_MATCH = [[<a href="([^"]*www.youtube.com[^"]+)"]]
 
 local COLUMN0_SIZE = 20
 
-function playlist:playlist(params)
-  self:list(params)
-  self.c['0:0'] = 'Track'
-  self.c['0:1'] = 'Artist'
-  self.c['0:2'] = 'Title'
-  self.c['0:3'] = 'Album'
-  self.c['alignment1'] = 'aleft'
-  self.c['alignment2'] = 'aleft'
-  self.c['alignment3'] = 'aleft'
-end
-
-function playlist:removeSelItem()
-  local tracks = playlist_api.getPlaylist()
-  local selTrack, selTracks = getSelection()
-  for i, track in ipairs(selTracks) do
-    local index = table.find(tracks, track)
-    table.remove(tracks, index)
-  end
-  self:modifySelection(math.min(self.lastSel, #tracks))
-  updateGui('title_bar', {true}, 'playlist', 'searchsites', {true}, 'lyrics')
-end
-
 local playlistMenu = iup.menu {
   iup.item {
     title = "Preview";
@@ -133,6 +111,32 @@ local playlistMenu = iup.menu {
   },
 }
 
+function playlist:playlist(params)
+  self:list(params)
+  self:setValue('Track',  0,0)
+  self:setValue('Artist', 0,1)
+  self:setValue('Title',  0,2)
+  self:setValue('Album',  0,3)
+  self:setAttribute('alignment', 'aleft', 1)
+  self:setAttribute('alignment', 'aleft', 2)
+  self:setAttribute('alignment', 'aleft', 3)
+  self.popup = playlistMenu
+  --self.c['sortsign1'] = 'yes'
+  --self.c['sortsign2'] = 'yes'
+  --self.c['sortsign3'] = 'yes'
+end
+
+function playlist:removeSelItem()
+  local tracks = playlist_api.getPlaylist()
+  local selTrack, selTracks = getSelection()
+  for i, track in ipairs(selTracks) do
+    local index = table.find(tracks, track)
+    table.remove(tracks, index)
+  end
+  self:modifySelection(math.min(self.lastSel, #tracks))
+  updateGui('title_bar', {true}, 'playlist', 'searchsites', {true}, 'lyrics')
+end
+
 function playInAudioPlayer(selTracks)
   local args = ''
   for i, track in ipairs(selTracks) do
@@ -220,7 +224,6 @@ function playlist:onPopup()
     playlistMenu[index].active = selMp3 and 'YES' or 'NO'
     index = index + 1
   end
-  playlistMenu:popup(iup.MOUSEPOS, iup.MOUSEPOS);
 end
 
 function playlist:onSelectionChanged(line)

@@ -51,6 +51,9 @@ function list:list(params)
   self.c.release_cb = function(widget, line, col, status)
     if iup.isbutton3(status) then
       self:call('onPopup')
+      if self.popup then
+        self.popup:popup(iup.MOUSEPOS, iup.MOUSEPOS)
+      end
     elseif iup.isbutton1(status) then -- left button is pressed
       self.addToSel = false
       if self.dragging then
@@ -65,9 +68,19 @@ function list:list(params)
     return iup['K_' .. id] == key or iup['K_s' .. id] == key
   end
 
+  local function getItemPosition(line)
+    local x, y = self:getCellPos(line, 1)
+    local w, h = self:getCellSize(line, 1)
+    return x+self.c.x+w, y+self.c.y+h
+  end
+
   self.c.k_any = function(widget, key, press)
     if (key == iup.K_Menu) then
       self:call('onPopup')
+      if self.popup then
+        local x, y = getItemPosition(self.lastSel)
+        self.popup:popup(x, y)
+      end
     elseif (key == iup.K_ca or key == iup.K_cA) then
       -- Selects everything
       self:modifySelection(1, widget.numlin)
@@ -120,6 +133,26 @@ function list:list(params)
     self.lastFocus = line
     return iup.DEFAULT
   end
+end
+
+function list:setAttribute(key, value, row, col)
+  self.c[key .. row .. (col and ':' .. col or '')] = value
+end
+
+function list:getAttribute(key, row, col)
+  return self.c[key .. row .. (col and ':' .. col or '')]
+end
+
+function list:getCellPos(row, col)
+  return self:getAttribute('celloffset', row, col):match('(%d+)x(%d+)')
+end
+
+function list:getCellSize(row, col)
+  return self:getAttribute('cellsize', row, col):match('(%d+)x(%d+)')
+end
+
+function list:setValue(value, row, col)
+  self:setAttribute('', value, row, col)
 end
 
 function list:call(func, ...)
