@@ -31,6 +31,10 @@ local function createDefaultConfig()
   table.saveToFileText(F(LOCALAPPDATADIR, 'config.lua'), config)
 end
 
+function restoreDefaultConfig()
+  config = configDefaults
+end
+
 local function loadConfig(singalongPath)
   -- Only allow config to be loaded once
   if configLoaded then return end
