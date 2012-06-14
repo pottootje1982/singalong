@@ -1,16 +1,16 @@
 -- Main.lua : script invoked directly from singalong.exe when no arguments are given
 
 -- BUGS:
--- when pressing windows menu button, spawn menu at selected item location
-
 
 -- TESTING:
 -- check if solving CAPTCHA works
 
 -- FEATURES
 -- save songtekst in .sing file
--- button to restore default config (settings dialog)
 -- make columns sortable
+
+-- NICE TO HAVE:
+-- port to linux
 
 require "misc"
 require "app"
