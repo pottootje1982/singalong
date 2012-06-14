@@ -5,6 +5,8 @@ require 'lyrics_gui'
 
 class 'siteslist' (list)
 
+local searchSiteMenu
+
 function siteslist:siteslist(params)
   self:list(params)
   self.c['0:0'] = '#'
@@ -12,9 +14,8 @@ function siteslist:siteslist(params)
   self.c['alignment1'] = 'aleft'
   self.c['width0'] = 20
   self.c['width1'] = 100
+  self.popup = searchSiteMenu
 end
-
-widget = siteslist({readonly = 'yes', minsize = '10x10', numcol=1, numlin=#search_sites, expand="yes", markmode='lin', multiple='yes', disableDragging = true, resizematrix = 'yes', fittosize = 'columns'})
 
 local goodItem
 local reasonableItem
@@ -68,8 +69,6 @@ function siteslist:onPopup()
   selectHtmlItem.active = selHtmlFound and 'YES' or 'NO'
   deleteHtmlItem.active = selHtmlFound and 'YES' or 'NO'
   deleteTxtItem.active = selTxtFound and 'YES' or 'NO'
-
-  searchSiteMenu:popup(iup.MOUSEPOS, iup.MOUSEPOS);
 end
 
 function siteslist:viewFile(ext)
@@ -304,6 +303,8 @@ searchSiteMenu = iup.menu {
   _DEBUG and reasonableItem,
   _DEBUG and discardItem,
 }
+
+widget = siteslist({readonly = 'yes', minsize = '10x10', numcol=1, numlin=#search_sites, expand="yes", markmode='lin', multiple='yes', disableDragging = true, resizematrix = 'yes', fittosize = 'columns'})
 
 function destroy()
   iup.Destroy(searchSiteMenu)
