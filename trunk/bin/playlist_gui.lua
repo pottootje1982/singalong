@@ -319,7 +319,7 @@ end
 
 function playlist:setRowColor(row, color)
   for column = 1, self.c.numcol do
-    self.c['bgcolor' .. row .. ':' .. column] = color
+    self:setAttribute('bgcolor', color, row, column)
     column = column + 1
   end
 end
@@ -343,14 +343,14 @@ function playlist:update()
   local tracks = playlist_api.getPlaylist()
   self.c.numlin = #tracks
   for i, mp3 in ipairs(tracks) do
-    self.c[i .. ':0'] = tostring(i)
-    self.c[i .. ':1'] = mp3.customArtist or mp3.artist
-    self.c[i .. ':2'] = mp3.customTitle or mp3.title
-    self.c[i .. ':3'] = mp3.id3 and mp3.id3.album
+    self:setValue(tostring(i), i, 0)
+    self:setValue(mp3.customArtist or mp3.artist, i, 1)
+    self:setValue(mp3.customTitle or mp3.title, i, 2)
+    self:setValue(mp3.id3 and mp3.id3.album, i, 3)
     self:updateItem(i, mp3, true)
   end
 
-  self.c[#tracks + 1 .. ':0'] = nil
+  self:setValue(nill, #tracks + 1, 0)
   if self.lastSel then
     iup.Update(widget.c)
   end

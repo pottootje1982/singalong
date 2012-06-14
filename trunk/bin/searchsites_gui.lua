@@ -9,11 +9,11 @@ local searchSiteMenu
 
 function siteslist:siteslist(params)
   self:list(params)
-  self.c['0:0'] = '#'
-  self.c['0:1'] = 'Site'
-  self.c['alignment1'] = 'aleft'
-  self.c['width0'] = 20
-  self.c['width1'] = 100
+  self:setValue('#',  0,0)
+  self:setValue('Site', 0,1)
+  self:setAttribute('alignment', 'aleft', 1)
+  self:setAttribute('width', 20, 0)
+  self:setAttribute('width', 100, 1)
   self.popup = searchSiteMenu
 end
 
@@ -126,31 +126,31 @@ function siteslist:update(updatePos)
     title = selMp3.title
   end
   for i, search_site in pairs(search_sites) do
-    self.c[i .. ':0'] = tostring(i)
-    self.c[i .. ':1'] = search_site.site
+    self:setValue(tostring(i), i, 0)
+    self:setValue(search_site.site, i, 1)
 
     local htmlFile, _, info = query.getLyrics('html', search_site, selMp3 or {})
     local txtFile, _, info = query.getLyrics('txt', search_site, selMp3 or {})
 
     -- White is default color
-    self.c['bgcolor' .. i .. ':1'] = WHITE
+    self:setAttribute('bgcolor', WHITE, i, 1)
     if lyrics_gui.htmlToggle.value == 'ON' then
       if htmlFile then
-        self.c['bgcolor' .. i .. ':1'] = GREEN
+        self:setAttribute('bgcolor', GREEN, i, 1)
         if not txtFile then
           -- display item in red if html file is present and no txt could be found (only when htmlToggle is on)
           -- Since getLyrics is implemented with cache, this case can never happen because html item is only set when txt file was found (see cache.buildCache)
-          self.c['bgcolor' .. i .. ':1'] = RED
+          self:setAttribute('bgcolor', RED, i, 1)
         end
       end
     else
       if info and not info.ignore then
         if not found then found = i end
         -- display item in green if html and txt were found
-        self.c['bgcolor' .. i .. ':1'] = GREEN
+        self:setAttribute('bgcolor', GREEN, i, 1)
       elseif info and info.ignore then
         -- display item in yellow if html and txt were found, but not selected for songbook
-        self.c['bgcolor' .. i .. ':1'] = YELLOW
+        self:setAttribute('bgcolor', YELLOW, i, 1)
       else
       end
     end
