@@ -156,7 +156,11 @@ end
 function saveAsPlaylist(selTracks)
   local playlist = ''
   for i, track in ipairs(selTracks) do
-    playlist = playlist .. track.file .. '\n'
+    if track.file then
+      playlist = playlist .. (track.file or '') .. '\n'
+    else
+      printf('Missing file: %s - %s', track.artist, track.title)
+    end
   end
   local res = playlist_api.showNewPlaylistDialog(nil, "Playlists (*.m3u)|*.m3u;|")
   if res then

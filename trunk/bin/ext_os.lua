@@ -1,5 +1,9 @@
 require 'lfs'
 
+function printf(...)
+  print(string.format(...))
+end
+
 function verify(succ, mess)
   if not succ then
     local debugMessage = '\n' .. debug.traceback()
