@@ -8,6 +8,7 @@
 -- FEATURES
 -- save songtekst in .sing file
 -- make columns sortable
+-- console with history
 
 -- NICE TO HAVE:
 -- port to linux

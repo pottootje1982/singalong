@@ -35,8 +35,10 @@ LUA_O=	lua.o
 LUAC_T=	luac
 LUAC_O=	luac.o print.o
 
+LUA_SO=liblua.so
+
 ALL_O= $(CORE_O) $(LIB_O) $(LUA_O) $(LUAC_O)
-ALL_T= $(LUA_A) $(LUA_T) $(LUAC_T)
+ALL_T= $(LUA_A) $(LUA_T) $(LUAC_T) $(LUA_SO)
 ALL_A= $(LUA_A)
 
 default: $(PLAT)
@@ -46,6 +48,9 @@ all:	$(ALL_T)
 o:	$(ALL_O)
 
 a:	$(ALL_A)
+
+$(LUA_SO): $(CORE_O) $(LIB_O)
+	$(CC) -o $@ -shared $?
 
 $(LUA_A): $(CORE_O) $(LIB_O)
 	$(AR) $@ $(CORE_O) $(LIB_O)	# DLL needs all object files
