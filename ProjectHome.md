@@ -1,0 +1,1 @@
+Application with which you can create a songbook in pdf format out of downloaded lyrics
